@@ -60,7 +60,38 @@ const CHECKOUT_URL = "https://pay.lowify.com.br/checkout?product_id=jlUfor";
 
 const trackFBEvent = (eventName: string, params?: object) => {
   if (typeof window !== 'undefined' && (window as any).fbq) {
-    (window as any).fbq('track', eventName, params);
+    let safeParams = params;
+    if (params && typeof params === 'object') {
+      // Check if it's a React SyntheticEvent or a DOM element (which have circular refs)
+      if (
+        ('nativeEvent' in params && 'target' in params) ||
+        params instanceof HTMLElement
+      ) {
+        safeParams = undefined;
+      } else {
+        // Try to create a shallow copy and only keep plain values
+        try {
+          const newParams: any = {};
+          for (const key in params) {
+            if (Object.prototype.hasOwnProperty.call(params, key)) {
+              const value = (params as any)[key];
+              if (typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean' || value === null) {
+                newParams[key] = value;
+              }
+            }
+          }
+          safeParams = newParams;
+        } catch (e) {
+          safeParams = undefined;
+        }
+      }
+    }
+    
+    if (safeParams && Object.keys(safeParams).length > 0) {
+      (window as any).fbq('track', eventName, safeParams);
+    } else {
+      (window as any).fbq('track', eventName);
+    }
   }
 };
 
@@ -170,8 +201,8 @@ const App: React.FC = () => {
     return () => clearInterval(interval);
   }, []);
 
-  const scrollToOffer = (e: React.MouseEvent) => {
-    e.preventDefault();
+  const scrollToOffer = (e?: React.MouseEvent) => {
+    if (e) e.preventDefault();
     trackFBEvent('InitiateCheckout');
     if (offerRef.current) {
       offerRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -179,7 +210,7 @@ const App: React.FC = () => {
   };
 
   const handleFinalCheckout = () => {
-    trackFBEvent('Purchase', { value: 37.9, currency: 'BRL' });
+    trackFBEvent('Purchase', { value: 10.0, currency: 'BRL' });
   };
 
   return (
@@ -332,122 +363,66 @@ const App: React.FC = () => {
 
         {/* SUPER OFFER CARD - MAIS COMPLETO */}
         <section ref={offerRef} className="p-4 space-y-10 pb-20 scroll-mt-20">
-          <div className="bg-white rounded-[50px] shadow-[0_30px_80px_-20px_rgba(236,72,153,0.4)] overflow-hidden border-[6px] border-[#fce7f3] relative">
+          <div className="bg-white rounded-[40px] shadow-2xl overflow-hidden border-2 border-pink-100 relative">
             
-            {/* Faixa de Oferta Irresistível */}
-            <div className="bg-gradient-to-r from-yellow-400 to-orange-400 p-3 text-center">
-               <p className="text-[11px] font-black text-gray-900 uppercase tracking-widest flex items-center justify-center gap-2">
-                 <Sparkles size={14} fill="currentColor"/> PACOTE COMPLETO + BÔNUS EXCLUSIVOS
-               </p>
-            </div>
-
             {/* Header do Card */}
-            <div className="bg-gradient-to-br from-[#ec4899] to-[#db2777] p-8 text-center text-white relative">
-                <div className="absolute top-4 right-4 bg-white/20 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-black uppercase">VITALÍCIO</div>
-                <h3 className="font-black text-2xl leading-tight uppercase tracking-tight">CATEQUESE KIDS<br/><span className="text-yellow-300">PREMIUM PACK</span></h3>
-                <p className="text-[11px] font-bold opacity-80 mt-2">Acesso imediato ao material mais completo do Brasil</p>
+            <div className="bg-pink-400 p-8 text-center text-white">
+                <h3 className="font-black text-2xl leading-tight uppercase tracking-tight">SUPER COMBO CATEQUESE KIDS</h3>
+                <p className="text-[13px] font-bold mt-2 opacity-90">TUDO O QUE VOCÊ VIU E MUITO MAIS!</p>
             </div>
 
-            <div className="p-6 sm:p-8">
-              {/* O que está incluído - LISTA DETALHADA */}
-              <div className="space-y-3 mb-10">
-                <p className="text-[11px] font-black text-gray-400 uppercase tracking-widest mb-4">CONTEÚDO DO PACK:</p>
-                {[
-                  { main: "+150 Páginas", sub: "Atividades Prontas para Imprimir", highlight: true },
-                  { main: "Módulo Completo", sub: "Os 7 Sacramentos Ilustrados" },
-                  { main: "Mandamentos HQ", sub: "Explicação Lúdica em Quadrinhos" },
-                  { main: "Bíblia Ilustrada", sub: "Personagens no estilo Bobbie Goods" },
-                  { main: "Guia da Missa", sub: "Atividades sobre a Santa Eucaristia" },
-                  { main: "Orações Kids", sub: "Pai Nosso e Ave Maria Ilustrados" },
-                  { main: "Dinâmicas", sub: "Jogos e Quebra-cabeças Cristãos" },
-                ].map((item, i) => (
-                  <div key={i} className="flex items-start gap-3 p-3 bg-pink-50/40 rounded-2xl border border-pink-100/50">
-                    <div className="bg-pink-500 text-white p-0.5 rounded-full mt-0.5 shadow-sm">
-                      <Check size={14} strokeWidth={4} />
-                    </div>
-                    <div className="text-[13px] leading-tight">
-                       <span className="font-black text-gray-800">{item.main}: </span>
-                       <span className="font-bold text-gray-600">{item.sub}</span>
-                    </div>
-                  </div>
-                ))}
-
-                <p className="text-[11px] font-black text-pink-400 uppercase tracking-widest mt-6 mb-4">BÔNUS ESPECIAIS (HOJE É GRÁTIS):</p>
-                {[
-                  { main: "BÔNUS 1:", sub: "Especial Histórias do Antigo Testamento", color: "text-orange-500" },
-                  { main: "BÔNUS 2:", sub: "Lembrancinhas para Datas Comemorativas", color: "text-blue-500" },
-                  { main: "BÔNUS 3:", sub: "Dinâmicas Inéditas para Catequistas", color: "text-green-500" },
-                ].map((item, i) => (
-                  <div key={i} className="flex items-start gap-3 p-3 bg-yellow-50/50 rounded-2xl border border-yellow-100">
-                    <div className="bg-yellow-400 text-white p-0.5 rounded-full mt-0.5 shadow-sm">
-                      <Star size={14} fill="white" />
-                    </div>
-                    <div className="text-[13px] leading-tight">
-                       <span className={`font-black ${item.color}`}>{item.main} </span>
-                       <span className="font-bold text-gray-600">{item.sub}</span>
-                    </div>
-                  </div>
-                ))}
+            <div className="p-8">
+              {/* Preço */}
+              <div className="text-center mb-8">
+                 <div className="flex items-center justify-center gap-3 mb-2">
+                    <span className="text-gray-400 line-through text-lg font-bold">R$ 97,00</span>
+                    <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-wider">ECONOMIZE 80%</span>
+                 </div>
+                 <p className="text-pink-500 text-[13px] font-black uppercase tracking-[2px] mb-1">POR APENAS</p>
+                 <div className="flex items-center justify-center text-pink-500">
+                   <span className="text-4xl font-black mr-1 mt-[-15px]">R$</span>
+                   <span className="text-7xl font-black tracking-tighter leading-none">10,00</span>
+                 </div>
+                 <p className="text-gray-400 text-[12px] font-bold mt-3 uppercase tracking-wider">ACESSO VITALÍCIO • PDF PRONTINHO</p>
               </div>
 
-              {/* Preço e Comparativo */}
-              <div className="bg-gray-50 rounded-[35px] p-8 text-center border-2 border-white shadow-inner mb-8">
-                <div className="flex flex-col items-center">
-                  <div className="flex items-center gap-3 mb-2">
-                     <span className="text-gray-400 line-through text-sm font-bold">De R$ 147,90</span>
-                     <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider">MUITO MAIS VALOR</span>
+              <hr className="border-gray-100 mb-8" />
+
+              {/* Lista */}
+              <div className="space-y-5 mb-10">
+                {[
+                  "Pack Completo: Batismo à Crisma",
+                  "Bônus: Histórias Bíblicas Kids (Adão e Moisés)",
+                  "Bônus: Lembrancinhas e Quebra-cabeças",
+                  "Especial Corpus Christi e Dinâmicas",
+                  "Desenhos Bobbie Goods Exclusivos",
+                ].map((item, i) => (
+                  <div key={i} className="flex items-center gap-3">
+                    <div className="bg-pink-100 text-pink-500 p-1 rounded-full">
+                      <Check size={16} strokeWidth={3} />
+                    </div>
+                    <span className="font-bold text-gray-700 text-[14px] leading-tight">{item}</span>
                   </div>
-                  
-                  <p className="text-pink-500 text-[11px] font-black uppercase tracking-[3px] mb-2">LEVE TUDO ISSO POR APENAS</p>
-                  
-                  <div className="flex items-center text-pink-500">
-                    <span className="text-3xl font-black mr-1 mt-[-10px]">R$</span>
-                    <span className="text-8xl font-black tracking-tighter leading-none">37,90</span>
-                  </div>
-                  
-                  <p className="text-gray-400 text-[10px] font-bold mt-4 leading-relaxed italic">
-                    "Menos que o preço de um lanche para<br/>transformar o ano todo da sua turma!"
-                  </p>
-                </div>
+                ))}
               </div>
 
               {/* Botão de Checkout */}
-              <div className="space-y-4">
-                <a 
-                  href={CHECKOUT_URL}
-                  onClick={handleFinalCheckout}
-                  className="block w-full bg-gradient-to-r from-[#ec4899] to-[#db2777] text-white font-black py-7 rounded-[35px] shadow-[0_15px_40px_-5px_rgba(219,39,119,0.5)] animate-cta text-2xl uppercase leading-tight px-4 text-center ring-4 ring-pink-100"
-                >
-                  QUERO O PACK COMPLETO!
-                </a>
-                
-                {/* Formas de Pagamento e Segurança */}
-                <div className="space-y-4 pt-4">
-                  <div className="flex justify-center items-center gap-4 opacity-50 grayscale">
-                    <div className="flex flex-col items-center gap-1">
-                      <CreditCard size={20} />
-                      <span className="text-[8px] font-black uppercase">Cartão</span>
-                    </div>
-                    <div className="flex flex-col items-center gap-1">
-                      <QrCode size={20} />
-                      <span className="text-[8px] font-black uppercase">PIX</span>
-                    </div>
-                    <div className="h-8 w-px bg-gray-300 mx-2"></div>
-                    <div className="flex flex-col items-center gap-1">
-                      <ShieldCheck size={20} />
-                      <span className="text-[8px] font-black uppercase">Seguro</span>
-                    </div>
-                  </div>
+              <button 
+                onClick={() => handleFinalCheckout()}
+                className="block w-full bg-pink-400 text-white font-black py-6 rounded-[24px] shadow-lg animate-cta text-xl uppercase leading-tight px-4 text-center mb-6"
+              >
+                QUERO ENCANTAR MINHA TURMA
+              </button>
 
-                  <div className="flex flex-col items-center gap-2">
-                    <div className="flex items-center gap-1.5 text-green-600 font-black text-[10px] uppercase tracking-widest bg-green-50 px-4 py-2 rounded-full">
-                       <Lock size={12}/> AMBIENTE 100% SEGURO E CRIPTOGRAFADO
-                    </div>
-                    <p className="text-[9px] text-gray-400 font-bold uppercase">Pagamento processado por Lowify</p>
-                  </div>
+              {/* Segurança e Estrelas */}
+              <div className="flex justify-center items-center gap-6 text-gray-400 font-black text-[11px] uppercase tracking-wider">
+                <div className="flex items-center gap-1.5">
+                  <ShieldCheck size={16} /> SEGURO
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <Star size={16} className="text-yellow-400" fill="currentColor" /> 4.9/5 ESTRELAS
                 </div>
               </div>
-
             </div>
           </div>
         </section>
