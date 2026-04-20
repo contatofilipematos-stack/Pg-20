@@ -87,8 +87,8 @@ const CountdownTimer: React.FC = () => {
   }, []);
 
   return (
-    <div className="flex items-center gap-2 text-pink-600 font-black text-xs bg-pink-50 px-5 py-2.5 rounded-full border-2 border-pink-100 uppercase tracking-tight">
-      <Clock size={16} />
+    <div className="flex items-center gap-2 text-blue-700 font-bold text-[11px] bg-blue-50 px-5 py-2.5 rounded-full border-2 border-blue-100/50 uppercase tracking-wide">
+      <Clock size={16} className="text-red-500 shrink-0" />
       <span>Oferta por tempo limitado: {String(timeLeft.minutes).padStart(2, '0')}:{String(timeLeft.seconds).padStart(2, '0')}</span>
     </div>
   );
@@ -105,7 +105,7 @@ const StickyCTA: React.FC<{ onAnchorClick: (e: React.MouseEvent) => void }> = ({
   if (!isVisible) return null;
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 p-4 z-[100] glass-effect border-t-2 border-pink-100 max-w-[480px] mx-auto animate-fade-in rounded-t-[32px] shadow-[0_-10px_40px_rgba(0,0,0,0.1)]">
+    <div className="fixed bottom-0 left-0 right-0 p-4 z-[100] glass-effect border-t-2 border-slate-100 max-w-[480px] mx-auto animate-fade-in rounded-t-[40px] shadow-[0_-15px_40px_rgba(0,0,0,0.08)]">
       <button 
         onClick={(e) => {
           e.stopPropagation();
@@ -114,7 +114,7 @@ const StickyCTA: React.FC<{ onAnchorClick: (e: React.MouseEvent) => void }> = ({
           }
           onAnchorClick(e);
         }}
-        className="w-full bg-gradient-to-r from-pink-500 to-pink-600 text-white font-black py-4.5 rounded-[24px] shadow-xl animate-cta flex items-center justify-center gap-2 text-lg uppercase"
+        className="w-full bg-gradient-to-r from-blue-600 to-blue-500 text-white font-black py-5 rounded-[28px] shadow-lg animate-cta flex items-center justify-center gap-2 text-lg uppercase tracking-tight border-b-4 border-blue-800"
       >
         <Zap size={20} fill="currentColor" />
         GARANTIR MEU MATERIAL AGORA
@@ -135,12 +135,12 @@ const FAQItem: React.FC<{ q: string; a: string }> = ({ q, a }) => {
           }
           setOpen(!open);
         }} 
-        className={`w-full p-5 rounded-2xl flex justify-between items-center text-left transition-all ${open ? 'bg-pink-50 ring-2 ring-pink-100' : 'bg-white'}`}
+        className={`w-full p-5 rounded-2xl flex justify-between items-center text-left transition-all ${open ? 'bg-yellow-50 ring-2 ring-yellow-400' : 'bg-white'}`}
       >
-        <span className="font-extrabold text-gray-800 text-sm">{q}</span>
-        <div className={`p-1 rounded-full bg-pink-100 text-pink-500 transition-transform ${open ? 'rotate-180' : ''}`}><ChevronDown size={18} /></div>
+        <span className="font-black text-slate-800 text-[13px]">{q}</span>
+        <div className={`p-1.5 rounded-xl bg-slate-100 text-slate-500 transition-transform ${open ? 'rotate-180 bg-yellow-400 text-black' : ''}`}><ChevronDown size={18} /></div>
       </button>
-      {open && <div className="p-5 text-gray-600 text-[13px] leading-relaxed animate-fade-in">{a}</div>}
+      {open && <div className="p-6 text-slate-600 text-[13px] font-medium leading-relaxed animate-fade-in bg-yellow-400/5 rounded-b-2xl">{a}</div>}
     </div>
   );
 };
@@ -178,93 +178,99 @@ const App: React.FC = () => {
       }
     }
     
-    // Slight delay to allow any pending UI updates before redirect
+    // Smooth transition
     setTimeout(() => {
       window.location.href = CHECKOUT_URL;
-    }, 200);
+    }, 150);
   };
 
   return (
-    <div className="min-h-screen flex justify-center selection:bg-pink-100">
-      <div className="max-w-[480px] w-full bg-white shadow-2xl relative overflow-x-hidden pb-10">
+    <div className="min-h-screen flex justify-center selection:bg-yellow-200">
+      <div className="max-w-[480px] w-full bg-[#FCFCFA] shadow-2xl relative overflow-x-hidden pb-10">
         
         {/* Urgency Header */}
-        <div className="bg-gradient-to-r from-pink-500 to-pink-400 text-white py-2 px-4 text-[10px] font-black text-center flex justify-center items-center gap-2 uppercase tracking-wider">
-          <Zap size={12} fill="white" className="animate-pulse" />
+        <div className="bg-yellow-400 text-black py-2.5 px-4 text-[10px] font-black text-center flex justify-center items-center gap-2 uppercase tracking-widest shadow-md">
+          <Zap size={12} fill="currentColor" className="animate-pulse" />
           Aproveite: {vagas} licenças PLR com desconto exclusivo hoje!
         </div>
 
         {/* Hero */}
-        <section className="p-6 pt-10 space-y-6 text-center bg-gradient-to-b from-sky-50 to-white relative">
-          <div className="flex justify-center items-center gap-2 text-pink-500 font-black text-[11px] uppercase bg-white/50 w-fit mx-auto px-4 py-1.5 rounded-full border border-pink-50">
+        <section className="p-6 pt-10 space-y-6 text-center bg-white relative overflow-hidden">
+          <div className="absolute top-0 left-0 w-full h-24 bg-yellow-100/50 -z-10" />
+          <div className="flex justify-center items-center gap-2 text-blue-600 font-black text-[11px] uppercase bg-blue-50 w-fit mx-auto px-5 py-2 rounded-full border-2 border-blue-100/50 shadow-sm">
             <Sparkles size={14} fill="currentColor" /> O Aliado que Todo Educador Merece <Sparkles size={14} fill="currentColor" />
           </div>
-          <h1 className="text-3xl font-black text-gray-900 leading-[1.1]">
-            Chega de Noites sem Dormir Planejando Aulas! Tenha <span className="text-pink-500 underline decoration-yellow-400 decoration-4">25.000 Materiais</span> Prontos! ✨
+          <h1 className="text-3xl font-black text-slate-900 leading-[1.1] tracking-tight">
+            Chega de Noites sem Dormir Planejando Aulas! Tenha <span className="text-red-500 underline decoration-yellow-400 decoration-8 underline-offset-4">25.000 Materiais</span> Prontos! ✨
           </h1>
-          <p className="text-gray-600 text-[15px] leading-relaxed font-bold italic px-4">
+          <p className="text-slate-600 text-[15px] leading-relaxed font-bold italic px-4">
             Resgate sua paz e seu tempo livre. Um acervo completo de atividades, jogos e planos de aula para você usar, editar ou até revender como se fossem seus! 📚🎨
           </p>
 
-          <div className="relative pt-4">
-            <div className="absolute -top-1 -left-1 z-10 bg-yellow-400 text-gray-900 text-[11px] font-black px-4 py-2 rounded-[18px] rotate-[-5deg] shadow-lg flex items-center gap-1 border-2 border-white">
+          <div className="relative pt-4 px-2">
+            <div className="absolute -top-1 -left-1 z-10 bg-green-500 text-white text-[10px] font-black px-5 py-2.5 rounded-[20px] rotate-[-4deg] shadow-xl flex items-center gap-1.5 border-2 border-white">
               <Cloud size={14} fill="white" /> ACESSO VITALÍCIO AO DRIVE
             </div>
-            <img src="https://iili.io/BgZ8mfn.png" alt="Drive Pedagógico" className="rounded-[40px] shadow-2xl border-[10px] border-white drop-shadow-2xl" />
+            <img src="https://iili.io/BgZ8mfn.png" alt="Drive Pedagógico" className="rounded-[40px] shadow-[0_20px_50px_rgba(0,0,0,0.1)] border-[8px] border-white drop-shadow-xl" />
           </div>
 
           <div className="flex flex-col items-center gap-5 pt-4">
             <CountdownTimer />
             <button 
               onClick={scrollToOffer}
-              className="w-full bg-gradient-to-r from-pink-500 to-pink-600 text-white text-xl font-black py-5 rounded-[30px] shadow-2xl animate-cta flex flex-col items-center border-b-4 border-pink-800/20"
+              className="w-full bg-yellow-400 text-black text-xl font-black py-6 rounded-[30px] shadow-[0_15px_0_0_#ca8a04] active:translate-y-1 active:shadow-[0_10px_0_0_#ca8a04] transition-all animate-cta flex flex-col items-center border-2 border-black"
             >
-              <span className="flex items-center gap-2 uppercase">GARANTIR MEU ACESSO AGORA <ArrowRight size={22} /></span>
-              <span className="text-[10px] opacity-90 mt-1 uppercase tracking-widest">Liberação Imediata via E-mail</span>
+              <span className="flex items-center gap-2 uppercase tracking-tight">GARANTIR MEU ACESSO AGORA <ArrowRight size={22} /></span>
+              <span className="text-[10px] opacity-80 mt-1 uppercase tracking-widest font-black">Liberação Imediata via E-mail</span>
             </button>
-            <div className="flex items-center gap-6 text-[10px] font-black text-gray-400 uppercase">
-              <span className="flex items-center gap-1.5"><Zap size={14} className="text-pink-300" /> Use ou Revenda (PLR)</span>
-              <span className="flex items-center gap-1.5"><Lock size={14} className="text-pink-300" /> Compra 100% Segura</span>
+            <div className="flex items-center gap-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">
+              <span className="flex items-center gap-2"><Zap size={14} className="text-blue-500" /> Use ou Revenda</span>
+              <span className="flex items-center gap-2"><Lock size={14} className="text-green-500" /> 100% Seguro</span>
             </div>
           </div>
         </section>
 
-        <WavyDividerBottom color="#f0f9ff" />
+        <WavyDividerBottom color="#F8FAFC" />
 
         {/* O que você vai receber - GRID DETALHADA */}
-        <section className="p-8 space-y-8 bg-sky-50 relative">
-          <h2 className="text-2xl font-black text-center text-gray-900 pt-10">O que te espera no Drive:</h2>
+        <section className="p-8 space-y-8 bg-[#F8FAFC] relative">
+          <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(#e2e8f0_1px,transparent_1px)] [background-size:20px_20px] opacity-30 -z-10" />
+          <div className="text-center space-y-2">
+            <h2 className="text-2xl font-black text-slate-900 pt-5">O que te espera no Drive:</h2>
+            <p className="text-xs text-slate-500 font-bold uppercase tracking-widest">Acervo completo organizado</p>
+          </div>
           <div className="grid grid-cols-2 gap-4">
             {[
-              { t: "Atividades Prontas", i: "📝", c: "bg-orange-50" },
-              { t: "Planos de Aula", i: "📅", c: "bg-blue-50" },
-              { t: "Jogos Pedagógicos", i: "🎲", c: "bg-sky-50" },
-              { t: "Cartilhas de Alfabetização", i: "🔤", c: "bg-pink-50" },
-              { t: "Recursos Especiais", i: "🧩", c: "bg-yellow-50" },
-              { t: "Capas de Caderno", i: "📒", c: "bg-red-50" },
-              { t: "Planners para Profs", i: "📑", c: "bg-green-50" },
-              { t: "Desenhos para Colorir", i: "🖍️", c: "bg-indigo-50" },
-              { t: "Painéis Decorativos", i: "🖼️", c: "bg-pink-100" },
-              { t: "Dinâmicas Criativas", i: "🏃", c: "bg-purple-50" },
-              { t: "Certificados para Alunos", i: "🏆", c: "bg-orange-100" },
-              { t: "Material PLR (Revenda)", i: "💰", c: "bg-blue-100" }
+              { t: "Atividades Prontas", i: "📝", c: "bg-blue-50", b: "border-blue-100" },
+              { t: "Planos de Aula", i: "📅", c: "bg-green-50", b: "border-green-100" },
+              { t: "Jogos Pedagógicos", i: "🎲", c: "bg-yellow-400/20", b: "border-yellow-400" },
+              { t: "Cartilhas de Alfabetização", i: "🔤", c: "bg-red-50", b: "border-red-100" },
+              { t: "Recursos Especiais", i: "🧩", c: "bg-sky-50", b: "border-sky-100" },
+              { t: "Capas de Caderno", i: "📒", c: "bg-yellow-400/20", b: "border-yellow-400" },
+              { t: "Planners para Profs", i: "📑", c: "bg-emerald-50", b: "border-emerald-100" },
+              { t: "Desenhos para Colorir", i: "🖍️", c: "bg-indigo-50", b: "border-indigo-100" },
+              { t: "Painéis Decorativos", i: "🖼️", c: "bg-blue-50", b: "border-blue-100" },
+              { t: "Dinâmicas Criativas", i: "🏃", c: "bg-rose-50", b: "border-rose-100" },
+              { t: "Certificados para Alunos", i: "🏆", c: "bg-yellow-400/30", b: "border-yellow-400" },
+              { t: "Material PLR (Revenda)", i: "💰", c: "bg-green-50", b: "border-green-100" }
             ].map((item, i) => (
-              <div key={i} className={`${item.c} border-4 border-white p-5 rounded-[30px] shadow-sm text-center flex flex-col items-center justify-center hover:scale-105 transition-transform`}>
-                <div className="text-4xl mb-2">{item.i}</div>
-                <h4 className="text-[13px] font-black text-gray-800 leading-tight">{item.t}</h4>
+              <div key={i} className={`${item.c} border-2 ${item.b} p-5 rounded-[32px] shadow-sm text-center flex flex-col items-center justify-center hover:scale-105 transition-all duration-300`}>
+                <div className="text-4xl mb-2 drop-shadow-sm">{item.i}</div>
+                <h4 className="text-[12px] font-black text-slate-800 leading-tight">{item.t}</h4>
               </div>
             ))}
           </div>
         </section>
 
         {/* SEÇÃO RECEBA AGORA */}
-        <section className="p-8 bg-gradient-to-br from-yellow-50 to-orange-50 rounded-[45px] mx-4 border-4 border-dashed border-yellow-300 space-y-8 shadow-inner my-10">
+        <section className="p-8 bg-yellow-50 rounded-[45px] mx-4 border-4 border-dashed border-yellow-400 space-y-8 shadow-inner my-10 relative overflow-hidden">
+           <div className="absolute top-0 right-0 w-32 h-32 bg-yellow-200/40 blur-3xl -z-10" />
            <div className="text-center space-y-2">
-              <div className="bg-pink-500 text-white text-[10px] font-black px-6 py-1.5 rounded-full uppercase tracking-widest inline-flex items-center gap-1 shadow-md mb-2">
+              <div className="bg-blue-600 text-white text-[10px] font-black px-6 py-1.5 rounded-full uppercase tracking-widest inline-flex items-center gap-1 shadow-md mb-2">
                  <Sparkles size={12} fill="white"/> TRANSFORME SUA ROTINA AGORA
               </div>
-              <h2 className="text-2xl font-black text-gray-900 leading-tight">
-                Dê um Fim ao Cansaço e <span className="text-pink-500 underline decoration-yellow-400 decoration-4">Ganhe Liberdade</span>!
+              <h2 className="text-2xl font-black text-slate-900 leading-tight">
+                Dê um Fim ao Cansaço e <span className="text-green-600 underline decoration-yellow-400 decoration-8 underline-offset-4">Ganhe Liberdade</span>!
               </h2>
            </div>
            
@@ -290,115 +296,127 @@ const App: React.FC = () => {
                   d: "Você tem o direito de revender esses materiais para outros professores e ficar com 100% do lucro.", 
                   i: <Zap size={22}/> 
                 }
-              ].map((item, idx) => (
-                <div key={idx} className="bg-white p-6 rounded-[35px] shadow-sm flex items-start gap-5 border-2 border-white hover:scale-[1.02] transition-transform">
-                   <div className="bg-pink-100 text-pink-500 p-3.5 rounded-2xl flex-shrink-0">{item.i}</div>
-                   <div>
-                      <h4 className="text-sm font-black text-gray-800 mb-1 leading-tight">{item.t}</h4>
-                      <p className="text-[11px] text-gray-500 font-bold leading-relaxed">{item.d}</p>
-                   </div>
-                </div>
-              ))}
+              ].map((item, idx) => {
+                const colors = [
+                  { bg: 'bg-blue-50', text: 'text-blue-600' },
+                  { bg: 'bg-red-50', text: 'text-red-500' },
+                  { bg: 'bg-green-50', text: 'text-green-600' },
+                  { bg: 'bg-yellow-400/20', text: 'text-yellow-600' }
+                ];
+                return (
+                  <div key={idx} className="bg-white p-7 rounded-[35px] shadow-sm flex items-start gap-5 border-2 border-white hover:scale-[1.02] transition-transform">
+                     <div className={`${colors[idx % colors.length].bg} ${colors[idx % colors.length].text} p-4 rounded-2xl flex-shrink-0`}>{item.i}</div>
+                     <div>
+                        <h4 className="text-[15px] font-black text-slate-800 mb-1 leading-tight">{item.t}</h4>
+                        <p className="text-[12px] text-slate-500 font-bold leading-relaxed">{item.d}</p>
+                     </div>
+                  </div>
+                );
+              })}
            </div>
         </section>
 
         {/* Depoimentos */}
-        <section className="p-8 space-y-8 bg-white">
-          <h2 className="text-2xl font-black text-center text-gray-900">O que as <span className="text-pink-500">Professoras</span> estão dizendo?</h2>
+        <section className="p-8 space-y-8 bg-[#F8F9FA]">
+          <h2 className="text-2xl font-black text-center text-slate-900 uppercase tracking-tight">O que as <span className="text-blue-600 underline decoration-yellow-400 decoration-8 underline-offset-2">Professoras</span> dizem?</h2>
           <div className="space-y-6">
-            {TESTIMONIALS.map((t, i) => (
-              <div key={i} className="bg-pink-50/50 p-6 rounded-[35px] border-2 border-white shadow-xl relative">
-                <p className="text-[13px] text-gray-600 font-bold italic mb-4">"{t.text}"</p>
-                <div className="flex items-center gap-3">
-                   <div className="w-12 h-12 bg-white rounded-full border-2 border-pink-200 overflow-hidden">
-                      <img src={t.avatar} alt={t.name} className="w-full h-full object-cover" />
-                   </div>
-                   <div>
-                      <h4 className="text-[13px] font-black text-gray-800">{t.name}</h4>
-                      <p className="text-[10px] text-pink-400 font-black uppercase">{t.role}</p>
-                   </div>
+            {TESTIMONIALS.map((t, i) => {
+              const accentColors = ['text-blue-600', 'text-green-600', 'text-red-500'];
+              return (
+                <div key={i} className="bg-white p-7 rounded-[40px] shadow-xl shadow-slate-200/50 relative border-2 border-slate-50">
+                  <div className="absolute top-6 right-8 opacity-10 text-6xl font-black">“</div>
+                  <p className="text-[14px] text-slate-600 font-bold italic mb-6 leading-relaxed relative z-10">"{t.text}"</p>
+                  <div className="flex items-center gap-4">
+                     <div className="w-14 h-14 bg-slate-100 rounded-full border-4 border-white shadow-md overflow-hidden flex-shrink-0">
+                        <img src={t.avatar} alt={t.name} className="w-full h-full object-cover" />
+                     </div>
+                     <div>
+                        <h4 className="text-[14px] font-black text-slate-900">{t.name}</h4>
+                        <p className={`text-[10px] ${accentColors[i % accentColors.length]} font-black uppercase tracking-widest`}>{t.role}</p>
+                     </div>
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </section>
 
-        {/* SUPER OFFER CARD */}
         <section ref={offerRef} className="p-4 space-y-10 pb-20 scroll-mt-20">
-          <div className="text-center space-y-4">
-             <h2 className="text-3xl font-black text-gray-900 leading-tight uppercase tracking-tight">
-               GARANTA SEU ACESSO <span className="text-pink-500 underline decoration-yellow-400 decoration-4">COMPLETO</span> AGORA!
+          <div className="text-center space-y-3">
+             <h2 className="text-3xl font-black text-slate-900 leading-tight uppercase tracking-tight">
+               GARANTA SEU ACESSO <span className="text-red-500 underline decoration-yellow-400 decoration-8 underline-offset-4">COMPLETO</span> AGORA!
              </h2>
-             <div className="flex items-center justify-center gap-2 text-pink-400 font-black text-[10px] uppercase tracking-widest bg-pink-50 w-fit mx-auto px-6 py-2 rounded-full border border-pink-100 shadow-sm">
+             <div className="flex items-center justify-center gap-2 text-black font-black text-[11px] uppercase tracking-widest bg-yellow-400 w-fit mx-auto px-6 py-2.5 rounded-full border-2 border-black shadow-md">
                 <Sparkles size={14} fill="currentColor" /> Oferta Especial por Tempo Limitado <Sparkles size={14} fill="currentColor" />
              </div>
           </div>
 
           {/* Plano Completo - ÚNICA OPÇÃO */}
-          <div className="bg-white rounded-[40px] shadow-2xl overflow-hidden border-2 border-pink-100 relative max-w-[420px] mx-auto">
-            <div className="bg-pink-500 p-8 text-center text-white relative">
-                <div className="absolute top-4 right-4 bg-yellow-400 text-gray-900 text-[10px] font-black px-4 py-1 rounded-full shadow-md z-10">
-                   VAGAS LIMITADAS
+          <div className="bg-white rounded-[45px] shadow-[0_25px_60px_rgba(0,0,0,0.15)] overflow-hidden border-2 border-yellow-400 relative max-w-[420px] mx-auto">
+            <div className="bg-yellow-400 p-10 text-center text-black relative border-b-2 border-black">
+                <div className="absolute top-5 right-5 bg-red-600 text-white text-[10px] font-black px-5 py-2 rounded-full shadow-lg z-10 border-2 border-white animate-pulse">
+                   ÚLTIMAS VAGAS
                 </div>
-                <h3 className="font-black text-2xl leading-tight uppercase tracking-tight">DRIVE COMPLETO 25K+</h3>
-                <p className="text-[13px] font-bold mt-2 opacity-90">TODO O ACERVO + BÔNUS + PLR</p>
+                <h3 className="font-black text-2xl leading-tight uppercase tracking-widest">DRIVE COMPLETO 25K+</h3>
+                <p className="text-[13px] font-black mt-2 opacity-100 uppercase tracking-tighter">TODO O ACERVO + BÔNUS + PLR</p>
             </div>
-            <div className="p-8">
-              <div className="text-center mb-8">
+            <div className="p-10 bg-white">
+              <div className="text-center mb-10">
                  <div className="flex items-center justify-center gap-3 mb-2">
-                    <span className="text-gray-400 line-through text-lg font-bold">R$ 197,00</span>
-                    <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-wider">ECONOMIZE 80%</span>
+                    <span className="text-slate-300 line-through text-lg font-bold">R$ 197,00</span>
+                    <span className="bg-green-100 text-green-700 px-4 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-wider">ECONOMIZE 80%</span>
                  </div>
-                 <p className="text-pink-500 text-[13px] font-black uppercase tracking-[2px] mb-1">POR APENAS</p>
-                 <div className="flex items-center justify-center text-pink-500">
-                   <span className="text-4xl font-black mr-1 mt-[-15px]">R$</span>
-                   <span className="text-7xl font-black tracking-tighter leading-none">39,90</span>
+                 <p className="text-blue-600 text-[13px] font-black uppercase tracking-[3px] mb-2">POR APENAS</p>
+                 <div className="flex items-center justify-center text-slate-900 font-black">
+                   <span className="text-4xl mr-2 mt-[-15px]">R$</span>
+                   <span className="text-8xl tracking-tighter leading-none">39,<span className="text-5xl align-top pt-2">90</span></span>
                  </div>
-                 <p className="text-gray-400 text-[12px] font-bold mt-3 uppercase tracking-wider">ACESSO VITALÍCIO • DIREITO DE REVENDA</p>
+                 <p className="text-slate-400 text-[11px] font-bold mt-5 uppercase tracking-[0.2em]">ACESSO VITALÍCIO • DIREITO DE REVENDA</p>
               </div>
 
-              <hr className="border-gray-100 mb-8" />
               <div className="space-y-4 mb-10">
                 {[
-                  "Mais de 25.000 Materiais Exclusivos",
-                  "Direito de Revenda (PLR) Incluso",
-                  "Acesso Imediato e Vitalício",
-                  "Bônus: 100 Planners Editáveis",
-                  "Bônus: Cartilhas de Caligrafia Premium",
-                  "Suporte Exclusivo via E-mail"
+                  { text: "Mais de 25.000 Materiais Exclusivos", color: "text-blue-500", bg: "bg-blue-50" },
+                  { text: "Direito de Revenda (PLR) Incluso", color: "text-green-500", bg: "bg-green-50" },
+                  { text: "Acesso Imediato e Vitalício", color: "text-red-500", bg: "bg-red-50" },
+                  { text: "Bônus: 100 Planners Editáveis", color: "text-orange-500", bg: "bg-orange-50" },
+                  { text: "Bônus: Cartilhas de Caligrafia Premium", color: "text-yellow-600", bg: "bg-yellow-50" },
+                  { text: "Suporte Exclusivo via E-mail", color: "text-blue-500", bg: "bg-blue-50" }
                 ].map((item, i) => (
-                  <div key={i} className="flex items-center gap-3">
-                    <div className="bg-pink-100 text-pink-500 p-1 rounded-full">
-                      <Check size={16} strokeWidth={3} />
+                  <div key={i} className="flex items-center gap-3.5">
+                    <div className={`${item.bg} ${item.color} p-1.5 rounded-full`}>
+                      <Check size={14} strokeWidth={4} />
                     </div>
-                    <span className="font-bold text-gray-700 text-[13px] leading-tight text-left">{item}</span>
+                    <span className="font-bold text-slate-700 text-[13px] leading-tight text-left">{item.text}</span>
                   </div>
                 ))}
               </div>
 
               <button 
                 onClick={(e) => handleFinalCheckout(e, 39.90)}
-                className="block w-full bg-pink-500 text-white font-black py-6 rounded-[24px] shadow-lg animate-cta text-xl uppercase leading-tight px-4 text-center mb-6"
+                className="block w-full bg-yellow-400 text-black font-black py-7 rounded-[30px] shadow-[0_15px_0_0_#ca8a04] active:translate-y-1 active:shadow-[0_10px_0_0_#ca8a04] transition-all animate-cta text-xl uppercase leading-tight px-4 text-center mb-8 border-2 border-black"
               >
                 QUERO MEU ACESSO AGORA
               </button>
 
-              <div className="flex justify-center items-center gap-6 text-gray-400 font-black text-[11px] uppercase tracking-wider">
+              <div className="flex justify-center items-center gap-6 text-slate-400 font-black text-[11px] uppercase tracking-wider">
                 <div className="flex items-center gap-1.5"><ShieldCheck size={16} /> SEGURO</div>
-                <div className="flex items-center gap-1.5"><Star size={16} className="text-yellow-400" fill="currentColor" /> 4.9/5 ESTRELAS</div>
+                <div className="flex items-center gap-1.5"><Star size={16} className="text-yellow-500" fill="currentColor" /> 4.9/5 ESTRELAS</div>
               </div>
             </div>
           </div>
         </section>
 
         {/* FAQ & Guarantee */}
-        <section className="p-10 space-y-8 bg-sky-50 rounded-[50px] mx-4 mb-10 border-4 border-white">
+        <section className="p-10 space-y-8 bg-sky-50/50 rounded-[50px] mx-4 mb-10 border-4 border-white shadow-inner">
           <div className="text-center space-y-4">
-            <ShieldCheck size={56} className="text-pink-500 mx-auto" />
-            <h3 className="font-black text-xl">Sua Satisfação é Prioridade</h3>
-            <p className="text-sm text-gray-500 font-bold px-4">Use o material por 7 dias. Se não sentir que sua rotina mudou, devolvemos seu dinheiro!</p>
+            <div className="bg-blue-600/10 w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-2 border-2 border-blue-100">
+               <ShieldCheck size={56} className="text-blue-600" />
+            </div>
+            <h3 className="font-black text-2xl text-slate-900 tracking-tight">Sua Satisfação é Prioridade</h3>
+            <p className="text-[14px] text-slate-500 font-bold px-4 leading-relaxed">Use o material por 7 dias. Se não sentir que sua rotina mudou, devolvemos 100% do seu dinheiro!</p>
           </div>
-          <div className="space-y-2">
+          <div className="space-y-3">
             <FAQItem q="O que é PLR?" a="PLR significa Private Label Rights. Isso quer dizer que você tem permissão legal para editar, personalizar e até revender os materiais como se fossem seus, ficando com 100% do lucro." />
             <FAQItem q="Como recebo o acesso?" a="Imediatamente após a confirmação do pagamento, você receberá um e-mail com as instruções para acessar o Drive no Google Drive." />
             <FAQItem q="O acesso é vitalício?" a="Sim! Uma vez adquirido, o acesso é seu para sempre, incluindo todas as atualizações futuras que fizermos no acervo." />
