@@ -363,13 +363,13 @@ const App: React.FC = () => {
             <div className="p-10 bg-white">
               <div className="text-center mb-10">
                  <div className="flex items-center justify-center gap-3 mb-2">
-                    <span className="text-slate-300 line-through text-lg font-bold">R$ 197,00</span>
-                    <span className="bg-green-100 text-green-700 px-4 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-wider">ECONOMIZE 95%</span>
+                    <span className="text-slate-300 line-through text-lg font-bold">R$ 57,00</span>
+                    <span className="bg-green-100 text-green-700 px-4 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-wider">ECONOMIZE 65%</span>
                  </div>
                  <p className="text-blue-600 text-[13px] font-black uppercase tracking-[3px] mb-2">POR APENAS</p>
                  <div className="flex items-center justify-center text-slate-900 font-black">
                    <span className="text-4xl mr-2 mt-[-15px]">R$</span>
-                   <span className="text-8xl tracking-tighter leading-none">10,<span className="text-5xl align-top pt-2">00</span></span>
+                   <span className="text-8xl tracking-tighter leading-none">19,<span className="text-5xl align-top pt-2">90</span></span>
                  </div>
                  <p className="text-slate-400 text-[11px] font-bold mt-5 uppercase tracking-[0.2em]">ACESSO VITALÍCIO • DIREITO DE REVENDA</p>
               </div>
@@ -393,7 +393,7 @@ const App: React.FC = () => {
               </div>
 
               <button 
-                onClick={(e) => handleFinalCheckout(e, 10.00)}
+                onClick={(e) => handleFinalCheckout(e, 19.90)}
                 className="block w-full bg-yellow-400 text-black font-black py-7 rounded-[30px] shadow-[0_15px_0_0_#ca8a04] active:translate-y-1 active:shadow-[0_10px_0_0_#ca8a04] transition-all animate-cta text-xl uppercase leading-tight px-4 text-center mb-8 border-2 border-black"
               >
                 QUERO MEU ACESSO AGORA
