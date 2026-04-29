@@ -117,7 +117,7 @@ const StickyCTA: React.FC<{ onAnchorClick: (e: React.MouseEvent) => void }> = ({
         className="w-full bg-gradient-to-r from-blue-600 to-blue-500 text-white font-black py-5 rounded-[28px] shadow-lg animate-cta flex items-center justify-center gap-2 text-lg uppercase tracking-tight border-b-4 border-blue-800"
       >
         <Zap size={20} fill="currentColor" />
-        GARANTIR MEU MATERIAL AGORA
+        GARANTIR MEU ACESSO AGORA
       </button>
     </div>
   );
@@ -191,7 +191,7 @@ const App: React.FC = () => {
         {/* Urgency Header */}
         <div className="bg-yellow-400 text-black py-2.5 px-4 text-[10px] font-black text-center flex justify-center items-center gap-2 uppercase tracking-widest shadow-md">
           <Zap size={12} fill="currentColor" className="animate-pulse" />
-          Aproveite: {vagas} licenças PLR com desconto exclusivo hoje!
+          Aproveite: {vagas} kits com desconto exclusivo hoje!
         </div>
 
         {/* Hero */}
@@ -201,17 +201,25 @@ const App: React.FC = () => {
             <Sparkles size={14} fill="currentColor" /> O Aliado que Todo Educador Merece <Sparkles size={14} fill="currentColor" />
           </div>
           <h1 className="text-3xl font-black text-slate-900 leading-[1.1] tracking-tight">
-            Chega de Noites sem Dormir Planejando Aulas! Tenha <span className="text-red-500 underline decoration-yellow-400 decoration-8 underline-offset-4">25.000 Materiais</span> Prontos! ✨
+            Ensinar Geometria Ficou Muito Mais Fácil! Tenha o <span className="text-red-500 underline decoration-yellow-400 decoration-8 underline-offset-4">Kit de Sólidos</span> Pronto! ✨
           </h1>
           <p className="text-slate-600 text-[15px] leading-relaxed font-bold italic px-4">
-            Resgate sua paz e seu tempo livre. Um acervo completo de atividades, jogos e planos de aula para você usar, editar ou até revender como se fossem seus! 📚🎨
+            Resgate sua paz. Conteúdo completo de Sólidos Geométricos para usar, montar e engajar seus alunos com materiais práticos em PDF! 📚🧩
           </p>
 
           <div className="relative pt-4 px-2">
             <div className="absolute -top-1 -left-1 z-10 bg-green-500 text-white text-[10px] font-black px-5 py-2.5 rounded-[20px] rotate-[-4deg] shadow-xl flex items-center gap-1.5 border-2 border-white">
-              <Cloud size={14} fill="white" /> ACESSO VITALÍCIO AO DRIVE
+              <Cloud size={14} fill="white" /> ACESSO IMEDIATO EM PDF
             </div>
-            <img src="https://iili.io/BgZ8mfn.png" alt="Drive Pedagógico" className="rounded-[40px] shadow-[0_20px_50px_rgba(0,0,0,0.1)] border-[8px] border-white drop-shadow-xl" />
+            <iframe 
+              className="w-full aspect-[9/16] rounded-[40px] shadow-[0_20px_50px_rgba(0,0,0,0.1)] border-[8px] border-white drop-shadow-xl"
+              src="https://www.youtube.com/embed/W6YtUSTHuJA"
+              title="VSL"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerPolicy="strict-origin-when-cross-origin"
+              allowFullScreen
+            />
           </div>
 
           <div className="flex flex-col items-center gap-5 pt-4">
@@ -232,31 +240,26 @@ const App: React.FC = () => {
 
         <WavyDividerBottom color="#F8FAFC" />
 
-        {/* O que você vai receber - GRID DETALHADA */}
+        {/* Nossos Produtos */}
         <section className="p-8 space-y-8 bg-[#F8FAFC] relative">
           <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(#e2e8f0_1px,transparent_1px)] [background-size:20px_20px] opacity-30 -z-10" />
           <div className="text-center space-y-2">
-            <h2 className="text-2xl font-black text-slate-900 pt-5">O que te espera no Drive:</h2>
-            <p className="text-xs text-slate-500 font-bold uppercase tracking-widest">Acervo completo organizado</p>
+            <h2 className="text-2xl font-black text-slate-900 pt-5">Nossos Materiais Exclusivos:</h2>
           </div>
           <div className="grid grid-cols-2 gap-4">
             {[
-              { t: "Atividades Prontas", i: "📝", c: "bg-blue-50", b: "border-blue-100" },
-              { t: "Planos de Aula", i: "📅", c: "bg-green-50", b: "border-green-100" },
-              { t: "Jogos Pedagógicos", i: "🎲", c: "bg-yellow-400/20", b: "border-yellow-400" },
-              { t: "Cartilhas de Alfabetização", i: "🔤", c: "bg-red-50", b: "border-red-100" },
-              { t: "Recursos Especiais", i: "🧩", c: "bg-sky-50", b: "border-sky-100" },
-              { t: "Capas de Caderno", i: "📒", c: "bg-yellow-400/20", b: "border-yellow-400" },
-              { t: "Planners para Profs", i: "📑", c: "bg-emerald-50", b: "border-emerald-100" },
-              { t: "Desenhos para Colorir", i: "🖍️", c: "bg-indigo-50", b: "border-indigo-100" },
-              { t: "Painéis Decorativos", i: "🖼️", c: "bg-blue-50", b: "border-blue-100" },
-              { t: "Dinâmicas Criativas", i: "🏃", c: "bg-rose-50", b: "border-rose-100" },
-              { t: "Certificados para Alunos", i: "🏆", c: "bg-yellow-400/30", b: "border-yellow-400" },
-              { t: "Material PLR (Revenda)", i: "💰", c: "bg-green-50", b: "border-green-100" }
+              { t: "Cartazes (A4)", i: "📄" },
+              { t: "Modelos p/ Montar", i: "📦" },
+              { t: "Atividades Fixação", i: "✏️" },
+              { t: "Guia Professor", i: "📖" },
+              { t: "Visão 3D", i: "🧊" },
+              { t: "Jogo Caça-Sólidos", i: "🎲" },
+              { t: "Plano BNCC", i: "📌" },
+              { t: "Bônus Especial", i: "🎁" }
             ].map((item, i) => (
-              <div key={i} className={`${item.c} border-2 ${item.b} p-5 rounded-[32px] shadow-sm text-center flex flex-col items-center justify-center hover:scale-105 transition-all duration-300`}>
-                <div className="text-4xl mb-2 drop-shadow-sm">{item.i}</div>
-                <h4 className="text-[12px] font-black text-slate-800 leading-tight">{item.t}</h4>
+              <div key={i} className="bg-white border text-slate-800 border-slate-100 p-6 rounded-[24px] shadow-sm hover:shadow-lg hover:border-yellow-200 transition-all duration-300 transform hover:-translate-y-1 text-center flex flex-col items-center justify-center group">
+                <div className="text-4xl mb-3 p-3 bg-yellow-50 rounded-2xl group-hover:scale-110 transition-transform">{item.i}</div>
+                <h4 className="text-[11px] font-black leading-tight uppercase tracking-wide text-slate-700">{item.t}</h4>
               </div>
             ))}
           </div>
@@ -273,27 +276,26 @@ const App: React.FC = () => {
                 Dê um Fim ao Cansaço e <span className="text-green-600 underline decoration-yellow-400 decoration-8 underline-offset-4">Ganhe Liberdade</span>!
               </h2>
            </div>
-           
            <div className="space-y-4">
-              {[
+               {[
                 { 
-                  t: "Economize Horas de Planejamento", 
-                  d: "Pare de passar o domingo planejando o que fazer na segunda. Abra o Drive, escolha e imprima.", 
-                  i: <Clock size={22}/> 
+                  t: "Pronto para Imprimir", 
+                  d: "Tudo em PDF disponível para impressão imediata e fácil uso.", 
+                  i: <Printer size={22}/> 
                 },
                 { 
                   t: "Aulas Criativas e Sem Estresse", 
-                  d: "Material testado e aprovado. Chegue na sala com a segurança de quem tem o melhor conteúdo nas mãos.", 
+                  d: "Material testado e aprovado. Engaje seus alunos de forma prática.", 
                   i: <Heart size={22} fill="currentColor"/> 
                 },
                 { 
-                  t: "Organização que Traz Paz", 
-                  d: "Tudo separado por pastas organizadas. Nunca mais perca tempo buscando arquivos no computador.", 
+                  t: "Alinhado à BNCC", 
+                  d: "Atividades focadas nas competências necessárias para o ensino fundamental.", 
                   i: <BookOpen size={22}/> 
                 },
                 { 
-                  t: "Renda Extra com PLR", 
-                  d: "Você tem o direito de revender esses materiais para outros professores e ficar com 100% do lucro.", 
+                  t: "Acesso no WhatsApp", 
+                  d: "Receba seu material rapidamente após a compra.", 
                   i: <Zap size={22}/> 
                 }
               ].map((item, idx) => {
@@ -341,67 +343,92 @@ const App: React.FC = () => {
           </div>
         </section>
 
-        <section ref={offerRef} className="p-4 space-y-10 pb-20 scroll-mt-20">
+        <section ref={offerRef} className="p-4 space-y-8 pb-20 scroll-mt-20">
           <div className="text-center space-y-3">
              <h2 className="text-3xl font-black text-slate-900 leading-tight uppercase tracking-tight">
-               GARANTA SEU ACESSO <span className="text-red-500 underline decoration-yellow-400 decoration-8 underline-offset-4">COMPLETO</span> AGORA!
+               GARANTA SEUS MATERIAIS <br/><span className="text-red-500 underline decoration-yellow-400 decoration-8 underline-offset-4">AGORA!</span>
              </h2>
-             <div className="flex items-center justify-center gap-2 text-black font-black text-[11px] uppercase tracking-widest bg-yellow-400 w-fit mx-auto px-6 py-2.5 rounded-full border-2 border-black shadow-md">
-                <Sparkles size={14} fill="currentColor" /> Oferta Especial por Tempo Limitado <Sparkles size={14} fill="currentColor" />
-             </div>
           </div>
 
-          {/* Plano Completo - ÚNICA OPÇÃO */}
-          <div className="bg-white rounded-[45px] shadow-[0_25px_60px_rgba(0,0,0,0.15)] overflow-hidden border-2 border-yellow-400 relative max-w-[420px] mx-auto">
-            <div className="bg-yellow-400 p-10 text-center text-black relative border-b-2 border-black">
-                <div className="absolute top-5 right-5 bg-red-600 text-white text-[10px] font-black px-5 py-2 rounded-full shadow-lg z-10 border-2 border-white animate-pulse">
-                   ÚLTIMAS VAGAS
+          <div className="grid grid-cols-1 gap-6 max-w-[420px] mx-auto">
+            {/* Card 1: Kit Sólidos */}
+            <div className="bg-white rounded-[40px] shadow-lg border-2 border-slate-100 overflow-hidden relative flex flex-col">
+                <div className="p-8 text-center border-b border-dashed border-slate-200 flex-grow">
+                    <img src="https://iili.io/BislbnV.png" alt="Sólidos" className="w-32 h-32 mx-auto mb-4 rounded-2xl object-cover" />
+                    <h3 className="font-black text-lg text-slate-900 uppercase">ATIVIDADES COM SÓLIDOS GEOMÉTRICOS</h3>
+                    <p className="text-[12px] font-bold text-slate-400 mt-1">De R$ 29,00 Por Apenas:</p>
+                    <p className="text-3xl text-green-600 font-black mt-1">R$ 14,90</p>
                 </div>
-                <h3 className="font-black text-2xl leading-tight uppercase tracking-widest">DRIVE COMPLETO 25K+</h3>
-                <p className="text-[13px] font-black mt-2 opacity-100 uppercase tracking-tighter">TODO O ACERVO + BÔNUS + PLR</p>
+                <div className="p-8 bg-white">
+                    <ul className="space-y-3 mb-8">
+                        {[
+                            "7 mini cartazes em A4 com explicações visuais",
+                            "5 modelos de sólidos geométricos para montar",
+                            "Atividade completa para o caderno para fixar",
+                            "Tudo em PDF — baixe e imprima quando quiser",
+                            "Entregue direto no seu WhatsApp"
+                        ].map((item, i) => (
+                            <li key={i} className="flex gap-2 text-[12px] font-bold text-slate-700">
+                                <Check size={16} className="text-green-500 shrink-0" />
+                                {item}
+                            </li>
+                        ))}
+                    </ul>
+                    <button 
+                        onClick={(e) => handleFinalCheckout(e, 14.90)}
+                        className="w-full bg-green-500 text-white font-black py-4 rounded-xl shadow-lg shadow-green-200 active:translate-y-1 transition-all uppercase text-sm"
+                    >
+                        GARANTIR MEU ACESSO AGORA
+                    </button>
+                </div>
             </div>
-            <div className="p-10 bg-white">
-              <div className="text-center mb-10">
-                 <div className="flex items-center justify-center gap-3 mb-2">
-                    <span className="text-slate-300 line-through text-lg font-bold">R$ 57,00</span>
-                    <span className="bg-green-100 text-green-700 px-4 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-wider">ECONOMIZE 65%</span>
-                 </div>
-                 <p className="text-blue-600 text-[13px] font-black uppercase tracking-[3px] mb-2">POR APENAS</p>
-                 <div className="flex items-center justify-center text-slate-900 font-black">
-                   <span className="text-4xl mr-2 mt-[-15px]">R$</span>
-                   <span className="text-8xl tracking-tighter leading-none">19,<span className="text-5xl align-top pt-2">90</span></span>
-                 </div>
-                 <p className="text-slate-400 text-[11px] font-bold mt-5 uppercase tracking-[0.2em]">ACESSO VITALÍCIO • DIREITO DE REVENDA</p>
-              </div>
 
-              <div className="space-y-4 mb-10">
-                {[
-                  { text: "Mais de 25.000 Materiais Exclusivos", color: "text-blue-500", bg: "bg-blue-50" },
-                  { text: "Direito de Revenda (PLR) Incluso", color: "text-green-500", bg: "bg-green-50" },
-                  { text: "Acesso Imediato e Vitalício", color: "text-red-500", bg: "bg-red-50" },
-                  { text: "Bônus: 100 Planners Editáveis", color: "text-orange-500", bg: "bg-orange-50" },
-                  { text: "Bônus: Cartilhas de Caligrafia Premium", color: "text-yellow-600", bg: "bg-yellow-50" },
-                  { text: "Suporte Exclusivo via E-mail", color: "text-blue-500", bg: "bg-blue-50" }
-                ].map((item, i) => (
-                  <div key={i} className="flex items-center gap-3.5">
-                    <div className={`${item.bg} ${item.color} p-1.5 rounded-full`}>
-                      <Check size={14} strokeWidth={4} />
-                    </div>
-                    <span className="font-bold text-slate-700 text-[13px] leading-tight text-left">{item.text}</span>
+            {/* Card 2: Combo Premium */}
+            <div className="bg-white rounded-[40px] shadow-[0_25px_60px_rgba(0,0,0,0.15)] overflow-hidden border-2 border-yellow-400 relative flex flex-col">
+              <div className="bg-yellow-400 p-8 text-center text-black border-b-2 border-black relative">
+                  <div className="absolute top-2 left-1/2 -translate-x-1/2 bg-orange-600 text-white text-[10px] font-black px-4 py-1 rounded-full shadow-md uppercase tracking-wider whitespace-nowrap">
+                      ÚLTIMAS VAGAS
                   </div>
-                ))}
+                  <h3 className="font-black text-2xl leading-tight uppercase tracking-tight">DRIVE COMPLETO 25K+</h3>
+                  <p className="text-[13px] font-black mt-1 uppercase tracking-tighter">TODO O ACERVO + BÔNUS + PLR</p>
               </div>
-
-              <button 
-                onClick={(e) => handleFinalCheckout(e, 19.90)}
-                className="block w-full bg-yellow-400 text-black font-black py-7 rounded-[30px] shadow-[0_15px_0_0_#ca8a04] active:translate-y-1 active:shadow-[0_10px_0_0_#ca8a04] transition-all animate-cta text-xl uppercase leading-tight px-4 text-center mb-8 border-2 border-black"
-              >
-                QUERO MEU ACESSO AGORA
-              </button>
-
-              <div className="flex justify-center items-center gap-6 text-slate-400 font-black text-[11px] uppercase tracking-wider">
-                <div className="flex items-center gap-1.5"><ShieldCheck size={16} /> SEGURO</div>
-                <div className="flex items-center gap-1.5"><Star size={16} className="text-yellow-500" fill="currentColor" /> 4.9/5 ESTRELAS</div>
+              <div className="p-8 bg-white flex-grow">
+                  <div className="text-center mb-8">
+                     <div className="flex items-center justify-center gap-3 mb-2">
+                        <span className="text-slate-300 line-through text-lg font-bold">R$ 57,00</span>
+                        <span className="bg-green-100 text-green-700 px-4 py-1 rounded-lg text-[10px] font-black uppercase tracking-wider">ECONOMIZE 65%</span>
+                     </div>
+                     <p className="text-blue-600 text-[13px] font-black uppercase tracking-[3px] mb-2">POR APENAS</p>
+                     <div className="flex items-center justify-center text-slate-900 font-black">
+                       <span className="text-4xl mr-2 mt-[-15px]">R$</span>
+                       <span className="text-6xl tracking-tighter leading-none">19,<span className="text-3xl align-top pt-2">90</span></span>
+                     </div>
+                     <p className="text-slate-400 text-[11px] font-bold mt-4 uppercase tracking-[0.1em]">ACESSO VITALÍCIO • DIREITO DE REVENDA</p>
+                  </div>
+                  <ul className="space-y-4 mb-8">
+                      {[
+                          "Mais de 25.000 Materiais Exclusivos",
+                          "Direito de Revenda (PLR) Incluso",
+                          "Acesso Imediato e Vitalício",
+                          "Bônus: 100 Planners Editáveis",
+                          "Bônus: Cartilhas de Caligrafia Premium"
+                      ].map((item, i) => (
+                          <li key={i} className="flex gap-3 text-[13px] font-bold text-slate-700 items-center">
+                              {i === 0 && <Check size={18} className="text-blue-500 shrink-0 bg-blue-50 p-0.5 rounded-full" />}
+                              {i === 1 && <Check size={18} className="text-green-500 shrink-0 bg-green-50 p-0.5 rounded-full" />}
+                              {i === 2 && <Check size={18} className="text-red-500 shrink-0 bg-red-50 p-0.5 rounded-full" />}
+                              {i === 3 && <Check size={18} className="text-orange-500 shrink-0 bg-orange-50 p-0.5 rounded-full" />}
+                              {i === 4 && <Check size={18} className="text-yellow-500 shrink-0 bg-yellow-50 p-0.5 rounded-full" />}
+                              {item}
+                          </li>
+                      ))}
+                  </ul>
+                  <button 
+                      onClick={(e) => handleFinalCheckout(e, 19.90)}
+                      className="w-full bg-gradient-to-r from-blue-600 to-blue-500 text-white font-black py-5 rounded-[20px] shadow-lg shadow-blue-200 active:translate-y-1 transition-all uppercase text-sm border-2 border-black"
+                  >
+                      GARANTIR MEU MATERIAL AGORA
+                  </button>
               </div>
             </div>
           </div>
