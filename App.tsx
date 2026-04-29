@@ -407,18 +407,19 @@ const App: React.FC = () => {
                   </div>
                   <ul className="space-y-4 mb-8">
                       {[
+                          "7 mini cartazes em A4 com explicações visuais",
+                          "5 modelos de sólidos geométricos para montar",
+                          "Atividade completa para o caderno para fixar",
                           "Mais de 25.000 Materiais Exclusivos",
                           "Direito de Revenda (PLR) Incluso",
                           "Acesso Imediato e Vitalício",
                           "Bônus: 100 Planners Editáveis",
-                          "Bônus: Cartilhas de Caligrafia Premium"
+                          "Bônus: Cartilhas de Caligrafia Premium",
+                          "Tudo em PDF — baixe e imprima quando quiser",
+                          "Entregue direto no seu WhatsApp"
                       ].map((item, i) => (
                           <li key={i} className="flex gap-3 text-[13px] font-bold text-slate-700 items-center">
-                              {i === 0 && <Check size={18} className="text-blue-500 shrink-0 bg-blue-50 p-0.5 rounded-full" />}
-                              {i === 1 && <Check size={18} className="text-green-500 shrink-0 bg-green-50 p-0.5 rounded-full" />}
-                              {i === 2 && <Check size={18} className="text-red-500 shrink-0 bg-red-50 p-0.5 rounded-full" />}
-                              {i === 3 && <Check size={18} className="text-orange-500 shrink-0 bg-orange-50 p-0.5 rounded-full" />}
-                              {i === 4 && <Check size={18} className="text-yellow-500 shrink-0 bg-yellow-50 p-0.5 rounded-full" />}
+                              <Check size={18} className="text-green-500 shrink-0 bg-green-50 p-0.5 rounded-full" />
                               {item}
                           </li>
                       ))}
