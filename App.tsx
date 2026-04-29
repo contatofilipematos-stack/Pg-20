@@ -232,7 +232,7 @@ const App: React.FC = () => {
               <span className="text-[10px] opacity-80 mt-1 uppercase tracking-widest font-black">Liberação Imediata via E-mail</span>
             </button>
             <div className="flex items-center gap-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">
-              <span className="flex items-center gap-2"><Zap size={14} className="text-blue-500" /> Use ou Revenda</span>
+              <span className="flex items-center gap-2"><Zap size={14} className="text-blue-500" /> Uso Profissional</span>
               <span className="flex items-center gap-2"><Lock size={14} className="text-green-500" /> 100% Seguro</span>
             </div>
           </div>
@@ -403,7 +403,7 @@ const App: React.FC = () => {
                        <span className="text-4xl mr-2 mt-[-15px]">R$</span>
                        <span className="text-6xl tracking-tighter leading-none">19,<span className="text-3xl align-top pt-2">90</span></span>
                      </div>
-                     <p className="text-slate-400 text-[11px] font-bold mt-4 uppercase tracking-[0.1em]">ACESSO VITALÍCIO • DIREITO DE REVENDA</p>
+                     <p className="text-slate-400 text-[11px] font-bold mt-4 uppercase tracking-[0.1em]">ACESSO VITALÍCIO</p>
                   </div>
                   <ul className="space-y-4 mb-8">
                       {[
@@ -411,7 +411,6 @@ const App: React.FC = () => {
                           "5 modelos de sólidos geométricos para montar",
                           "Atividade completa para o caderno para fixar",
                           "Mais de 25.000 Materiais Exclusivos",
-                          "Direito de Revenda (PLR) Incluso",
                           "Acesso Imediato e Vitalício",
                           "Bônus: 100 Planners Editáveis",
                           "Bônus: Cartilhas de Caligrafia Premium",
@@ -445,7 +444,7 @@ const App: React.FC = () => {
             <p className="text-[14px] text-slate-500 font-bold px-4 leading-relaxed">Use o material por 7 dias. Se não sentir que sua rotina mudou, devolvemos 100% do seu dinheiro!</p>
           </div>
           <div className="space-y-3">
-            <FAQItem q="O que é PLR?" a="PLR significa Private Label Rights. Isso quer dizer que você tem permissão legal para editar, personalizar e até revender os materiais como se fossem seus, ficando com 100% do lucro." />
+            <FAQItem q="Como funciona o acesso?" a="Imediatamente após a confirmação do pagamento, você receberá um e-mail com as instruções para acessar todo o Drive com mais de 25.000 materiais pedagógicos organizados por categorias." />
             <FAQItem q="Como recebo o acesso?" a="Imediatamente após a confirmação do pagamento, você receberá um e-mail com as instruções para acessar o Drive no Google Drive." />
             <FAQItem q="O acesso é vitalício?" a="Sim! Uma vez adquirido, o acesso é seu para sempre, incluindo todas as atualizações futuras que fizermos no acervo." />
           </div>
