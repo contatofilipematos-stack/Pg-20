@@ -389,7 +389,7 @@ const App: React.FC = () => {
                   <div className="absolute top-2 left-1/2 -translate-x-1/2 bg-orange-600 text-white text-[10px] font-black px-4 py-1 rounded-full shadow-md uppercase tracking-wider whitespace-nowrap">
                       ÚLTIMAS VAGAS
                   </div>
-                  <h3 className="font-black text-2xl leading-tight uppercase tracking-tight">DRIVE COMPLETO 25K+</h3>
+                  <h3 className="font-black text-2xl leading-tight uppercase tracking-tight">MEGA PACK MATEMÁTICA E BÔNUS</h3>
                   <p className="text-[13px] font-black mt-1 uppercase tracking-tighter">TODO O ACERVO + BÔNUS + PLR</p>
               </div>
               <div className="p-8 bg-white flex-grow">
