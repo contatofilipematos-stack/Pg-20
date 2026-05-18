@@ -90,7 +90,7 @@ const CountdownTimer: React.FC = () => {
   );
 };
 
-const StickyCTA: React.FC<{ onAnchorClick: (e: React.MouseEvent) => void }> = ({ onAnchorClick }) => {
+const StickyCTA: React.FC<{ onAnchorClick: () => void }> = ({ onAnchorClick }) => {
   const [isVisible, setIsVisible] = useState(false);
   useEffect(() => {
     const handleScroll = () => setIsVisible(window.scrollY > 800);
@@ -103,7 +103,7 @@ const StickyCTA: React.FC<{ onAnchorClick: (e: React.MouseEvent) => void }> = ({
   return (
     <div className="fixed bottom-0 left-0 right-0 p-4 z-[100] glass-effect border-t-2 border-pink-100 max-w-[480px] mx-auto animate-fade-in rounded-t-[32px] shadow-[0_-10px_40px_rgba(0,0,0,0.1)]">
       <button 
-        onClick={onAnchorClick}
+        onClick={() => onAnchorClick()}
         className="w-full bg-gradient-to-r from-pink-500 to-pink-600 text-white font-black py-4.5 rounded-[24px] shadow-xl animate-cta flex items-center justify-center gap-2 text-lg uppercase"
       >
         <Heart size={20} fill="currentColor" />
@@ -128,8 +128,8 @@ const Carousel: React.FC<{ images: string[] }> = ({ images }) => {
             </div>
           ))}
         </div>
-        <button onClick={prev} className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-pink-500/90 text-white shadow-lg flex items-center justify-center"><ChevronLeft size={24}/></button>
-        <button onClick={next} className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-pink-500/90 text-white shadow-lg flex items-center justify-center"><ChevronRight size={24}/></button>
+        <button onClick={() => prev()} className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-pink-500/90 text-white shadow-lg flex items-center justify-center"><ChevronLeft size={24}/></button>
+        <button onClick={() => next()} className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-pink-500/90 text-white shadow-lg flex items-center justify-center"><ChevronRight size={24}/></button>
         <div className="absolute top-6 right-6 pdf-badge shadow-xl">PDF FOFINHO</div>
       </div>
       <div className="flex justify-center gap-2 mt-4">
@@ -208,7 +208,7 @@ const App: React.FC = () => {
           <div className="flex flex-col items-center gap-5 pt-4">
             <CountdownTimer />
             <button 
-              onClick={scrollToOffer}
+              onClick={() => scrollToOffer()}
               className="w-full bg-gradient-to-r from-pink-500 to-pink-600 text-white text-xl font-black py-5 rounded-[30px] shadow-2xl animate-cta flex flex-col items-center border-b-4 border-pink-800/20"
             >
               <span className="flex items-center gap-2 uppercase">QUERO MEU PDF AGORA <ArrowRight size={22} /></span>
