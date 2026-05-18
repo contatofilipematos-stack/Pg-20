@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect, useRef } from 'react';
+import { redirectWithParams } from './redirect';
 import { 
   Check, 
   ArrowRight, 
@@ -57,23 +58,6 @@ const TESTIMONIALS = [
 ];
 
 const CHECKOUT_URL = "https://pay.lowify.com.br/checkout?product_id=jlUfor";
-
-const trackFBEvent = (eventName: string, params?: object) => {
-  if (typeof window !== 'undefined' && (window as any).fbq) {
-    if (params && typeof params === 'object') {
-      // Very strict sanitization to ensure only plain data is passed
-      const cleanParams: any = {};
-      for (const [key, value] of Object.entries(params)) {
-        if (typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean' || value === null) {
-          cleanParams[key] = value;
-        }
-      }
-      (window as any).fbq('track', eventName, cleanParams);
-    } else {
-      (window as any).fbq('track', eventName);
-    }
-  }
-};
 
 // --- Sub-Components ---
 
@@ -183,14 +167,13 @@ const App: React.FC = () => {
 
   const scrollToOffer = (e?: React.MouseEvent) => {
     if (e) e.preventDefault();
-    trackFBEvent('InitiateCheckout');
     if (offerRef.current) {
       offerRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   };
 
   const handleFinalCheckout = () => {
-    trackFBEvent('Purchase', { value: 10.0, currency: 'BRL' });
+    redirectWithParams(CHECKOUT_URL);
   };
 
   return (
