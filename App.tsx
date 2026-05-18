@@ -9,6 +9,8 @@ import {
   Clock,
   Lock,
   Printer,
+  ChevronLeft,
+  ChevronRight,
   Heart,
   Palette,
   Cloud,
@@ -23,45 +25,55 @@ import {
 } from 'lucide-react';
 
 // --- Data ---
+const CAROUSEL_1 = [
+  "https://i.ibb.co/h5cmvwg/1000141289.png",
+  "https://i.ibb.co/HLnd6gNX/1000141290.png",
+  "https://i.ibb.co/RKGn5tW/1000141294.png",
+  "https://i.ibb.co/qQP2KZ1/1000141306.png"
+];
+
 const TESTIMONIALS = [
   {
-    name: "Débora S.",
-    role: "Professora de Curitiba - PR",
-    text: "Minha vida mudou! Eu chegava em casa exausta e ainda tinha que planejar aula. Agora, com o Drive, escolho a atividade, imprimo e pronto. Sobra tempo até para brincar com meus filhos.",
-    city: "Curitiba - PR",
+    name: "Ana Paula R.",
+    role: "Catequista há 5 anos",
+    text: "Gente, esse material é surreal! Eu perdia horas no Pinterest buscando o que fazer. Agora meus encontros são os mais esperados da paróquia. As crianças amam os desenhos fofinhos!",
+    city: "São Paulo - SP",
     avatar: "https://iili.io/ftqH97R.jpg"
   },
   {
-    name: "Cláudia M.",
-    role: "Educação Infantil há 12 anos",
-    text: "O material é de uma qualidade absurda. As crianças ficam hipnotizadas com os desenhos. Além disso, usei alguns materiais para criar meu próprio mini-curso e já estou vendendo!",
-    city: "Salvador - BA",
+    name: "Maria Luísa S.",
+    role: "Coordenadora de Catequese",
+    text: "Comprei para as catequistas da minha comunidade e foi a melhor escolha. Os Mandamentos em Quadrinhos facilitaram muito a explicação. É didático e lindo ao mesmo tempo.",
+    city: "Curitiba - PR",
     avatar: "https://iili.io/ftq9ydv.jpg"
   },
   {
-    name: "Renata F.",
-    role: "Recém-formada e Encantada",
-    text: "Eu estava perdida no começo da carreira. Este acervo foi meu bote salva-vidas. Planos de aula prontinhos e atividades que realmente engajam os pequenos. Melhor investimento que fiz.",
-    city: "Porto Alegre - RS",
+    name: "Luciana M.",
+    role: "Catequista de Primeira Eucaristia",
+    text: "O brilho nos olhos dos pequenos quando entrego as atividades é impagável. O estilo Bobbie Goods católico é uma genialidade. Recomendo de olhos fechados!",
+    city: "Belo Horizonte - MG",
     avatar: "https://iili.io/ftq9mrJ.jpg"
   }
 ];
 
-const CHECKOUT_URL = "https://pay.lowify.com.br/checkout?product_id=bLcXUO";
+const CHECKOUT_URL = "https://pay.lowify.com.br/checkout?product_id=jlUfor";
 
-// --- Global Fix for Circular JSON Errors in Third-Party Trackers ---
-if (typeof window !== 'undefined') {
-  if (!(HTMLElement.prototype as any).toJSON) {
-    (HTMLElement.prototype as any).toJSON = function() {
-      return {
-        tagName: this.tagName,
-        id: this.id,
-        className: this.className,
-        type: (this as any).type
-      };
-    };
+const trackFBEvent = (eventName: string, params?: object) => {
+  if (typeof window !== 'undefined' && (window as any).fbq) {
+    if (params && typeof params === 'object') {
+      // Very strict sanitization to ensure only plain data is passed
+      const cleanParams: any = {};
+      for (const [key, value] of Object.entries(params)) {
+        if (typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean' || value === null) {
+          cleanParams[key] = value;
+        }
+      }
+      (window as any).fbq('track', eventName, cleanParams);
+    } else {
+      (window as any).fbq('track', eventName);
+    }
   }
-}
+};
 
 // --- Sub-Components ---
 
@@ -87,8 +99,8 @@ const CountdownTimer: React.FC = () => {
   }, []);
 
   return (
-    <div className="flex items-center gap-2 text-blue-700 font-bold text-[11px] bg-blue-50 px-5 py-2.5 rounded-full border-2 border-blue-100/50 uppercase tracking-wide">
-      <Clock size={16} className="text-red-500 shrink-0" />
+    <div className="flex items-center gap-2 text-pink-600 font-black text-xs bg-pink-50 px-5 py-2.5 rounded-full border-2 border-pink-100 uppercase tracking-tight">
+      <Clock size={16} />
       <span>Oferta por tempo limitado: {String(timeLeft.minutes).padStart(2, '0')}:{String(timeLeft.seconds).padStart(2, '0')}</span>
     </div>
   );
@@ -105,20 +117,42 @@ const StickyCTA: React.FC<{ onAnchorClick: (e: React.MouseEvent) => void }> = ({
   if (!isVisible) return null;
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 p-4 z-[100] glass-effect border-t-2 border-slate-100 max-w-[480px] mx-auto animate-fade-in rounded-t-[40px] shadow-[0_-15px_40px_rgba(0,0,0,0.08)]">
+    <div className="fixed bottom-0 left-0 right-0 p-4 z-[100] glass-effect border-t-2 border-pink-100 max-w-[480px] mx-auto animate-fade-in rounded-t-[32px] shadow-[0_-10px_40px_rgba(0,0,0,0.1)]">
       <button 
-        onClick={(e) => {
-          e.stopPropagation();
-          if (e.nativeEvent && e.nativeEvent.stopImmediatePropagation) {
-            e.nativeEvent.stopImmediatePropagation();
-          }
-          onAnchorClick(e);
-        }}
-        className="w-full bg-gradient-to-r from-blue-600 to-blue-500 text-white font-black py-5 rounded-[28px] shadow-lg animate-cta flex items-center justify-center gap-2 text-lg uppercase tracking-tight border-b-4 border-blue-800"
+        onClick={onAnchorClick}
+        className="w-full bg-gradient-to-r from-pink-500 to-pink-600 text-white font-black py-4.5 rounded-[24px] shadow-xl animate-cta flex items-center justify-center gap-2 text-lg uppercase"
       >
-        <Zap size={20} fill="currentColor" />
-        GARANTIR MEU ACESSO AGORA
+        <Heart size={20} fill="currentColor" />
+        QUERO MEU PDF AGORA
       </button>
+    </div>
+  );
+};
+
+const Carousel: React.FC<{ images: string[] }> = ({ images }) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const next = () => setCurrentIndex(prev => (prev === images.length - 1 ? 0 : prev + 1));
+  const prev = () => setCurrentIndex(prev => (prev === 0 ? images.length - 1 : prev - 1));
+
+  return (
+    <div className="relative group">
+      <div className="relative overflow-hidden rounded-[32px] shadow-2xl bg-white border-8 border-pink-100 aspect-[3/4] flex items-center justify-center">
+        <div className="flex transition-transform duration-700 h-full w-full" style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
+          {images.map((img, idx) => (
+            <div key={idx} className="w-full h-full flex-shrink-0 flex items-center justify-center p-4 bg-white">
+              <img src={img} alt={`Amostra ${idx + 1}`} className="max-w-full max-h-full object-contain drop-shadow-lg" />
+            </div>
+          ))}
+        </div>
+        <button onClick={prev} className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-pink-500/90 text-white shadow-lg flex items-center justify-center"><ChevronLeft size={24}/></button>
+        <button onClick={next} className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-pink-500/90 text-white shadow-lg flex items-center justify-center"><ChevronRight size={24}/></button>
+        <div className="absolute top-6 right-6 pdf-badge shadow-xl">PDF FOFINHO</div>
+      </div>
+      <div className="flex justify-center gap-2 mt-4">
+        {images.map((_, idx) => (
+          <div key={idx} className={`w-2.5 h-2.5 rounded-full transition-all ${idx === currentIndex ? 'bg-pink-500 w-6' : 'bg-pink-200'}`} />
+        ))}
+      </div>
     </div>
   );
 };
@@ -127,20 +161,11 @@ const FAQItem: React.FC<{ q: string; a: string }> = ({ q, a }) => {
   const [open, setOpen] = useState(false);
   return (
     <div className="mb-3">
-      <button 
-        onClick={(e) => {
-          e.stopPropagation();
-          if (e.nativeEvent && e.nativeEvent.stopImmediatePropagation) {
-            e.nativeEvent.stopImmediatePropagation();
-          }
-          setOpen(!open);
-        }} 
-        className={`w-full p-5 rounded-2xl flex justify-between items-center text-left transition-all ${open ? 'bg-yellow-50 ring-2 ring-yellow-400' : 'bg-white'}`}
-      >
-        <span className="font-black text-slate-800 text-[13px]">{q}</span>
-        <div className={`p-1.5 rounded-xl bg-slate-100 text-slate-500 transition-transform ${open ? 'rotate-180 bg-yellow-400 text-black' : ''}`}><ChevronDown size={18} /></div>
+      <button onClick={() => setOpen(!open)} className={`w-full p-5 rounded-2xl flex justify-between items-center text-left transition-all ${open ? 'bg-pink-50 ring-2 ring-pink-100' : 'bg-white'}`}>
+        <span className="font-extrabold text-gray-800 text-sm">{q}</span>
+        <div className={`p-1 rounded-full bg-pink-100 text-pink-500 transition-transform ${open ? 'rotate-180' : ''}`}><ChevronDown size={18} /></div>
       </button>
-      {open && <div className="p-6 text-slate-600 text-[13px] font-medium leading-relaxed animate-fade-in bg-yellow-400/5 rounded-b-2xl">{a}</div>}
+      {open && <div className="p-5 text-gray-600 text-[13px] leading-relaxed animate-fade-in">{a}</div>}
     </div>
   );
 };
@@ -157,302 +182,255 @@ const App: React.FC = () => {
   }, []);
 
   const scrollToOffer = (e?: React.MouseEvent) => {
-    if (e) {
-      e.preventDefault();
-      e.stopPropagation();
-      if (e.nativeEvent && e.nativeEvent.stopImmediatePropagation) {
-        e.nativeEvent.stopImmediatePropagation();
-      }
-    }
+    if (e) e.preventDefault();
+    trackFBEvent('InitiateCheckout');
     if (offerRef.current) {
       offerRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   };
 
-  const handleFinalCheckout = (e: React.MouseEvent, value: number) => {
-    if (e) {
-      e.preventDefault(); 
-      e.stopPropagation();
-      if (e.nativeEvent && e.nativeEvent.stopImmediatePropagation) {
-        e.nativeEvent.stopImmediatePropagation();
-      }
-    }
-    
-    // Smooth transition
-    setTimeout(() => {
-      window.location.href = CHECKOUT_URL;
-    }, 150);
+  const handleFinalCheckout = () => {
+    trackFBEvent('Purchase', { value: 10.0, currency: 'BRL' });
   };
 
   return (
-    <div className="min-h-screen flex justify-center selection:bg-yellow-200">
-      <div className="max-w-[480px] w-full bg-[#FCFCFA] shadow-2xl relative overflow-x-hidden pb-10">
+    <div className="min-h-screen flex justify-center selection:bg-pink-100">
+      <div className="max-w-[480px] w-full bg-white shadow-2xl relative overflow-x-hidden pb-10">
         
         {/* Urgency Header */}
-        <div className="bg-yellow-400 text-black py-2.5 px-4 text-[10px] font-black text-center flex justify-center items-center gap-2 uppercase tracking-widest shadow-md">
-          <Zap size={12} fill="currentColor" className="animate-pulse" />
-          Aproveite: {vagas} kits com desconto exclusivo hoje!
+        <div className="bg-gradient-to-r from-pink-500 to-pink-400 text-white py-2 px-4 text-[10px] font-black text-center flex justify-center items-center gap-2 uppercase tracking-wider">
+          <Sun size={12} fill="white" className="animate-pulse" />
+          Apenas {vagas} vagas com o bônus "Bobbie Goods" exclusivo!
         </div>
 
         {/* Hero */}
-        <section className="p-6 pt-10 space-y-6 text-center bg-white relative overflow-hidden">
-          <div className="absolute top-0 left-0 w-full h-24 bg-yellow-100/50 -z-10" />
-          <div className="flex justify-center items-center gap-2 text-blue-600 font-black text-[11px] uppercase bg-blue-50 w-fit mx-auto px-5 py-2 rounded-full border-2 border-blue-100/50 shadow-sm">
-            <Sparkles size={14} fill="currentColor" /> O Aliado que Todo Educador Merece <Sparkles size={14} fill="currentColor" />
+        <section className="p-6 pt-10 space-y-6 text-center bg-gradient-to-b from-sky-50 to-white relative">
+          <div className="flex justify-center items-center gap-2 text-pink-500 font-black text-[11px] uppercase bg-white/50 w-fit mx-auto px-4 py-1.5 rounded-full border border-pink-50">
+            <Heart size={14} fill="currentColor" /> A Melhor Escolha para sua Catequese <Heart size={14} fill="currentColor" />
           </div>
-          <h1 className="text-3xl font-black text-slate-900 leading-[1.1] tracking-tight">
-            Ensinar Geometria Ficou Muito Mais Fácil! Tenha o <span className="text-red-500 underline decoration-yellow-400 decoration-8 underline-offset-4">Kit de Sólidos</span> Pronto! ✨
+          <h1 className="text-3xl font-black text-gray-900 leading-[1.1]">
+            Transforme sua Catequese: Tenha o Material mais <span className="text-pink-500 underline decoration-yellow-400 decoration-4">Lúdico e Apaixonante</span> do Brasil! ✨
           </h1>
-          <p className="text-slate-600 text-[15px] leading-relaxed font-bold italic px-4">
-            Resgate sua paz. Conteúdo completo de Sólidos Geométricos para usar, montar e engajar seus alunos com materiais práticos em PDF! 📚🧩
+          <p className="text-gray-600 text-[15px] leading-relaxed font-bold italic px-4">
+            Diga adeus ao cansaço de preparar aulas do zero. Encante seus pequenos com atividades fofas em PDF e veja o brilho nos olhos de cada criança! 🎨📖
           </p>
 
-          <div className="relative pt-4 px-2">
-            <div className="absolute -top-1 -left-1 z-10 bg-green-500 text-white text-[10px] font-black px-5 py-2.5 rounded-[20px] rotate-[-4deg] shadow-xl flex items-center gap-1.5 border-2 border-white">
-              <Cloud size={14} fill="white" /> ACESSO IMEDIATO EM PDF
+          <div className="relative pt-4">
+            <div className="absolute -top-1 -left-1 z-10 bg-yellow-400 text-gray-900 text-[11px] font-black px-4 py-2 rounded-[18px] rotate-[-5deg] shadow-lg flex items-center gap-1 border-2 border-white">
+              <Cloud size={14} fill="white" /> 100% DIGITAL EM PDF
             </div>
-            <iframe 
-              className="w-full aspect-[9/16] rounded-[40px] shadow-[0_20px_50px_rgba(0,0,0,0.1)] border-[8px] border-white drop-shadow-xl"
-              src="https://www.youtube.com/embed/W6YtUSTHuJA"
-              title="VSL"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              referrerPolicy="strict-origin-when-cross-origin"
-              allowFullScreen
-            />
+            <img src="https://i.ibb.co/Xx9tT55J/1000141193.png" alt="Pack Kids" className="rounded-[40px] shadow-2xl border-[10px] border-white drop-shadow-2xl" />
           </div>
 
           <div className="flex flex-col items-center gap-5 pt-4">
             <CountdownTimer />
             <button 
               onClick={scrollToOffer}
-              className="w-full bg-yellow-400 text-black text-xl font-black py-6 rounded-[30px] shadow-[0_15px_0_0_#ca8a04] active:translate-y-1 active:shadow-[0_10px_0_0_#ca8a04] transition-all animate-cta flex flex-col items-center border-2 border-black"
+              className="w-full bg-gradient-to-r from-pink-500 to-pink-600 text-white text-xl font-black py-5 rounded-[30px] shadow-2xl animate-cta flex flex-col items-center border-b-4 border-pink-800/20"
             >
-              <span className="flex items-center gap-2 uppercase tracking-tight">GARANTIR MEU ACESSO AGORA <ArrowRight size={22} /></span>
-              <span className="text-[10px] opacity-80 mt-1 uppercase tracking-widest font-black">Liberação Imediata via E-mail</span>
+              <span className="flex items-center gap-2 uppercase">QUERO MEU PDF AGORA <ArrowRight size={22} /></span>
+              <span className="text-[10px] opacity-90 mt-1 uppercase tracking-widest">Acesso Vitalício e Imediato</span>
             </button>
-            <div className="flex items-center gap-6 text-[10px] font-black text-slate-400 uppercase tracking-widest">
-              <span className="flex items-center gap-2"><Zap size={14} className="text-blue-500" /> Uso Profissional</span>
-              <span className="flex items-center gap-2"><Lock size={14} className="text-green-500" /> 100% Seguro</span>
+            <div className="flex items-center gap-6 text-[10px] font-black text-gray-400 uppercase">
+              <span className="flex items-center gap-1.5"><Printer size={14} className="text-pink-300" /> Imprima e Encante</span>
+              <span className="flex items-center gap-1.5"><Lock size={14} className="text-pink-300" /> Compra 100% Segura</span>
             </div>
           </div>
         </section>
 
-        <WavyDividerBottom color="#F8FAFC" />
+        <WavyDividerBottom color="#f0f9ff" />
 
-        {/* Nossos Produtos */}
-        <section className="p-8 space-y-8 bg-[#F8FAFC] relative">
-          <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(#e2e8f0_1px,transparent_1px)] [background-size:20px_20px] opacity-30 -z-10" />
-          <div className="text-center space-y-2">
-            <h2 className="text-2xl font-black text-slate-900 pt-5">Nossos Materiais Exclusivos:</h2>
-          </div>
+        {/* O que você vai receber - GRID DETALHADA */}
+        <section className="p-8 space-y-8 bg-sky-50 relative">
+          <h2 className="text-2xl font-black text-center text-gray-900 pt-10">O que vem no seu Pack:</h2>
           <div className="grid grid-cols-2 gap-4">
             {[
-              { t: "Cartazes (A4)", i: "📄" },
-              { t: "Modelos p/ Montar", i: "📦" },
-              { t: "Atividades Fixação", i: "✏️" },
-              { t: "Guia Professor", i: "📖" },
-              { t: "Visão 3D", i: "🧊" },
-              { t: "Jogo Caça-Sólidos", i: "🎲" },
-              { t: "Plano BNCC", i: "📌" },
-              { t: "Bônus Especial", i: "🎁" }
+              { t: "Mandamentos HQ", i: "📜", c: "bg-orange-50" },
+              { t: "7 Sacramentos", i: "⛪", c: "bg-blue-50" },
+              { t: "Batismo", i: "💧", c: "bg-sky-50" },
+              { t: "Confissão", i: "🤍", c: "bg-pink-50" },
+              { t: "Eucaristia", i: "🍞", c: "bg-yellow-50" },
+              { t: "Crisma", i: "🔥", c: "bg-red-50" },
+              { t: "Perseverança", i: "👣", c: "bg-green-50" },
+              { t: "Bíblia Ilustrada", i: "📖", c: "bg-indigo-50" },
+              { t: "Dinâmicas Kids", i: "🎈", c: "bg-pink-100" },
+              { t: "Bobbie Goods", i: "🎨", c: "bg-purple-50" },
+              { t: "Jogos & Quiz", i: "🧩", c: "bg-orange-100" },
+              { t: "Santos & Anjos", i: "😇", c: "bg-blue-100" }
             ].map((item, i) => (
-              <div key={i} className="bg-white border text-slate-800 border-slate-100 p-6 rounded-[24px] shadow-sm hover:shadow-lg hover:border-yellow-200 transition-all duration-300 transform hover:-translate-y-1 text-center flex flex-col items-center justify-center group">
-                <div className="text-4xl mb-3 p-3 bg-yellow-50 rounded-2xl group-hover:scale-110 transition-transform">{item.i}</div>
-                <h4 className="text-[11px] font-black leading-tight uppercase tracking-wide text-slate-700">{item.t}</h4>
+              <div key={i} className={`${item.c} border-4 border-white p-5 rounded-[30px] shadow-sm text-center flex flex-col items-center justify-center hover:scale-105 transition-transform`}>
+                <div className="text-4xl mb-2">{item.i}</div>
+                <h4 className="text-[13px] font-black text-gray-800 leading-tight">{item.t}</h4>
               </div>
             ))}
           </div>
         </section>
 
+        {/* Carousel de Amostras */}
+        <section className="p-8 space-y-8 bg-white">
+          <div className="text-center space-y-3">
+            <h2 className="text-2xl font-black text-gray-900">Espie a Fofura do <span className="text-pink-500 underline decoration-yellow-300 decoration-4">Nosso Material</span></h2>
+            <p className="text-sm text-gray-500 font-bold italic">O estilo Bobbie Goods que as crianças amam!</p>
+          </div>
+          <Carousel images={CAROUSEL_1} />
+        </section>
+
         {/* SEÇÃO RECEBA AGORA */}
-        <section className="p-8 bg-yellow-50 rounded-[45px] mx-4 border-4 border-dashed border-yellow-400 space-y-8 shadow-inner my-10 relative overflow-hidden">
-           <div className="absolute top-0 right-0 w-32 h-32 bg-yellow-200/40 blur-3xl -z-10" />
+        <section className="p-8 bg-gradient-to-br from-yellow-50 to-orange-50 rounded-[45px] mx-4 border-4 border-dashed border-yellow-300 space-y-8 shadow-inner my-10">
            <div className="text-center space-y-2">
-              <div className="bg-blue-600 text-white text-[10px] font-black px-6 py-1.5 rounded-full uppercase tracking-widest inline-flex items-center gap-1 shadow-md mb-2">
-                 <Sparkles size={12} fill="white"/> TRANSFORME SUA ROTINA AGORA
+              <div className="bg-pink-500 text-white text-[10px] font-black px-6 py-1.5 rounded-full uppercase tracking-widest inline-flex items-center gap-1 shadow-md mb-2">
+                 <Sparkles size={12} fill="white"/> LIBERADO AGORA NO SEU E-MAIL
               </div>
-              <h2 className="text-2xl font-black text-slate-900 leading-tight">
-                Dê um Fim ao Cansaço e <span className="text-green-600 underline decoration-yellow-400 decoration-8 underline-offset-4">Ganhe Liberdade</span>!
+              <h2 className="text-2xl font-black text-gray-900 leading-tight">
+                Sua Rotina na Catequese vai <span className="text-pink-500 underline decoration-yellow-400 decoration-4">Mudar Agora</span>!
               </h2>
            </div>
+           
            <div className="space-y-4">
-               {[
+              {[
                 { 
-                  t: "Pronto para Imprimir", 
-                  d: "Tudo em PDF disponível para impressão imediata e fácil uso.", 
-                  i: <Printer size={22}/> 
+                  t: "Resgate sua Paz e seu Tempo Livre", 
+                  d: "Pare de passar madrugadas buscando o que fazer. Abra o PDF, imprima e sua aula está pronta.", 
+                  i: <Clock size={22}/> 
                 },
                 { 
-                  t: "Aulas Criativas e Sem Estresse", 
-                  d: "Material testado e aprovado. Engaje seus alunos de forma prática.", 
+                  t: "Evangelização que Prende a Atenção", 
+                  d: "Use a estética 'Bobbie Goods' que é febre entre as crianças e veja a participação da sua turma decolar.", 
                   i: <Heart size={22} fill="currentColor"/> 
                 },
                 { 
-                  t: "Alinhado à BNCC", 
-                  d: "Atividades focadas nas competências necessárias para o ensino fundamental.", 
+                  t: "Material Completo e Fiel à Igreja", 
+                  d: "Atividades didáticas baseadas na sã doutrina, unindo beleza estética e profundidade espiritual.", 
                   i: <BookOpen size={22}/> 
                 },
                 { 
-                  t: "Acesso no WhatsApp", 
-                  d: "Receba seu material rapidamente após a compra.", 
+                  t: "Acesso Vitalício no seu E-mail", 
+                  d: "Compre uma vez e use para sempre. O material é seu, para todas as turmas que você tiver.", 
                   i: <Zap size={22}/> 
                 }
-              ].map((item, idx) => {
-                const colors = [
-                  { bg: 'bg-blue-50', text: 'text-blue-600' },
-                  { bg: 'bg-red-50', text: 'text-red-500' },
-                  { bg: 'bg-green-50', text: 'text-green-600' },
-                  { bg: 'bg-yellow-400/20', text: 'text-yellow-600' }
-                ];
-                return (
-                  <div key={idx} className="bg-white p-7 rounded-[35px] shadow-sm flex items-start gap-5 border-2 border-white hover:scale-[1.02] transition-transform">
-                     <div className={`${colors[idx % colors.length].bg} ${colors[idx % colors.length].text} p-4 rounded-2xl flex-shrink-0`}>{item.i}</div>
-                     <div>
-                        <h4 className="text-[15px] font-black text-slate-800 mb-1 leading-tight">{item.t}</h4>
-                        <p className="text-[12px] text-slate-500 font-bold leading-relaxed">{item.d}</p>
-                     </div>
-                  </div>
-                );
-              })}
+              ].map((item, idx) => (
+                <div key={idx} className="bg-white p-6 rounded-[35px] shadow-sm flex items-start gap-5 border-2 border-white hover:scale-[1.02] transition-transform">
+                   <div className="bg-pink-100 text-pink-500 p-3.5 rounded-2xl flex-shrink-0">{item.i}</div>
+                   <div>
+                      <h4 className="text-sm font-black text-gray-800 mb-1 leading-tight">{item.t}</h4>
+                      <p className="text-[11px] text-gray-500 font-bold leading-relaxed">{item.d}</p>
+                   </div>
+                </div>
+              ))}
            </div>
         </section>
 
         {/* Depoimentos */}
-        <section className="p-8 space-y-8 bg-[#F8F9FA]">
-          <h2 className="text-2xl font-black text-center text-slate-900 uppercase tracking-tight">O que as <span className="text-blue-600 underline decoration-yellow-400 decoration-8 underline-offset-2">Professoras</span> dizem?</h2>
+        <section className="p-8 space-y-8 bg-white">
+          <h2 className="text-2xl font-black text-center text-gray-900">O que as <span className="text-pink-500">Catequistas</span> estão dizendo?</h2>
           <div className="space-y-6">
-            {TESTIMONIALS.map((t, i) => {
-              const accentColors = ['text-blue-600', 'text-green-600', 'text-red-500'];
-              return (
-                <div key={i} className="bg-white p-7 rounded-[40px] shadow-xl shadow-slate-200/50 relative border-2 border-slate-50">
-                  <div className="absolute top-6 right-8 opacity-10 text-6xl font-black">“</div>
-                  <p className="text-[14px] text-slate-600 font-bold italic mb-6 leading-relaxed relative z-10">"{t.text}"</p>
-                  <div className="flex items-center gap-4">
-                     <div className="w-14 h-14 bg-slate-100 rounded-full border-4 border-white shadow-md overflow-hidden flex-shrink-0">
-                        <img src={t.avatar} alt={t.name} className="w-full h-full object-cover" />
-                     </div>
-                     <div>
-                        <h4 className="text-[14px] font-black text-slate-900">{t.name}</h4>
-                        <p className={`text-[10px] ${accentColors[i % accentColors.length]} font-black uppercase tracking-widest`}>{t.role}</p>
-                     </div>
-                  </div>
+            {TESTIMONIALS.map((t, i) => (
+              <div key={i} className="bg-pink-50/50 p-6 rounded-[35px] border-2 border-white shadow-xl relative">
+                <p className="text-[13px] text-gray-600 font-bold italic mb-4">"{t.text}"</p>
+                <div className="flex items-center gap-3">
+                   <div className="w-12 h-12 bg-white rounded-full border-2 border-pink-200 overflow-hidden">
+                      <img src={t.avatar} alt={t.name} className="w-full h-full object-cover" />
+                   </div>
+                   <div>
+                      <h4 className="text-[13px] font-black text-gray-800">{t.name}</h4>
+                      <p className="text-[10px] text-pink-400 font-black uppercase">{t.role}</p>
+                   </div>
                 </div>
-              );
-            })}
+              </div>
+            ))}
           </div>
         </section>
 
-        <section ref={offerRef} className="p-4 space-y-8 pb-20 scroll-mt-20">
-          <div className="text-center space-y-3">
-             <h2 className="text-3xl font-black text-slate-900 leading-tight uppercase tracking-tight">
-               GARANTA SEUS MATERIAIS <br/><span className="text-red-500 underline decoration-yellow-400 decoration-8 underline-offset-4">AGORA!</span>
-             </h2>
+        {/* SUPER OFFER CARD - MAIS COMPLETO */}
+        <section ref={offerRef} className="p-4 space-y-10 pb-20 scroll-mt-20">
+          <div className="text-center space-y-2">
+            <div className="inline-flex items-center gap-2 bg-yellow-400 text-gray-900 font-black text-[11px] px-5 py-1.5 rounded-full uppercase tracking-widest shadow-sm">
+              OPORTUNIDADE DE HOJE 🎁
+            </div>
+            <h2 className="text-3xl font-black text-gray-900 leading-tight">Leve o Pack Completo</h2>
           </div>
 
-          <div className="grid grid-cols-1 gap-6 max-w-[420px] mx-auto">
-            {/* Card 1: Kit Sólidos */}
-            <div className="bg-white rounded-[40px] shadow-lg border-2 border-slate-100 overflow-hidden relative flex flex-col">
-                <div className="p-8 text-center border-b border-dashed border-slate-200 flex-grow">
-                    <img src="https://iili.io/BislbnV.png" alt="Sólidos" className="w-32 h-32 mx-auto mb-4 rounded-2xl object-cover" />
-                    <h3 className="font-black text-lg text-slate-900 uppercase">ATIVIDADES COM SÓLIDOS GEOMÉTRICOS</h3>
-                    <p className="text-[12px] font-bold text-slate-400 mt-1">De R$ 29,00 Por Apenas:</p>
-                    <p className="text-3xl text-green-600 font-black mt-1">R$ 14,90</p>
-                </div>
-                <div className="p-8 bg-white">
-                    <ul className="space-y-3 mb-8">
-                        {[
-                            "7 mini cartazes em A4 com explicações visuais",
-                            "5 modelos de sólidos geométricos para montar",
-                            "Atividade completa para o caderno para fixar",
-                            "Tudo em PDF — baixe e imprima quando quiser",
-                            "Entregue direto no seu WhatsApp"
-                        ].map((item, i) => (
-                            <li key={i} className="flex gap-2 text-[12px] font-bold text-slate-700">
-                                <Check size={16} className="text-green-500 shrink-0" />
-                                {item}
-                            </li>
-                        ))}
-                    </ul>
-                    <button 
-                        onClick={(e) => handleFinalCheckout(e, 14.90)}
-                        className="w-full bg-green-500 text-white font-black py-4 rounded-xl shadow-lg shadow-green-200 active:translate-y-1 transition-all uppercase text-sm"
-                    >
-                        GARANTIR MEU ACESSO AGORA
-                    </button>
-                </div>
+          <div className="bg-white rounded-[40px] shadow-2xl overflow-hidden border-2 border-pink-100 relative">
+            
+            {/* Header do Card */}
+            <div className="bg-pink-400 p-8 text-center text-white">
+                <h3 className="font-black text-2xl leading-tight uppercase tracking-tight">SUPER COMBO CATEQUESE KIDS</h3>
+                <p className="text-[13px] font-bold mt-2 opacity-90">TUDO O QUE VOCÊ VIU E MUITO MAIS!</p>
             </div>
 
-            {/* Card 2: Combo Premium */}
-            <div className="bg-white rounded-[40px] shadow-[0_25px_60px_rgba(0,0,0,0.15)] overflow-hidden border-2 border-yellow-400 relative flex flex-col">
-              <div className="bg-yellow-400 p-8 text-center text-black border-b-2 border-black relative">
-                  <div className="absolute top-2 left-1/2 -translate-x-1/2 bg-orange-600 text-white text-[10px] font-black px-4 py-1 rounded-full shadow-md uppercase tracking-wider whitespace-nowrap">
-                      ÚLTIMAS VAGAS
-                  </div>
-                  <h3 className="font-black text-2xl leading-tight uppercase tracking-tight">MEGA PACK MATEMÁTICA E BÔNUS</h3>
-                  <p className="text-[13px] font-black mt-1 uppercase tracking-tighter">TODO O ACERVO + BÔNUS + PLR</p>
+            <div className="p-8">
+              {/* Preço */}
+              <div className="text-center mb-8">
+                 <div className="flex items-center justify-center gap-3 mb-2">
+                    <span className="text-gray-400 line-through text-lg font-bold">R$ 97,00</span>
+                    <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-wider">ECONOMIZE 80%</span>
+                 </div>
+                 <p className="text-pink-500 text-[13px] font-black uppercase tracking-[2px] mb-1">POR APENAS</p>
+                 <div className="flex items-center justify-center text-pink-500">
+                   <span className="text-4xl font-black mr-1 mt-[-15px]">R$</span>
+                   <span className="text-7xl font-black tracking-tighter leading-none">19,90</span>
+                 </div>
+                 <p className="text-gray-400 text-[12px] font-bold mt-3 uppercase tracking-wider">ACESSO VITALÍCIO • PDF PRONTINHO</p>
               </div>
-              <div className="p-8 bg-white flex-grow">
-                  <div className="text-center mb-8">
-                     <div className="flex items-center justify-center gap-3 mb-2">
-                        <span className="text-slate-300 line-through text-lg font-bold">R$ 57,00</span>
-                        <span className="bg-green-100 text-green-700 px-4 py-1 rounded-lg text-[10px] font-black uppercase tracking-wider">ECONOMIZE 65%</span>
-                     </div>
-                     <p className="text-blue-600 text-[13px] font-black uppercase tracking-[3px] mb-2">POR APENAS</p>
-                     <div className="flex items-center justify-center text-slate-900 font-black">
-                       <span className="text-4xl mr-2 mt-[-15px]">R$</span>
-                       <span className="text-6xl tracking-tighter leading-none">19,<span className="text-3xl align-top pt-2">90</span></span>
-                     </div>
-                     <p className="text-slate-400 text-[11px] font-bold mt-4 uppercase tracking-[0.1em]">ACESSO VITALÍCIO</p>
+
+              <hr className="border-gray-100 mb-8" />
+
+              {/* Lista */}
+              <div className="space-y-5 mb-10">
+                {[
+                  "Pack Completo: Batismo à Crisma",
+                  "Bônus: Histórias Bíblicas Kids (Adão e Moisés)",
+                  "Bônus: Lembrancinhas e Quebra-cabeças",
+                  "Especial Corpus Christi e Dinâmicas",
+                  "Desenhos Bobbie Goods Exclusivos",
+                ].map((item, i) => (
+                  <div key={i} className="flex items-center gap-3">
+                    <div className="bg-pink-100 text-pink-500 p-1 rounded-full">
+                      <Check size={16} strokeWidth={3} />
+                    </div>
+                    <span className="font-bold text-gray-700 text-[14px] leading-tight">{item}</span>
                   </div>
-                  <ul className="space-y-4 mb-8">
-                      {[
-                          "7 mini cartazes em A4 com explicações visuais",
-                          "5 modelos de sólidos geométricos para montar",
-                          "Atividade completa para o caderno para fixar",
-                          "Mais de 25.000 Materiais Exclusivos",
-                          "Acesso Imediato e Vitalício",
-                          "Bônus: 100 Planners Editáveis",
-                          "Bônus: Cartilhas de Caligrafia Premium",
-                          "Tudo em PDF — baixe e imprima quando quiser",
-                          "Entregue direto no seu WhatsApp"
-                      ].map((item, i) => (
-                          <li key={i} className="flex gap-3 text-[13px] font-bold text-slate-700 items-center">
-                              <Check size={18} className="text-green-500 shrink-0 bg-green-50 p-0.5 rounded-full" />
-                              {item}
-                          </li>
-                      ))}
-                  </ul>
-                  <button 
-                      onClick={(e) => handleFinalCheckout(e, 19.90)}
-                      className="w-full bg-gradient-to-r from-blue-600 to-blue-500 text-white font-black py-5 rounded-[20px] shadow-lg shadow-blue-200 active:translate-y-1 transition-all uppercase text-sm border-2 border-black"
-                  >
-                      GARANTIR MEU MATERIAL AGORA
-                  </button>
+                ))}
+              </div>
+
+              {/* Botão de Checkout */}
+              <button 
+                onClick={() => handleFinalCheckout()}
+                className="block w-full bg-pink-400 text-white font-black py-6 rounded-[24px] shadow-lg animate-cta text-xl uppercase leading-tight px-4 text-center mb-6"
+              >
+                QUERO ENCANTAR MINHA TURMA
+              </button>
+
+              {/* Segurança e Estrelas */}
+              <div className="flex justify-center items-center gap-6 text-gray-400 font-black text-[11px] uppercase tracking-wider">
+                <div className="flex items-center gap-1.5">
+                  <ShieldCheck size={16} /> SEGURO
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <Star size={16} className="text-yellow-400" fill="currentColor" /> 4.9/5 ESTRELAS
+                </div>
               </div>
             </div>
           </div>
         </section>
 
         {/* FAQ & Guarantee */}
-        <section className="p-10 space-y-8 bg-sky-50/50 rounded-[50px] mx-4 mb-10 border-4 border-white shadow-inner">
+        <section className="p-10 space-y-8 bg-sky-50 rounded-[50px] mx-4 mb-10 border-4 border-white">
           <div className="text-center space-y-4">
-            <div className="bg-blue-600/10 w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-2 border-2 border-blue-100">
-               <ShieldCheck size={56} className="text-blue-600" />
-            </div>
-            <h3 className="font-black text-2xl text-slate-900 tracking-tight">Sua Satisfação é Prioridade</h3>
-            <p className="text-[14px] text-slate-500 font-bold px-4 leading-relaxed">Use o material por 7 dias. Se não sentir que sua rotina mudou, devolvemos 100% do seu dinheiro!</p>
+            <ShieldCheck size={56} className="text-pink-500 mx-auto" />
+            <h3 className="font-black text-xl">Garantia Sorriso no Rosto</h3>
+            <p className="text-sm text-gray-500 font-bold px-4">Seus pequenos vão amar. Se não gostar, devolvemos seu dinheiro em 7 dias!</p>
           </div>
-          <div className="space-y-3">
-            <FAQItem q="Como funciona o acesso?" a="Imediatamente após a confirmação do pagamento, você receberá um e-mail com as instruções para acessar todo o Drive com mais de 25.000 materiais pedagógicos organizados por categorias." />
-            <FAQItem q="Como recebo o acesso?" a="Imediatamente após a confirmação do pagamento, você receberá um e-mail com as instruções para acessar o Drive no Google Drive." />
-            <FAQItem q="O acesso é vitalício?" a="Sim! Uma vez adquirido, o acesso é seu para sempre, incluindo todas as atualizações futuras que fizermos no acervo." />
+          <div className="space-y-2">
+            <FAQItem q="O material chega pelo correio?" a="Não, é 100% digital! Você recebe no e-mail logo após a compra, baixa e imprime quando quiser." />
+            <FAQItem q="É pago mensalmente?" a="Não! É um pagamento único de R$ 37,90 e você tem acesso para sempre." />
+            <FAQItem q="Como recebo o acesso?" a="Imediatamente após a confirmação do pagamento, você receberá um e-mail com o link para baixar todos os PDFs." />
           </div>
         </section>
 
         <footer className="p-10 text-center bg-white pb-32">
           <p className="text-[10px] text-gray-400 font-black uppercase tracking-widest px-8">
-            © 2024 DRIVE PEDAGÓGICO PLR - FACILITANDO A VIDA DO PROFESSOR COM AMOR
+            © 2024 CATEQUESE KIDS - FEITO COM AMOR PARA OS PEQUENOS DE DEUS
           </p>
         </footer>
 
