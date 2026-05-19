@@ -57,7 +57,7 @@ const TESTIMONIALS = [
   }
 ];
 
-const CHECKOUT_URL = "https://pay.lowify.com.br/checkout?product_id=ImZoQR";
+const CHECKOUT_URL = "https://pay.lowify.com.br/checkout?product_id=jlUfor";
 
 // --- Sub-Components ---
 
@@ -184,7 +184,7 @@ const App: React.FC = () => {
 
     // Delay redirect to ensure pixel has time to fire (200ms)
     setTimeout(() => {
-      redirectWithParams("https://pay.lowify.com.br/checkout?product_id=ImZoQR");
+      redirectWithParams(CHECKOUT_URL);
     }, 200);
   };
 
