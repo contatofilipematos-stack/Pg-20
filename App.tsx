@@ -173,7 +173,19 @@ const App: React.FC = () => {
   };
 
   const handleFinalCheckout = () => {
-    redirectWithParams(CHECKOUT_URL);
+    // Fire IC event if UTMfy pixel is loaded
+    if (typeof window !== 'undefined' && (window as any).utmify?.track) {
+      try {
+        (window as any).utmify.track("InitiateCheckout");
+      } catch (e) {
+        console.error("Erro ao rastrear IC:", e);
+      }
+    }
+
+    // Delay redirect to ensure pixel has time to fire (200ms)
+    setTimeout(() => {
+      redirectWithParams("https://pay.lowify.com.br/checkout?product_id=ImZoQR");
+    }, 200);
   };
 
   return (
