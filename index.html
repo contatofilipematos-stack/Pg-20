@@ -20,20 +20,18 @@
     <div id="root"></div>
     <script type="module" src="/index.tsx"></script>
 
-    <!-- UTMify Scripts -->
+    <!-- UTMify Pixel Script -->
     <script>
       window.pixelId = "6a0b580ffa3a9074f80efce0";
-      var a = document.createElement("script");
-      a.setAttribute("async", "");
-      a.setAttribute("defer", "");
-      a.setAttribute("src", "https://cdn.utmify.com.br/scripts/pixel/pixel.js");
-      document.head.appendChild(a);
     </script>
-    <script src="https://cdn.utmify.com.br/scripts/utms/latest.js"
+    <script defer src="https://cdn.utmify.com.br/scripts/pixel/pixel.js"></script>
+    
+    <!-- UTMify UTM Script -->
+    <script 
+      defer
+      src="https://cdn.utmify.com.br/scripts/utms/latest.js"
       data-utmify-prevent-subids
       data-utmify-ignore-iframe
-      async
-      defer
     ></script>
 </body>
 </html>
