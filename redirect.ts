@@ -1,16 +1,24 @@
 
 export function redirectWithParams(destination: string) {
+  if (typeof window === 'undefined') return;
   const currentParams = window.location.search;
 
-  if (!currentParams) {
-      window.location.href = destination;
-      return;
-  }
-
-  if (destination.includes("?")) {
-      window.location.href = destination + "&" + currentParams.substring(1);
+  const url = new URL(destination, window.location.origin);
+  
+  if (currentParams) {
+      if (url.search) {
+          // If destination already has params, merge them
+          const newParams = new URLSearchParams(currentParams.substring(1));
+          newParams.forEach((value, key) => {
+              url.searchParams.set(key, value);
+          });
+          window.location.href = url.toString();
+      } else {
+          // Otherwise, just append current search
+          window.location.href = destination + currentParams;
+      }
   } else {
-      window.location.href = destination + currentParams;
+      window.location.href = destination;
   }
 }
 
