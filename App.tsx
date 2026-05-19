@@ -103,10 +103,7 @@ const StickyCTA: React.FC<{ onAnchorClick: () => void }> = ({ onAnchorClick }) =
   return (
     <div className="fixed bottom-0 left-0 right-0 p-4 z-[100] glass-effect border-t-2 border-pink-100 max-w-[480px] mx-auto animate-fade-in rounded-t-[32px] shadow-[0_-10px_40px_rgba(0,0,0,0.1)]">
       <button 
-        onClick={(e) => {
-          e.stopPropagation();
-          onAnchorClick();
-        }}
+        onClick={() => onAnchorClick()}
         className="w-full bg-gradient-to-r from-pink-500 to-pink-600 text-white font-black py-4.5 rounded-[24px] shadow-xl animate-cta flex items-center justify-center gap-2 text-lg uppercase"
       >
         <Heart size={20} fill="currentColor" />
@@ -211,10 +208,7 @@ const App: React.FC = () => {
           <div className="flex flex-col items-center gap-5 pt-4">
             <CountdownTimer />
             <button 
-              onClick={(e) => {
-                e.stopPropagation();
-                scrollToOffer();
-              }}
+              onClick={() => scrollToOffer()}
               className="w-full bg-gradient-to-r from-pink-500 to-pink-600 text-white text-xl font-black py-5 rounded-[30px] shadow-2xl animate-cta flex flex-col items-center border-b-4 border-pink-800/20"
             >
               <span className="flex items-center gap-2 uppercase">QUERO MEU PDF AGORA <ArrowRight size={22} /></span>
@@ -384,10 +378,7 @@ const App: React.FC = () => {
 
               {/* Botão de Checkout */}
               <button 
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleFinalCheckout();
-                }}
+                onClick={() => handleFinalCheckout()}
                 className="block w-full bg-pink-400 text-white font-black py-6 rounded-[24px] shadow-lg animate-cta text-xl uppercase leading-tight px-4 text-center mb-6"
               >
                 QUERO ENCANTAR MINHA TURMA
