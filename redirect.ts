@@ -1,27 +1,19 @@
 
-export function redirectWithParams(destination: string) {
-  if (typeof window === 'undefined') return;
+function redirectWithParams(destination: string) {
+  const currentParams = window.location.search;
 
-  try {
-    const targetUrl = new URL(destination);
-    const searchParams = new URLSearchParams(window.location.search);
+  if (!currentParams) {
+    window.location.href = destination;
+    return;
+  }
 
-    // Merge current search parameters into the target URL parameters
-    searchParams.forEach((value, key) => {
-      targetUrl.searchParams.set(key, value);
-    });
-
-    window.location.href = targetUrl.toString();
-  } catch (e) {
-    console.error("Failed to redirect with params, falling back:", e);
-    // Fallback if URL construction fails
-    window.location.href = destination + (window.location.search ? 
-      (destination.includes('?') ? '&' : '?') + window.location.search.substring(1) : 
-      '');
+  if (destination.includes("?")) {
+    window.location.href = destination + "&" + currentParams.substring(1);
+  } else {
+    window.location.href = destination + currentParams;
   }
 }
 
-// Add to window for global access if needed, though importing is better in TS
 declare global {
   interface Window {
     redirectWithParams: (destination: string) => void;
@@ -29,3 +21,4 @@ declare global {
 }
 
 window.redirectWithParams = redirectWithParams;
+export { redirectWithParams };

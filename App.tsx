@@ -57,7 +57,7 @@ const TESTIMONIALS = [
   }
 ];
 
-const CHECKOUT_URL = "https://pay.lowify.com.br/checkout?product_id=jlUfor";
+const CHECKOUT_URL = "https://pay.lowify.com.br/checkout?product_id=ImZoQR";
 
 // --- Sub-Components ---
 
