@@ -207,7 +207,7 @@ const App: React.FC = () => {
               onClick={() => scrollToOffer()}
               className="w-full bg-gradient-to-r from-pink-500 to-pink-600 text-white text-xl font-black py-5 rounded-[30px] shadow-2xl animate-cta flex flex-col items-center border-b-4 border-pink-800/20"
             >
-              <span className="flex items-center gap-2 uppercase">QUERO MEU PDF AGORA <ArrowRight size={22} /></span>
+              <span className="flex items-center gap-2 uppercase">QUERO MEU MATERIAL AGORA <ArrowRight size={22} /></span>
               <span className="text-[10px] opacity-90 mt-1 uppercase tracking-widest">Acesso Vitalício e Imediato</span>
             </button>
             <div className="flex items-center gap-6 text-[10px] font-black text-gray-400 uppercase">
@@ -217,34 +217,11 @@ const App: React.FC = () => {
           </div>
         </section>
 
-        <WavyDividerBottom color="#f0f9ff" />
-
-        {/* O que você vai receber - GRID DETALHADA */}
-        <section className="p-8 space-y-8 bg-sky-50 relative">
-          <h2 className="text-2xl font-black text-center text-gray-900 pt-10">O que vem no seu Pack:</h2>
-          <div className="grid grid-cols-2 gap-4">
-            {[
-              { t: "Mandamentos HQ", i: "📜", c: "bg-orange-50" },
-              { t: "7 Sacramentos", i: "⛪", c: "bg-blue-50" },
-              { t: "Batismo", i: "💧", c: "bg-sky-50" },
-              { t: "Confissão", i: "🤍", c: "bg-pink-50" },
-              { t: "Eucaristia", i: "🍞", c: "bg-yellow-50" },
-              { t: "Crisma", i: "🔥", c: "bg-red-50" },
-              { t: "Perseverança", i: "👣", c: "bg-green-50" },
-              { t: "Bíblia Ilustrada", i: "📖", c: "bg-indigo-50" },
-              { t: "Dinâmicas Kids", i: "🎈", c: "bg-pink-100" },
-              { t: "Bobbie Goods", i: "🎨", c: "bg-purple-50" },
-              { t: "Jogos & Quiz", i: "🧩", c: "bg-orange-100" },
-              { t: "Santos & Anjos", i: "😇", c: "bg-blue-100" }
-            ].map((item, i) => (
-              <div key={i} className={`${item.c} border-4 border-white p-5 rounded-[30px] shadow-sm text-center flex flex-col items-center justify-center hover:scale-105 transition-transform`}>
-                <div className="text-4xl mb-2">{item.i}</div>
-                <h4 className="text-[13px] font-black text-gray-800 leading-tight">{item.t}</h4>
-              </div>
-            ))}
-          </div>
+        <WavyDividerBottom color="#e0f2fe" />
+        <section className="bg-sky-100 flex justify-center items-center pb-10">
+          <img src="https://i.ibb.co/GvcHNLT7/Screenshot-2026-05-20-09-29-53-316-com-android-chrome-edit.jpg" alt="Conteúdo do Pack" className="w-full" />
         </section>
-
+        
         {/* Carousel de Amostras */}
         <section className="p-8 space-y-8 bg-white">
           <div className="text-center space-y-3">
@@ -252,72 +229,48 @@ const App: React.FC = () => {
             <p className="text-sm text-gray-500 font-bold italic">O estilo Bobbie Goods que as crianças amam!</p>
           </div>
           <Carousel images={CAROUSEL_1} />
+          
+          <div className="flex justify-center mt-6">
+            <img src="https://i.ibb.co/5hTpDGLH/Screenshot-2026-05-20-09-53-33-377-com-android-chrome-edit.jpg" alt="Qualidade que Apaixona" className="w-full rounded-[24px] [mask-image:linear-gradient(to_bottom,black_90%,transparent_100%)]" />
+          </div>
         </section>
 
-        {/* SEÇÃO RECEBA AGORA */}
-        <section className="p-8 bg-gradient-to-br from-yellow-50 to-orange-50 rounded-[45px] mx-4 border-4 border-dashed border-yellow-300 space-y-8 shadow-inner my-10">
-           <div className="text-center space-y-2">
-              <div className="bg-pink-500 text-white text-[10px] font-black px-6 py-1.5 rounded-full uppercase tracking-widest inline-flex items-center gap-1 shadow-md mb-2">
-                 <Sparkles size={12} fill="white"/> LIBERADO AGORA NO SEU E-MAIL
-              </div>
-              <h2 className="text-2xl font-black text-gray-900 leading-tight">
-                Sua Rotina na Catequese vai <span className="text-pink-500 underline decoration-yellow-400 decoration-4">Mudar Agora</span>!
-              </h2>
-           </div>
-           
-           <div className="space-y-4">
-              {[
-                { 
-                  t: "Resgate sua Paz e seu Tempo Livre", 
-                  d: "Pare de passar madrugadas buscando o que fazer. Abra o PDF, imprima e sua aula está pronta.", 
-                  i: <Clock size={22}/> 
-                },
-                { 
-                  t: "Evangelização que Prende a Atenção", 
-                  d: "Use a estética 'Bobbie Goods' que é febre entre as crianças e veja a participação da sua turma decolar.", 
-                  i: <Heart size={22} fill="currentColor"/> 
-                },
-                { 
-                  t: "Material Completo e Fiel à Igreja", 
-                  d: "Atividades didáticas baseadas na sã doutrina, unindo beleza estética e profundidade espiritual.", 
-                  i: <BookOpen size={22}/> 
-                },
-                { 
-                  t: "Acesso Vitalício no seu E-mail", 
-                  d: "Compre uma vez e use para sempre. O material é seu, para todas as turmas que você tiver.", 
-                  i: <Zap size={22}/> 
-                }
-              ].map((item, idx) => (
-                <div key={idx} className="bg-white p-6 rounded-[35px] shadow-sm flex items-start gap-5 border-2 border-white hover:scale-[1.02] transition-transform">
-                   <div className="bg-pink-100 text-pink-500 p-3.5 rounded-2xl flex-shrink-0">{item.i}</div>
-                   <div>
-                      <h4 className="text-sm font-black text-gray-800 mb-1 leading-tight">{item.t}</h4>
-                      <p className="text-[11px] text-gray-500 font-bold leading-relaxed">{item.d}</p>
-                   </div>
-                </div>
-              ))}
-           </div>
-        </section>
-
-        {/* Depoimentos */}
-        <section className="p-8 space-y-8 bg-white">
-          <h2 className="text-2xl font-black text-center text-gray-900">O que as <span className="text-pink-500">Catequistas</span> estão dizendo?</h2>
-          <div className="space-y-6">
-            {TESTIMONIALS.map((t, i) => (
-              <div key={i} className="bg-pink-50/50 p-6 rounded-[35px] border-2 border-white shadow-xl relative">
-                <p className="text-[13px] text-gray-600 font-bold italic mb-4">"{t.text}"</p>
-                <div className="flex items-center gap-3">
-                   <div className="w-12 h-12 bg-white rounded-full border-2 border-pink-200 overflow-hidden">
-                      <img src={t.avatar} alt={t.name} className="w-full h-full object-cover" />
-                   </div>
-                   <div>
-                      <h4 className="text-[13px] font-black text-gray-800">{t.name}</h4>
-                      <p className="text-[10px] text-pink-400 font-black uppercase">{t.role}</p>
-                   </div>
-                </div>
+        {/* O que você vai receber - GRID DETALHADA */}
+        <section className="p-8 space-y-8 bg-sky-50 relative">
+          <h2 className="text-2xl font-black text-center text-gray-900 pt-10">O que vem no seu Pack:</h2>
+          <div className="grid grid-cols-2 gap-4">
+            {[
+              { t: "Mandamentos HQ", s: "HISTÓRIAS EM QUADRINHOS", i: "📜", c: "bg-orange-50" },
+              { t: "7 Sacramentos", s: "AULAS CRIATIVAS", i: "⛪", c: "bg-blue-50" },
+              { t: "Batismo", s: "INICIAÇÃO CRISTÃ", i: "💧", c: "bg-sky-50" },
+              { t: "Confissão", s: "PENITÊNCIA LÚDICA", i: "🤍", c: "bg-pink-50" },
+              { t: "Eucaristia", s: "1ª COMUNHÃO", i: "🍞", c: "bg-yellow-50" },
+              { t: "Crisma", s: "CONFIRMAÇÃO", i: "🔥", c: "bg-red-50" },
+              { t: "Perseverança", s: "CAMINHANDO COM JESUS", i: "👣", c: "bg-green-50" },
+              { t: "Bíblia Ilustrada", s: "CONTOS EM PDF", i: "📖", c: "bg-indigo-50" },
+              { t: "Dinâmicas Kids", s: "ALEGRIA NO ENCONTRO", i: "🎈", c: "bg-pink-100" },
+              { t: "Bobbie Goods", s: "DESENHOS EXCLUSIVOS", i: "🎨", c: "bg-purple-50" },
+              { t: "Jogos & Quiz", s: "FIXAÇÃO DIVERTIDA", i: "🧩", c: "bg-orange-100" },
+              { t: "Santos & Anjos", s: "NOSSOS AMIGOS", i: "😇", c: "bg-blue-100" }
+            ].map((item, i) => (
+              <div key={i} className={`${item.c} border-4 border-white p-5 rounded-[30px] shadow-sm text-center flex flex-col items-center justify-center hover:scale-105 transition-transform`}>
+                <div className="text-4xl mb-2">{item.i}</div>
+                <h4 className="text-[13px] font-black text-gray-800 leading-tight">{item.t}</h4>
+                <p className="text-[9px] text-gray-500 font-bold uppercase mt-1 tracking-wider">{item.s}</p>
               </div>
             ))}
           </div>
+        </section>
+
+
+        {/* Imagem do Pack Completo */}
+        <section className="p-0 bg-white">
+          <img src="https://iili.io/C9zwhoQ.jpg" alt="Pack Completo" className="w-full saturate-150" />
+        </section>
+
+        {/* Imagem dos Bônus */}
+        <section className="p-0 bg-white">
+          <img src="https://iili.io/C9z8wiv.jpg" alt="Bônus Especiais" className="w-full [mask-image:linear-gradient(to_bottom,black_90%,transparent_100%)]" />
         </section>
 
         {/* SUPER OFFER CARD - MAIS COMPLETO */}
@@ -329,12 +282,12 @@ const App: React.FC = () => {
             <h2 className="text-3xl font-black text-gray-900 leading-tight">Leve o Pack Completo</h2>
           </div>
 
-          <div className="bg-white rounded-[40px] shadow-2xl overflow-hidden border-2 border-pink-100 relative">
+          <div className="bg-gradient-to-b from-white to-pink-50 rounded-[40px] shadow-[0_20px_40px_rgba(244,114,182,0.15)] border-[8px] border-pink-100 relative">
             
             {/* Header do Card */}
-            <div className="bg-pink-400 p-8 text-center text-white">
-                <h3 className="font-black text-2xl leading-tight uppercase tracking-tight">SUPER COMBO CATEQUESE KIDS</h3>
-                <p className="text-[13px] font-bold mt-2 opacity-90">TUDO O QUE VOCÊ VIU E MUITO MAIS!</p>
+            <div className="bg-pink-500 rounded-t-[32px] p-8 text-center text-white">
+                <h3 className="font-extrabold text-[22px] leading-tight uppercase tracking-tight">SUPER COMBO CATEQUESE KIDS</h3>
+                <p className="text-[12px] font-bold mt-2 opacity-90 uppercase tracking-wide">TUDO O QUE VOCÊ VIU E MUITO MAIS!</p>
             </div>
 
             <div className="p-8">
@@ -344,12 +297,12 @@ const App: React.FC = () => {
                     <span className="text-gray-400 line-through text-lg font-bold">R$ 97,00</span>
                     <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-wider">ECONOMIZE 80%</span>
                  </div>
-                 <p className="text-pink-500 text-[13px] font-black uppercase tracking-[2px] mb-1">POR APENAS</p>
-                 <div className="flex items-center justify-center text-pink-500">
-                   <span className="text-4xl font-black mr-1 mt-[-15px]">R$</span>
-                   <span className="text-7xl font-black tracking-tighter leading-none">19,90</span>
+                 <p className="text-pink-500 text-[12px] font-black uppercase tracking-[2px] mb-1">POR APENAS</p>
+                 <div className="flex items-baseline justify-center text-pink-600">
+                   <span className="text-3xl font-black mr-1">R$</span>
+                   <span className="text-[72px] font-black tracking-tighter leading-none">19,90</span>
                  </div>
-                 <p className="text-gray-400 text-[12px] font-bold mt-3 uppercase tracking-wider">ACESSO VITALÍCIO • PDF PRONTINHO</p>
+                 <p className="text-gray-400 text-[11px] font-bold mt-3 uppercase tracking-wider">ACESSO VITALÍCIO • PDF PRONTINHO</p>
               </div>
 
               <hr className="border-gray-100 mb-8" />
@@ -375,7 +328,7 @@ const App: React.FC = () => {
               {/* Botão de Checkout */}
               <button 
                 data-checkout={CHECKOUT_URL}
-                className="block w-full bg-pink-400 text-white font-black py-6 rounded-[24px] shadow-lg animate-cta text-xl uppercase leading-tight px-4 text-center mb-6"
+                className="block w-full bg-pink-600 text-white font-black py-4 rounded-[20px] shadow-[0_4px_15px_rgba(219,39,119,0.3)] animate-cta text-[18px] uppercase tracking-wide px-6 text-center mb-6 whitespace-nowrap"
               >
                 QUERO ENCANTAR MINHA TURMA
               </button>
