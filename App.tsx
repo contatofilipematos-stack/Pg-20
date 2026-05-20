@@ -303,7 +303,7 @@ const App: React.FC = () => {
                  <p className="text-pink-500 text-[12px] font-black uppercase tracking-[2px] mb-1">POR APENAS</p>
                  <div className="flex items-baseline justify-center text-pink-600">
                    <span className="text-3xl font-black mr-1">R$</span>
-                   <span className="text-[72px] font-black tracking-tighter leading-none">19,90</span>
+                   <span className="text-[72px] font-black tracking-tighter leading-none">10,00</span>
                  </div>
                  <p className="text-gray-400 text-[11px] font-bold mt-3 uppercase tracking-wider">ACESSO VITALÍCIO • PDF PRONTINHO</p>
               </div>
@@ -358,7 +358,7 @@ const App: React.FC = () => {
           </div>
           <div className="space-y-2">
             <FAQItem q="O material chega pelo correio?" a="Não, é 100% digital! Você recebe no e-mail logo após a compra, baixa e imprime quando quiser." />
-            <FAQItem q="É pago mensalmente?" a="Não! É um pagamento único de R$ 37,90 e você tem acesso para sempre." />
+            <FAQItem q="É pago mensalmente?" a="Não! É um pagamento único de R$ 10,00 e você tem acesso para sempre." />
             <FAQItem q="Como recebo o acesso?" a="Imediatamente após a confirmação do pagamento, você receberá um e-mail com o link para baixar todos os PDFs." />
           </div>
         </section>
