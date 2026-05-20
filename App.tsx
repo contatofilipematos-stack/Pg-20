@@ -1,6 +1,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { redirectWithParams } from './redirect';
+import CatechismCarousel from './src/components/CatechismCarousel';
 import { 
   Check, 
   ArrowRight, 
@@ -205,9 +206,9 @@ const App: React.FC = () => {
             <CountdownTimer />
             <button 
               onClick={() => scrollToOffer()}
-              className="w-full bg-gradient-to-r from-pink-500 to-pink-600 text-white text-xl font-black py-5 rounded-[30px] shadow-2xl animate-cta flex flex-col items-center border-b-4 border-pink-800/20"
+              className="w-full bg-gradient-to-r from-pink-500 to-pink-600 text-white text-base font-black py-5 rounded-[30px] shadow-2xl animate-cta flex flex-col items-center border-b-4 border-pink-800/20"
             >
-              <span className="flex items-center gap-2 uppercase">QUERO MEU MATERIAL AGORA <ArrowRight size={22} /></span>
+              <span className="flex items-center gap-2 uppercase whitespace-nowrap">QUERO MEU MATERIAL AGORA <ArrowRight size={22} /></span>
               <span className="text-[10px] opacity-90 mt-1 uppercase tracking-widest">Acesso Vitalício e Imediato</span>
             </button>
             <div className="flex items-center gap-6 text-[10px] font-black text-gray-400 uppercase">
@@ -234,6 +235,8 @@ const App: React.FC = () => {
             <img src="https://i.ibb.co/5hTpDGLH/Screenshot-2026-05-20-09-53-33-377-com-android-chrome-edit.jpg" alt="Qualidade que Apaixona" className="w-full rounded-[24px] [mask-image:linear-gradient(to_bottom,black_90%,transparent_100%)]" />
           </div>
         </section>
+
+        <CatechismCarousel />
 
         {/* O que você vai receber - GRID DETALHADA */}
         <section className="p-8 space-y-8 bg-sky-50 relative">
