@@ -104,9 +104,9 @@ const StickyCTA: React.FC<{ onAnchorClick: () => void }> = ({ onAnchorClick }) =
     <div className="fixed bottom-0 left-0 right-0 p-4 z-[100] glass-effect border-t-2 border-pink-100 max-w-[480px] mx-auto animate-fade-in rounded-t-[32px] shadow-[0_-10px_40px_rgba(0,0,0,0.1)]">
       <button 
         onClick={() => onAnchorClick()}
-        className="w-full bg-gradient-to-r from-pink-500 to-pink-600 text-white font-black py-4.5 rounded-[24px] shadow-xl animate-cta flex items-center justify-center gap-2 text-lg uppercase"
+        className="w-full bg-pink-400 text-white font-black py-2 rounded-full shadow-lg animate-cta flex items-center justify-center gap-2 text-xs uppercase tracking-wide whitespace-nowrap"
       >
-        <Heart size={20} fill="currentColor" />
+        <Heart size={18} fill="currentColor" />
         QUERO MEU PDF AGORA
       </button>
     </div>
@@ -328,7 +328,7 @@ const App: React.FC = () => {
               {/* Botão de Checkout */}
               <button 
                 data-checkout={CHECKOUT_URL}
-                className="block w-full bg-pink-600 text-white font-black py-4 rounded-[20px] shadow-[0_4px_15px_rgba(219,39,119,0.3)] animate-cta text-[18px] uppercase tracking-wide px-6 text-center mb-6 whitespace-nowrap"
+                className="block w-full bg-pink-600 text-white font-black py-4 rounded-[20px] shadow-[0_4px_15px_rgba(219,39,119,0.3)] animate-cta text-[13px] sm:text-[16px] uppercase tracking-wide px-2 sm:px-4 text-center mb-6 whitespace-nowrap"
               >
                 QUERO ENCANTAR MINHA TURMA
               </button>
