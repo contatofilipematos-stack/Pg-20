@@ -172,22 +172,6 @@ const App: React.FC = () => {
     }
   };
 
-  const handleFinalCheckout = () => {
-    // Fire IC event if UTMfy pixel is loaded
-    if (typeof window !== 'undefined' && (window as any).utmify?.track) {
-      try {
-        (window as any).utmify.track("InitiateCheckout");
-      } catch (e) {
-        console.error("Erro ao rastrear IC:", e);
-      }
-    }
-
-    // Delay redirect to ensure pixel has time to fire (200ms)
-    setTimeout(() => {
-      redirectWithParams(CHECKOUT_URL);
-    }, 200);
-  };
-
   return (
     <div className="min-h-screen flex justify-center selection:bg-pink-100">
       <div className="max-w-[480px] w-full bg-white shadow-2xl relative overflow-x-hidden pb-10">
@@ -390,7 +374,7 @@ const App: React.FC = () => {
 
               {/* Botão de Checkout */}
               <button 
-                onClick={() => handleFinalCheckout()}
+                data-checkout={CHECKOUT_URL}
                 className="block w-full bg-pink-400 text-white font-black py-6 rounded-[24px] shadow-lg animate-cta text-xl uppercase leading-tight px-4 text-center mb-6"
               >
                 QUERO ENCANTAR MINHA TURMA
