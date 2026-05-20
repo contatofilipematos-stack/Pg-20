@@ -329,12 +329,12 @@ const App: React.FC = () => {
               </div>
 
               {/* Botão de Checkout */}
-              <button 
-                data-checkout={CHECKOUT_URL}
+              <a 
+                href={CHECKOUT_URL}
                 className="block w-full bg-pink-600 text-white font-black py-4 rounded-[20px] shadow-[0_4px_15px_rgba(219,39,119,0.3)] animate-cta text-[13px] sm:text-[16px] uppercase tracking-wide px-2 sm:px-4 text-center mb-6 whitespace-nowrap"
               >
                 QUERO ENCANTAR MINHA TURMA
-              </button>
+              </a>
 
               {/* Segurança e Estrelas */}
               <div className="flex justify-center items-center gap-6 text-gray-400 font-black text-[11px] uppercase tracking-wider">
