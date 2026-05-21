@@ -241,14 +241,21 @@ const App: React.FC = () => {
   const [showExitModal, setShowExitModal] = useState(false);
   const [exitTimer, setExitTimer] = useState(180); // 3-minute urgency scarcity countdown inside modal
   const [modalDismissed, setModalDismissed] = useState(false);
+  const [hasClickedCheckout, setHasClickedCheckout] = useState(() => {
+    return localStorage.getItem('clicked_checkout') === 'true';
+  });
 
   // 1. Listen for Checkout Clicks
   useEffect(() => {
     const handleCheckoutClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
       const anchor = target.closest('a');
-      if (anchor && anchor.getAttribute('href') === CHECKOUT_URL) {
-        localStorage.setItem('clicked_checkout', 'true');
+      if (anchor) {
+        const href = anchor.getAttribute('href');
+        if (href === CHECKOUT_URL || href === DISCOUNT_CHECKOUT_URL) {
+          localStorage.setItem('clicked_checkout', 'true');
+          setHasClickedCheckout(true);
+        }
       }
     };
     document.addEventListener('click', handleCheckoutClick);
@@ -257,19 +264,30 @@ const App: React.FC = () => {
 
   // 2. Active Exit Intent & Checkout Return Checks
   useEffect(() => {
-    const isReturningFromCheckout = localStorage.getItem('clicked_checkout') === 'true';
+    const isReturningFromCheckout = localStorage.getItem('clicked_checkout') === 'true' || hasClickedCheckout;
     const isDismissed = localStorage.getItem('upsell_dismissed') === 'true';
 
-    // If they never clicked checkout, do absolutely nothing (no popup, no listeners)
+    // If they never clicked checkout, do absolutely nothing (no popup, no background listeners)
     if (!isReturningFromCheckout) return;
 
-    if (!isDismissed && !modalDismissed) {
-      // Small delay of 800ms for premium user-experience
-      const showTimer = setTimeout(() => {
+    const checkAndShowModal = () => {
+      const isStillDismissed = localStorage.getItem('upsell_dismissed') === 'true';
+      if (!isStillDismissed && !modalDismissed) {
         setShowExitModal(true);
-      }, 800);
+      }
+    };
+
+    // If they definitely returned from checkout (clicked_checkout in localStorage), show immediately
+    if (localStorage.getItem('clicked_checkout') === 'true' && !isDismissed && !modalDismissed) {
+      const showTimer = setTimeout(() => {
+        checkAndShowModal();
+      }, 600);
       return () => clearTimeout(showTimer);
     }
+
+    // Capture tab switching, focus, or browser back from memory (bfcache support)
+    window.addEventListener('pageshow', checkAndShowModal);
+    window.addEventListener('focus', checkAndShowModal);
 
     // 2b. Exit Intent Strategy (Desktop - mouse moves off top screen boundary)
     const handleMouseLeave = (e: MouseEvent) => {
@@ -282,7 +300,7 @@ const App: React.FC = () => {
     };
 
     // 2c. Mobile History Hijack Back-Button Strategy:
-    // When visiting the page, we push state. If they click "back", popstate fires and we open the 50% discount modal rather than letting them drop off empty handed!
+    // Only push state and hijack if they actually clicked checkout, protecting normal visitors
     const currentUrl = window.location.href;
     window.history.pushState({ exitIntent: true }, '', currentUrl);
 
@@ -290,7 +308,6 @@ const App: React.FC = () => {
       const isDismissedPop = localStorage.getItem('upsell_dismissed') === 'true';
       if (!isDismissedPop && !modalDismissed) {
         setShowExitModal(true);
-        // Push State again so that they need to click back again if they dismiss it
         window.history.pushState({ exitIntent: true }, '', currentUrl);
       }
     };
@@ -299,10 +316,12 @@ const App: React.FC = () => {
     window.addEventListener('popstate', handlePopState);
 
     return () => {
+      window.removeEventListener('pageshow', checkAndShowModal);
+      window.removeEventListener('focus', checkAndShowModal);
       document.removeEventListener('mouseleave', handleMouseLeave);
       window.removeEventListener('popstate', handlePopState);
     };
-  }, [modalDismissed]);
+  }, [modalDismissed, hasClickedCheckout]);
 
   // 3. Countdown timer for the Upsell Scarcity
   useEffect(() => {
