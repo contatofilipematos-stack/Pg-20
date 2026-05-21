@@ -475,7 +475,7 @@ const App: React.FC = () => {
               {/* Lista com Value Stack */}
               <div className="space-y-4 mb-10">
                 {[
-                  { text: "Pack Completo: Temas de Batismo à Crisma", val: "R$ 47" },
+                  { text: "Pack Completo: Temas de Batismo à Crisma", val: "R$ 57" },
                   { text: "Bônus: Coleção de Histórias Bíblicas Kids", val: "R$ 27" },
                   { text: "Bônus: Lembrancinhas e Moldes Prontos", val: "R$ 19" },
                   { text: "Super Bônus: Desenhos Bobbie Goods 100% Católicos", val: "R$ 37" },
@@ -487,9 +487,15 @@ const App: React.FC = () => {
                     </div>
                     <div className="text-left leading-tight">
                       <span className="font-bold text-gray-700 text-[13.5px] block">{item.text}</span>
-                      <span className="text-[10px] text-pink-500 font-extrabold uppercase bg-pink-50 px-2 py-0.5 rounded border border-pink-100/50 inline-block mt-1">
-                        Valor normal: {item.val} • <span className="text-green-600 font-black">HOJE GRÁTIS</span>
-                      </span>
+                      {i === 0 ? (
+                        <span className="text-[10px] text-pink-500 font-extrabold uppercase bg-pink-50 px-2 py-0.5 rounded border border-pink-100/50 inline-block mt-1">
+                          Valor normal: R$ 57 • <span className="text-pink-600 font-black animate-pulse">HOJE POR APENAS R$ 19,90</span>
+                        </span>
+                      ) : (
+                        <span className="text-[10px] text-pink-500 font-extrabold uppercase bg-pink-50 px-2 py-0.5 rounded border border-pink-100/50 inline-block mt-1">
+                          Valor normal: {item.val} • <span className="text-green-600 font-black">HOJE GRÁTIS</span>
+                        </span>
+                      )}
                     </div>
                   </div>
                 ))}
