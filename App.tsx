@@ -111,37 +111,25 @@ const CATECHIST_PURCHASES = [
 const PurchaseToast: React.FC<{ vagas: number }> = ({ vagas }) => {
   const [current, setCurrent] = useState(0);
   const [show, setShow] = useState(false);
-  const firstUpdate = useRef(true);
-
-  // Auto-toast on count drop
-  useEffect(() => {
-    if (firstUpdate.current) {
-      firstUpdate.current = false;
-      return;
-    }
-    // Vagas decreased! Hide current immediately, then show a fresh purchase after 200ms
-    setShow(false);
-    const timeout = setTimeout(() => {
-      // Pick a random or next purchase
-      setCurrent(prev => (prev + 1) % CATECHIST_PURCHASES.length);
-      setShow(true);
-    }, 200);
-
-    return () => clearTimeout(timeout);
-  }, [vagas]);
 
   useEffect(() => {
+    // Delay first notification by 12 seconds so user can read hero peacefully
     const initialTimer = setTimeout(() => {
       setShow(true);
-    }, 4000);
+      // Automatically close after 5 seconds
+      setTimeout(() => setShow(false), 5000);
+    }, 12000);
 
+    // Dynamic slower interval of 22 seconds for consecutive organic alerts
     const interval = setInterval(() => {
       setShow(false);
       setTimeout(() => {
         setCurrent(prev => (prev + 1) % CATECHIST_PURCHASES.length);
         setShow(true);
+        // Display for 5 seconds of active duration
+        setTimeout(() => setShow(false), 5000);
       }, 1000);
-    }, 12000);
+    }, 22000);
 
     return () => {
       clearTimeout(initialTimer);
@@ -301,7 +289,7 @@ const App: React.FC = () => {
               runSequentialDrop();
               if (observer) observer.disconnect();
             }
-          }, { threshold: 0.1 });
+          }, { threshold: 0.05 });
           observer.observe(target);
         }
       };
@@ -310,14 +298,8 @@ const App: React.FC = () => {
       setTimeout(checkAndRun, 100);
     }
 
-    // Backup timer: if they stay on page for 5 seconds anyway, start dropping
-    const backupId = setTimeout(() => {
-      runSequentialDrop();
-    }, 5000);
-
     return () => {
       if (observer) observer.disconnect();
-      clearTimeout(backupId);
     };
   }, [hasTriggeredDrop]);
 
