@@ -397,7 +397,7 @@ const App: React.FC = () => {
               {/* Botão de Checkout */}
               <a 
                 href={CHECKOUT_URL}
-                className="block w-full bg-pink-600 hover:bg-pink-700 text-white font-black py-4 sm:py-4.5 rounded-[22px] shadow-[0_8px_25px_rgba(219,39,119,0.35)] animate-cta text-[13px] sm:text-[17px] uppercase tracking-wider px-4 text-center mb-6 border-b-4 border-pink-800 whitespace-normal break-words leading-tight"
+                className="block w-full bg-pink-600 hover:bg-pink-700 text-white font-black py-4 sm:py-4.5 rounded-[22px] text-[13px] sm:text-[17px] uppercase tracking-wider px-4 text-center mb-6 border-b-4 border-pink-800 whitespace-normal break-words leading-tight animate-pulse-strong"
               >
                 QUERO ENCANTAR MINHA TURMA AGORA
               </a>
@@ -455,8 +455,23 @@ const App: React.FC = () => {
       <style>{`
         @keyframes fade-in { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes slide-up { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes pulse-strong {
+          0% {
+            transform: scale(1);
+            box-shadow: 0 0 0 0 rgba(219, 39, 119, 0.7), 0 8px 25px rgba(219, 39, 119, 0.35);
+          }
+          50% {
+            transform: scale(1.04);
+            box-shadow: 0 0 0 20px rgba(219, 39, 119, 0), 0 12px 35px rgba(219, 39, 119, 0.55);
+          }
+          100% {
+            transform: scale(1);
+            box-shadow: 0 0 0 0 rgba(219, 39, 119, 0), 0 8px 25px rgba(219, 39, 119, 0.35);
+          }
+        }
         .animate-fade-in { animation: fade-in 0.4s ease-out forwards; }
         .animate-slide-up { animation: slide-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .animate-pulse-strong { animation: pulse-strong 1.5s infinite cubic-bezier(0.25, 1, 0.5, 1); }
         .glass-effect { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); }
       `}</style>
     </div>
