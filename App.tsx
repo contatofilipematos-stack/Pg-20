@@ -92,14 +92,20 @@ const CountdownTimer: React.FC = () => {
 };
 
 const CATECHIST_PURCHASES = [
-  { name: "Mariana S.", city: "Porto Alegre - RS", time: "1 minuto atrás" },
-  { name: "Clarice de Oliveira", city: "Campinas - SP", time: "3 minutos atrás" },
-  { name: "Regina M.", city: "Belo Horizonte - MG", time: "Recém adquirido" },
-  { name: "Luciana F.", city: "Salvador - BA", time: "2 minutos atrás" },
-  { name: "Suely Santos", city: "São Paulo - SP", time: "Recém adquirido" },
-  { name: "Ana Paula de Sousa", city: "Curitiba - PR", time: "5 minutos atrás" },
-  { name: "Fernanda R.", city: "Rio de Janeiro - RJ", time: "1 minuto atrás" },
-  { name: "Patrícia Nunes", city: "Goiânia - GO", time: "Recém adquirido" },
+  { name: "Mariana S.", city: "Porto Alegre - RS", time: "1 minuto atrás", avatar: "https://i.ibb.co/pBsXfBcb/download-18.jpg" },
+  { name: "Clarice de Oliveira", city: "Campinas - SP", time: "3 minutos atrás", avatar: "https://i.ibb.co/0RVtSHVp/download-17.jpg" },
+  { name: "Regina Maria", city: "Belo Horizonte - MG", time: "Recém adquirido", avatar: "https://i.ibb.co/2YZsMdBn/download-16.jpg" },
+  { name: "Luciana F.", city: "Salvador - BA", time: "2 minutos atrás", avatar: "https://i.ibb.co/ymYyyTxP/download-15.jpg" },
+  { name: "Suely Santos", city: "São Paulo - SP", time: "Recém adquirido", avatar: "https://i.ibb.co/hxqQsxB2/download-14.jpg" },
+  { name: "Ana Paula de Sousa", city: "Curitiba - PR", time: "5 minutos atrás", avatar: "https://i.ibb.co/WvjmsmwN/download-13.jpg" },
+  { name: "Fernanda Ribeiro", city: "Rio de Janeiro - RJ", time: "1 minuto atrás", avatar: "https://i.ibb.co/7xyrsZRN/images-5.jpg" },
+  { name: "Patrícia Nunes", city: "Goiânia - GO", time: "Recém adquirido", avatar: "https://i.ibb.co/JRCp9dWb/download-12.jpg" },
+  { name: "Cristina M.", city: "Fortaleza - CE", time: "4 minutos atrás", avatar: "https://i.ibb.co/fdrz0Zjb/download-11.jpg" },
+  { name: "Rita C.", city: "Recife - PE", time: "Recém adquirido", avatar: "https://i.ibb.co/chMZPkJ1/images-4.jpg" },
+  { name: "Cláudia Regina", city: "Manaus - AM", time: "1 minuto atrás", avatar: "https://i.ibb.co/mCYQ5QKV/images-3.jpg" },
+  { name: "Rosana Silva", city: "Vitória - ES", time: "2 minutos atrás", avatar: "https://i.ibb.co/pB3cr8Rm/images-2.jpg" },
+  { name: "Sandra de Sousa", city: "Florianópolis - SC", time: "3 minutos atrás", avatar: "https://i.ibb.co/GfcCShNV/images-1.jpg" },
+  { name: "Fátima Medeiros", city: "Natal - RN", time: "Recém adquirido", avatar: "https://i.ibb.co/MxnCcV7T/images.jpg" },
 ];
 
 const PurchaseToast: React.FC = () => {
@@ -130,10 +136,15 @@ const PurchaseToast: React.FC = () => {
 
   return (
     <div className="fixed bottom-24 left-4 right-4 z-[90] max-w-[480px] mx-auto animate-slide-up pointer-events-none px-2 sm:px-4">
-      <div className="bg-white/95 backdrop-blur-md rounded-2xl border-2 border-pink-100 shadow-[0_12px_30px_rgba(219,39,119,0.15)] p-3 flex items-center gap-3 max-w-[280px]">
-        <div className="w-8 h-8 rounded-full bg-pink-100 text-pink-500 flex items-center justify-center font-black text-sm shrink-0 relative animate-pulse">
-          ⛪
-          <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-green-500 rounded-full border-2 border-white" />
+      <div className="bg-white/95 backdrop-blur-md rounded-2xl border-2 border-pink-100 shadow-[0_12px_30px_rgba(219,39,119,0.15)] p-3 flex items-center gap-3 max-w-[310px]">
+        <div className="w-10 h-10 rounded-full bg-pink-50 flex items-center justify-center shrink-0 relative border border-pink-100">
+          <img 
+            src={item.avatar} 
+            alt={item.name} 
+            className="w-full h-full rounded-full object-cover"
+            referrerPolicy="no-referrer"
+          />
+          <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-green-500 rounded-full border-2 border-white animate-pulse" />
         </div>
         <div className="text-left leading-tight">
           <p className="text-[9px] text-gray-400 font-extrabold uppercase tracking-widest">Inscrição Confirmada!</p>
