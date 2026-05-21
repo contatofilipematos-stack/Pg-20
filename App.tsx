@@ -59,6 +59,8 @@ const TESTIMONIALS = [
 ];
 
 const CHECKOUT_URL = "https://pay.lowify.com.br/checkout?product_id=jlUfor";
+// URL com 50% de desconto adicional (R$ 9,90) para o Upsell de saída / intenção de sair
+const DISCOUNT_CHECKOUT_URL = "https://pay.lowify.com.br/checkout?product_id=jlUfor_68"; // O cliente pode trocar pelo link com cupom ou produto de R$ 9,90 se necessário!
 
 // --- Sub-Components ---
 
@@ -234,6 +236,88 @@ const App: React.FC = () => {
   const [hasTriggeredDrop, setHasTriggeredDrop] = useState(false);
   const offerRef = useRef<HTMLDivElement>(null);
   const bannerRef = useRef<HTMLDivElement>(null);
+
+  // Upsell / Exit Intent State
+  const [showExitModal, setShowExitModal] = useState(false);
+  const [exitTimer, setExitTimer] = useState(180); // 3-minute urgency scarcity countdown inside modal
+  const [modalDismissed, setModalDismissed] = useState(false);
+
+  // 1. Listen for Checkout Clicks
+  useEffect(() => {
+    const handleCheckoutClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      const anchor = target.closest('a');
+      if (anchor && anchor.getAttribute('href') === CHECKOUT_URL) {
+        localStorage.setItem('clicked_checkout', 'true');
+      }
+    };
+    document.addEventListener('click', handleCheckoutClick);
+    return () => document.removeEventListener('click', handleCheckoutClick);
+  }, []);
+
+  // 2. Active Exit Intent & Checkout Return Checks
+  useEffect(() => {
+    const isReturningFromCheckout = localStorage.getItem('clicked_checkout') === 'true';
+    const isDismissed = localStorage.getItem('upsell_dismissed') === 'true';
+
+    // If they never clicked checkout, do absolutely nothing (no popup, no listeners)
+    if (!isReturningFromCheckout) return;
+
+    if (!isDismissed && !modalDismissed) {
+      // Small delay of 800ms for premium user-experience
+      const showTimer = setTimeout(() => {
+        setShowExitModal(true);
+      }, 800);
+      return () => clearTimeout(showTimer);
+    }
+
+    // 2b. Exit Intent Strategy (Desktop - mouse moves off top screen boundary)
+    const handleMouseLeave = (e: MouseEvent) => {
+      if (e.clientY < 20) {
+        const isDismissedIE = localStorage.getItem('upsell_dismissed') === 'true';
+        if (!isDismissedIE && !modalDismissed) {
+          setShowExitModal(true);
+        }
+      }
+    };
+
+    // 2c. Mobile History Hijack Back-Button Strategy:
+    // When visiting the page, we push state. If they click "back", popstate fires and we open the 50% discount modal rather than letting them drop off empty handed!
+    const currentUrl = window.location.href;
+    window.history.pushState({ exitIntent: true }, '', currentUrl);
+
+    const handlePopState = (e: PopStateEvent) => {
+      const isDismissedPop = localStorage.getItem('upsell_dismissed') === 'true';
+      if (!isDismissedPop && !modalDismissed) {
+        setShowExitModal(true);
+        // Push State again so that they need to click back again if they dismiss it
+        window.history.pushState({ exitIntent: true }, '', currentUrl);
+      }
+    };
+
+    document.addEventListener('mouseleave', handleMouseLeave);
+    window.addEventListener('popstate', handlePopState);
+
+    return () => {
+      document.removeEventListener('mouseleave', handleMouseLeave);
+      window.removeEventListener('popstate', handlePopState);
+    };
+  }, [modalDismissed]);
+
+  // 3. Countdown timer for the Upsell Scarcity
+  useEffect(() => {
+    if (!showExitModal) return;
+    const interval = setInterval(() => {
+      setExitTimer(prev => {
+        if (prev <= 1) {
+          clearInterval(interval);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [showExitModal]);
 
   useEffect(() => {
     if (hasTriggeredDrop) return;
@@ -558,6 +642,84 @@ const App: React.FC = () => {
 
         {/* Sticky CTA */}
         <StickyCTA />
+
+        {/* Upsell / Exit Intent / Checkout Return Modal */}
+        {showExitModal && (
+          <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[200] flex items-center justify-center p-4 animate-fade-in">
+            <div className="bg-white rounded-[28px] w-full max-w-[330px] overflow-hidden border-[4px] border-pink-100 shadow-[0_20px_50px_rgba(219,39,119,0.2)] relative animate-slide-up flex flex-col p-5 text-center space-y-3.5">
+              
+              {/* Special Floating Badge */}
+              <div className="bg-pink-100 text-pink-600 text-[9px] font-black px-3 py-1 rounded-full mx-auto w-fit uppercase tracking-wider border border-pink-200">
+                Oportunidade de Resgate
+              </div>
+
+              {/* Title */}
+              <h3 className="text-lg font-black text-pink-600 leading-tight">
+                ESPERE! NÃO VÁ EMBORA
+              </h3>
+
+              {/* Pitch */}
+              <p className="text-[11.5px] text-gray-500 font-bold leading-normal px-1">
+                Garante o <span className="text-pink-500 font-extrabold">Pack Catequese Kids</span> agora pela metade do preço promocional para não perder esse material.
+              </p>
+
+              {/* Offer Details Box */}
+              <div className="bg-pink-50/40 rounded-2xl border border-pink-100/60 p-3.5 space-y-1">
+                <span className="text-[9px] text-pink-500 font-bold uppercase tracking-wider block">
+                  Desconto Especial de 50%
+                </span>
+
+                <div className="space-y-0.5">
+                  <div className="text-gray-400 text-[10.5px] font-semibold line-through pb-0.5">
+                    De R$ 19,90 por apenas
+                  </div>
+                  <div className="text-2xl min-[360px]:text-3xl font-black text-pink-600 tracking-tight leading-none py-1">
+                    R$ 9,90
+                  </div>
+                  <div className="text-[10px] text-gray-400 font-bold">
+                    Acesso Vitalício e Imediato
+                  </div>
+                </div>
+              </div>
+
+              {/* Countdown urgency inside modal */}
+              <div className="text-[9.5px] text-gray-400 font-extrabold uppercase">
+                O link expira em: <span className="font-mono text-pink-600 bg-pink-50/50 px-2 py-0.5 rounded border border-pink-100 ml-1 font-black">{Math.floor(exitTimer / 60)}:{(exitTimer % 60).toString().padStart(2, '0')}</span>
+              </div>
+
+              {/* Buttons */}
+              <div className="space-y-2 pt-1">
+                <a
+                  href={DISCOUNT_CHECKOUT_URL}
+                  onClick={() => {
+                    localStorage.setItem('upsell_dismissed', 'true');
+                    setModalDismissed(true);
+                  }}
+                  className="block w-full bg-pink-500 hover:bg-pink-600 text-white font-black py-3 rounded-xl text-[12px] uppercase tracking-wider transition-all text-center leading-tight hover:scale-[1.01]"
+                >
+                  Quero o Desconto
+                </a>
+
+                <button
+                  onClick={() => {
+                    localStorage.setItem('upsell_dismissed', 'true');
+                    setModalDismissed(true);
+                    setShowExitModal(false);
+                  }}
+                  className="text-[10px] text-gray-400 font-bold hover:text-pink-500 hover:underline uppercase tracking-wider block mx-auto pt-0.5"
+                >
+                  Não quero economizar
+                </button>
+              </div>
+
+              {/* Badges footer */}
+              <div className="flex items-center justify-center gap-2 text-[8px] text-gray-400 font-extrabold uppercase border-t border-gray-100 pt-2.5">
+                <span className="flex items-center gap-1"><ShieldCheck size={11} className="text-pink-400" /> Compra 100% Segura</span>
+              </div>
+
+            </div>
+          </div>
+        )}
       </div>
       <style>{`
         @keyframes fade-in { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
