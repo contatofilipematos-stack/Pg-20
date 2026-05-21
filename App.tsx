@@ -108,14 +108,32 @@ const CATECHIST_PURCHASES = [
   { name: "Fátima Medeiros", city: "Natal - RN", time: "Recém adquirido", avatar: "https://i.ibb.co/MxnCcV7T/images.jpg" },
 ];
 
-const PurchaseToast: React.FC = () => {
+const PurchaseToast: React.FC<{ vagas: number }> = ({ vagas }) => {
   const [current, setCurrent] = useState(0);
   const [show, setShow] = useState(false);
+  const firstUpdate = useRef(true);
+
+  // Auto-toast on count drop
+  useEffect(() => {
+    if (firstUpdate.current) {
+      firstUpdate.current = false;
+      return;
+    }
+    // Vagas decreased! Hide current immediately, then show a fresh purchase after 200ms
+    setShow(false);
+    const timeout = setTimeout(() => {
+      // Pick a random or next purchase
+      setCurrent(prev => (prev + 1) % CATECHIST_PURCHASES.length);
+      setShow(true);
+    }, 200);
+
+    return () => clearTimeout(timeout);
+  }, [vagas]);
 
   useEffect(() => {
     const initialTimer = setTimeout(() => {
       setShow(true);
-    }, 3000);
+    }, 4000);
 
     const interval = setInterval(() => {
       setShow(false);
@@ -123,7 +141,7 @@ const PurchaseToast: React.FC = () => {
         setCurrent(prev => (prev + 1) % CATECHIST_PURCHASES.length);
         setShow(true);
       }, 1000);
-    }, 10000);
+    }, 12000);
 
     return () => {
       clearTimeout(initialTimer);
@@ -223,13 +241,103 @@ const FAQItem: React.FC<{ q: string; a: string }> = ({ q, a }) => {
 // --- Main App ---
 
 const App: React.FC = () => {
-  const [vagas, setVagas] = useState(14);
+  const [vagas, setVagas] = useState<number>(17);
+  const [isVagasFlash, setIsVagasFlash] = useState(false);
+  const [hasTriggeredDrop, setHasTriggeredDrop] = useState(false);
   const offerRef = useRef<HTMLDivElement>(null);
+  const bannerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const interval = setInterval(() => setVagas(prev => (prev > 2 ? prev - 1 : prev)), 60000);
+    if (hasTriggeredDrop) return;
+
+    const runSequentialDrop = () => {
+      setHasTriggeredDrop(true);
+      
+      // First drop (17 -> 16) after 1.2s
+      setTimeout(() => {
+        setVagas(prev => {
+          if (prev > 3) {
+            setIsVagasFlash(true);
+            setTimeout(() => setIsVagasFlash(false), 850);
+            return prev - 1;
+          }
+          return prev;
+        });
+
+        // Second drop (16 -> 15) after 1.8s
+        setTimeout(() => {
+          setVagas(prev => {
+            if (prev > 3) {
+              setIsVagasFlash(true);
+              setTimeout(() => setIsVagasFlash(false), 850);
+              return prev - 1;
+            }
+            return prev;
+          });
+
+          // Third drop (15 -> 14) after 1.8s
+          setTimeout(() => {
+            setVagas(prev => {
+              if (prev > 3) {
+                setIsVagasFlash(true);
+                setTimeout(() => setIsVagasFlash(false), 850);
+                return prev - 1;
+              }
+              return prev;
+            });
+          }, 1800);
+        }, 1800);
+      }, 1200);
+    };
+
+    // Trigger on scroll (when the pricing banner enters viewport)
+    let observer: IntersectionObserver | null = null;
+    if (typeof window !== 'undefined' && 'IntersectionObserver' in window) {
+      const checkAndRun = () => {
+        const target = bannerRef.current || document.getElementById("urgency-banner");
+        if (target) {
+          observer = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting) {
+              runSequentialDrop();
+              if (observer) observer.disconnect();
+            }
+          }, { threshold: 0.1 });
+          observer.observe(target);
+        }
+      };
+      
+      // Schedule check to ensure element is rendered
+      setTimeout(checkAndRun, 100);
+    }
+
+    // Backup timer: if they stay on page for 5 seconds anyway, start dropping
+    const backupId = setTimeout(() => {
+      runSequentialDrop();
+    }, 5000);
+
+    return () => {
+      if (observer) observer.disconnect();
+      clearTimeout(backupId);
+    };
+  }, [hasTriggeredDrop]);
+
+  useEffect(() => {
+    // Normal slow ambient decrement every 50 seconds to continue standard urgency decay down to 3
+    const interval = setInterval(() => {
+      if (hasTriggeredDrop) {
+        setVagas(prev => {
+          if (prev > 3) {
+            setIsVagasFlash(true);
+            setTimeout(() => setIsVagasFlash(false), 850);
+            return prev - 1;
+          }
+          return prev;
+        });
+      }
+    }, 50000);
+
     return () => clearInterval(interval);
-  }, []);
+  }, [hasTriggeredDrop]);
 
   const scrollToOffer = (e?: React.MouseEvent) => {
     if (e) e.preventDefault();
@@ -245,7 +353,7 @@ const App: React.FC = () => {
         {/* Urgency Header */}
         <div className="bg-gradient-to-r from-pink-500 to-pink-400 text-white py-2 px-4 text-[10px] font-black text-center flex justify-center items-center gap-2 uppercase tracking-wider">
           <Sun size={12} fill="white" className="animate-pulse" />
-          Apenas {vagas} vagas com o bônus "Bobbie Goods" exclusivo!
+          Apenas <span className={`inline-block transition-all duration-300 transform ${isVagasFlash ? 'text-yellow-200 scale-135 font-black drop-shadow-[0_0_8px_rgba(253,224,71,0.8)]' : ''}`}>{vagas}</span> vagas com o bônus "Bobbie Goods" exclusivo!
         </div>
 
         {/* Hero */}
@@ -375,8 +483,8 @@ const App: React.FC = () => {
                  <p className="text-gray-400 text-[11px] font-bold mt-3 uppercase tracking-wider">ACESSO VITALÍCIO • DEVOLUÇÃO EM 7 DIAS</p>
                  
                  {/* Blinking Urgency Banner inside Pricing box */}
-                 <div className="mt-4 bg-red-50 border border-red-100 text-red-600 rounded-xl p-3 text-[11px] font-black uppercase tracking-wide flex items-center justify-center gap-1.5 animate-pulse">
-                   <span>⚠️ VAGAS PROMOCIONAIS ESGOTANDO (APENAS 3 RESTANTES)</span>
+                 <div id="urgency-banner" ref={bannerRef} className="mt-4 bg-red-50 border border-red-100 text-red-600 rounded-xl p-3 text-[11px] font-black uppercase tracking-wide flex items-center justify-center gap-1.5 animate-pulse">
+                   <span>⚠️ VAGAS PROMOCIONAIS ESGOTANDO (APENAS <span className={`inline-block transition-all duration-300 transform ${isVagasFlash ? 'text-pink-600 scale-150 font-black drop-shadow-[0_0_12px_rgba(219,39,119,0.7)]' : ''}`}>{vagas}</span> RESTANTES)</span>
                  </div>
               </div>
 
@@ -458,7 +566,7 @@ const App: React.FC = () => {
         </footer>
 
         {/* Purchase Toast notification for ultimate social proof */}
-        <PurchaseToast />
+        <PurchaseToast vagas={vagas} />
 
         {/* Sticky CTA */}
         <StickyCTA />
