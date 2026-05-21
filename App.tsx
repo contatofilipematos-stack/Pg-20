@@ -454,8 +454,8 @@ const App: React.FC = () => {
               {/* Preço */}
               <div className="text-center mb-8">
                  <div className="flex items-center justify-center gap-3 mb-2">
-                    <span className="text-gray-400 line-through text-lg font-bold">R$ 97,00</span>
-                    <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-wider">90% DE DESCONTO</span>
+                    <span className="text-gray-400 line-through text-lg font-bold">R$ 57,00</span>
+                    <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-wider">65% DE DESCONTO</span>
                  </div>
                  <p className="text-pink-500 text-[12px] font-black uppercase tracking-[2px] mb-1">POR APENAS</p>
                  <div className="flex items-baseline justify-center text-pink-600">
