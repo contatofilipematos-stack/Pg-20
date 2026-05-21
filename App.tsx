@@ -351,9 +351,9 @@ const App: React.FC = () => {
       <div className="max-w-[480px] w-full bg-white shadow-2xl relative overflow-x-hidden pb-10">
         
         {/* Urgency Header */}
-        <div className="bg-gradient-to-r from-pink-500 to-pink-400 text-white py-2 px-3 text-[10px] sm:text-[11px] font-black text-center flex justify-center items-center gap-1.5 uppercase tracking-wide leading-tight">
-          <Sun size={12} fill="white" className="animate-pulse shrink-0" />
-          <span>VAGAS LIMITADAS PARA ADQUIRIR O MATERIAL: RESTAM APENAS <span className={`inline-block transition-all duration-300 transform ${isVagasFlash ? 'text-yellow-200 scale-135 font-black drop-shadow-[0_0_8px_rgba(253,224,71,0.8)]' : ''}`}>{vagas}</span>!</span>
+        <div className="bg-gradient-to-r from-pink-500 to-pink-400 text-white py-2 px-2 text-[8.2px] min-[360px]:text-[9px] min-[390px]:text-[10px] sm:text-[11px] font-black text-center flex justify-center items-center gap-1 uppercase tracking-tight leading-none whitespace-nowrap">
+          <Sun size={11} fill="white" className="animate-pulse shrink-0" />
+          <span>VAGAS LIMITADAS PARA ADQUIRIR O MATERIAL: RESTAM APENAS <span className={`inline-block transition-all duration-300 transform ${isVagasFlash ? 'text-yellow-200 scale-125 font-black drop-shadow-[0_0_8px_rgba(253,224,71,0.8)]' : ''}`}>{vagas}</span>!</span>
         </div>
 
         {/* Hero */}
