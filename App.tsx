@@ -455,12 +455,12 @@ const App: React.FC = () => {
               <div className="text-center mb-8">
                  <div className="flex items-center justify-center gap-3 mb-2">
                     <span className="text-gray-400 line-through text-lg font-bold">R$ 57,00</span>
-                    <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-wider">65% DE DESCONTO</span>
+                    <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-wider">82% DE DESCONTO</span>
                  </div>
                  <p className="text-pink-500 text-[12px] font-black uppercase tracking-[2px] mb-1">POR APENAS</p>
                  <div className="flex items-baseline justify-center text-pink-600">
                    <span className="text-3xl font-black mr-1">R$</span>
-                   <span className="text-[72px] font-black tracking-tighter leading-none animate-pulse">19,90</span>
+                   <span className="text-[72px] font-black tracking-tighter leading-none animate-pulse">10,00</span>
                  </div>
                  <p className="text-gray-400 text-[11px] font-bold mt-3 uppercase tracking-wider">ACESSO VITALÍCIO • DEVOLUÇÃO EM 7 DIAS</p>
                  
@@ -489,7 +489,7 @@ const App: React.FC = () => {
                       <span className="font-bold text-gray-700 text-[13.5px] block">{item.text}</span>
                       {i === 0 ? (
                         <span className="text-[10px] text-pink-500 font-extrabold uppercase bg-pink-50 px-2 py-0.5 rounded border border-pink-100/50 inline-block mt-1">
-                          Valor normal: R$ 57 • <span className="text-pink-600 font-black animate-pulse">HOJE POR APENAS R$ 19,90</span>
+                          Valor normal: R$ 57 • <span className="text-pink-600 font-black animate-pulse">HOJE POR APENAS R$ 10,00</span>
                         </span>
                       ) : (
                         <span className="text-[10px] text-pink-500 font-extrabold uppercase bg-pink-50 px-2 py-0.5 rounded border border-pink-100/50 inline-block mt-1">
@@ -542,7 +542,7 @@ const App: React.FC = () => {
           </div>
           <div className="space-y-2">
             <FAQItem q="O material chega pelo correio?" a="Não, é 100% digital! Você recebe no e-mail logo após a compra, baixa e imprime quando quiser." />
-            <FAQItem q="É pago mensalmente?" a="Não! É um pagamento único de R$ 19,90 e você tem acesso para sempre." />
+            <FAQItem q="É pago mensalmente?" a="Não! É um pagamento único de R$ 10,00 e você tem acesso para sempre." />
             <FAQItem q="Como recebo o acesso?" a="Imediatamente após a confirmação do pagamento, você receberá um e-mail com o link para baixar todos os PDFs." />
           </div>
         </section>
