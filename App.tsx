@@ -1,7 +1,6 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { redirectWithParams } from './redirect';
-import CatechismCarousel from './src/components/CatechismCarousel';
 import { 
   Check, 
   ArrowRight, 
@@ -105,9 +104,9 @@ const StickyCTA: React.FC<{ onAnchorClick: () => void }> = ({ onAnchorClick }) =
     <div className="fixed bottom-0 left-0 right-0 p-4 z-[100] glass-effect border-t-2 border-pink-100 max-w-[480px] mx-auto animate-fade-in rounded-t-[32px] shadow-[0_-10px_40px_rgba(0,0,0,0.1)]">
       <button 
         onClick={() => onAnchorClick()}
-        className="w-full bg-pink-400 text-white font-black py-2 rounded-full shadow-lg animate-cta flex items-center justify-center gap-2 text-xs uppercase tracking-wide whitespace-nowrap"
+        className="w-full bg-gradient-to-r from-pink-500 to-pink-600 text-white font-black py-4.5 rounded-[24px] shadow-xl animate-cta flex items-center justify-center gap-2 text-lg uppercase"
       >
-        <Heart size={18} fill="currentColor" />
+        <Heart size={20} fill="currentColor" />
         QUERO MEU PDF AGORA
       </button>
     </div>
@@ -206,9 +205,9 @@ const App: React.FC = () => {
             <CountdownTimer />
             <button 
               onClick={() => scrollToOffer()}
-              className="w-full bg-gradient-to-r from-pink-500 to-pink-600 text-white text-base font-black py-5 rounded-[30px] shadow-2xl animate-cta flex flex-col items-center border-b-4 border-pink-800/20"
+              className="w-full bg-gradient-to-r from-pink-500 to-pink-600 text-white text-xl font-black py-5 rounded-[30px] shadow-2xl animate-cta flex flex-col items-center border-b-4 border-pink-800/20"
             >
-              <span className="flex items-center gap-2 uppercase whitespace-nowrap">QUERO MEU MATERIAL AGORA <ArrowRight size={22} /></span>
+              <span className="flex items-center gap-2 uppercase">QUERO MEU MATERIAL AGORA <ArrowRight size={22} /></span>
               <span className="text-[10px] opacity-90 mt-1 uppercase tracking-widest">Acesso Vitalício e Imediato</span>
             </button>
             <div className="flex items-center gap-6 text-[10px] font-black text-gray-400 uppercase">
@@ -235,8 +234,6 @@ const App: React.FC = () => {
             <img src="https://i.ibb.co/5hTpDGLH/Screenshot-2026-05-20-09-53-33-377-com-android-chrome-edit.jpg" alt="Qualidade que Apaixona" className="w-full rounded-[24px] [mask-image:linear-gradient(to_bottom,black_90%,transparent_100%)]" />
           </div>
         </section>
-
-        <CatechismCarousel />
 
         {/* O que você vai receber - GRID DETALHADA */}
         <section className="p-8 space-y-8 bg-sky-50 relative">
@@ -285,30 +282,30 @@ const App: React.FC = () => {
             <h2 className="text-3xl font-black text-gray-900 leading-tight">Leve o Pack Completo</h2>
           </div>
 
-          <div className="bg-gradient-to-b from-white to-pink-50/80 rounded-[40px] shadow-[0_25px_50px_rgba(236,72,153,0.22)] border-[8px] border-pink-200 relative">
+          <div className="bg-gradient-to-b from-white to-pink-50 rounded-[40px] shadow-[0_20px_40px_rgba(244,114,182,0.15)] border-[8px] border-pink-100 relative">
             
             {/* Header do Card */}
-            <div className="bg-gradient-to-r from-pink-500 via-rose-500 to-pink-500 bg-[size:150%_auto] rounded-t-[32px] p-8 text-center text-white shadow-inner">
-                <h3 className="font-black text-[22px] leading-tight uppercase tracking-tight drop-shadow-sm">SUPER COMBO CATEQUESE KIDS</h3>
-                <p className="text-[12px] font-black mt-2 opacity-95 uppercase tracking-wider bg-white/10 py-1 px-3 rounded-full inline-block">TUDO O QUE VOCÊ VIU E MUITO MAIS! ✨</p>
+            <div className="bg-pink-500 rounded-t-[32px] p-8 text-center text-white">
+                <h3 className="font-extrabold text-[22px] leading-tight uppercase tracking-tight">SUPER COMBO CATEQUESE KIDS</h3>
+                <p className="text-[12px] font-bold mt-2 opacity-90 uppercase tracking-wide">TUDO O QUE VOCÊ VIU E MUITO MAIS!</p>
             </div>
 
             <div className="p-8">
               {/* Preço */}
               <div className="text-center mb-8">
-                 <div className="flex items-center justify-center gap-3 mb-3">
+                 <div className="flex items-center justify-center gap-3 mb-2">
                     <span className="text-gray-400 line-through text-lg font-bold">R$ 97,00</span>
-                    <span className="bg-green-150 text-green-700 px-3.5 py-1 rounded-full text-[11px] font-black uppercase tracking-wider border border-green-200/50">ECONOMIZE 80%</span>
+                    <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-wider">ECONOMIZE 80%</span>
                  </div>
-                 <p className="text-pink-600 text-[11px] font-black uppercase tracking-[3px] bg-pink-100/60 px-3 py-1 rounded-full w-fit mx-auto mb-2">POR APENAS</p>
-                 <div className="flex items-baseline justify-center text-pink-500 drop-shadow-sm">
+                 <p className="text-pink-500 text-[12px] font-black uppercase tracking-[2px] mb-1">POR APENAS</p>
+                 <div className="flex items-baseline justify-center text-pink-600">
                    <span className="text-3xl font-black mr-1">R$</span>
-                   <span className="text-[72px] font-black tracking-tighter leading-none bg-gradient-to-br from-pink-500 to-rose-600 bg-clip-text text-transparent">10,00</span>
+                   <span className="text-[72px] font-black tracking-tighter leading-none">10,00</span>
                  </div>
                  <p className="text-gray-400 text-[11px] font-bold mt-3 uppercase tracking-wider">ACESSO VITALÍCIO • PDF PRONTINHO</p>
               </div>
 
-              <hr className="border-pink-100/65 mb-8" />
+              <hr className="border-gray-100 mb-8" />
 
               {/* Lista */}
               <div className="space-y-5 mb-10">
@@ -320,10 +317,10 @@ const App: React.FC = () => {
                   "Desenhos Bobbie Goods Exclusivos",
                 ].map((item, i) => (
                   <div key={i} className="flex items-center gap-3">
-                    <div className="bg-pink-500 text-white p-1 rounded-full shadow-md shadow-pink-500/20">
-                      <Check size={14} strokeWidth={4.5} />
+                    <div className="bg-pink-100 text-pink-500 p-1 rounded-full">
+                      <Check size={16} strokeWidth={3} />
                     </div>
-                    <span className="font-extrabold text-gray-700 text-[14.5px] leading-tight">{item}</span>
+                    <span className="font-bold text-gray-700 text-[14px] leading-tight">{item}</span>
                   </div>
                 ))}
               </div>
@@ -331,7 +328,7 @@ const App: React.FC = () => {
               {/* Botão de Checkout */}
               <button 
                 data-checkout={CHECKOUT_URL}
-                className="block w-full bg-gradient-to-r from-pink-500 via-rose-500 to-pink-600 text-white font-black py-4.5 rounded-[22px] shadow-[0_10px_25px_rgba(244,63,94,0.45)] hover:shadow-[0_12px_30px_rgba(244,63,94,0.55)] transition-all duration-300 transform hover:scale-[1.01] active:scale-[0.99] animate-cta text-[14px] sm:text-[16px] uppercase tracking-wider px-2 sm:px-4 text-center mb-6 whitespace-nowrap border-b-4 border-rose-700/40"
+                className="block w-full bg-pink-600 text-white font-black py-4 rounded-[20px] shadow-[0_4px_15px_rgba(219,39,119,0.3)] animate-cta text-[13px] sm:text-[16px] uppercase tracking-wide px-2 sm:px-4 text-center mb-6 whitespace-nowrap"
               >
                 QUERO ENCANTAR MINHA TURMA
               </button>
