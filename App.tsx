@@ -91,78 +91,7 @@ const CountdownTimer: React.FC = () => {
   );
 };
 
-const CATECHIST_PURCHASES = [
-  { name: "Mariana S.", city: "Porto Alegre - RS", time: "1 minuto atrás", avatar: "https://i.ibb.co/pBsXfBcb/download-18.jpg" },
-  { name: "Clarice de Oliveira", city: "Campinas - SP", time: "3 minutos atrás", avatar: "https://i.ibb.co/0RVtSHVp/download-17.jpg" },
-  { name: "Regina Maria", city: "Belo Horizonte - MG", time: "Recém adquirido", avatar: "https://i.ibb.co/2YZsMdBn/download-16.jpg" },
-  { name: "Luciana F.", city: "Salvador - BA", time: "2 minutos atrás", avatar: "https://i.ibb.co/ymYyyTxP/download-15.jpg" },
-  { name: "Suely Santos", city: "São Paulo - SP", time: "Recém adquirido", avatar: "https://i.ibb.co/hxqQsxB2/download-14.jpg" },
-  { name: "Ana Paula de Sousa", city: "Curitiba - PR", time: "5 minutos atrás", avatar: "https://i.ibb.co/WvjmsmwN/download-13.jpg" },
-  { name: "Fernanda Ribeiro", city: "Rio de Janeiro - RJ", time: "1 minuto atrás", avatar: "https://i.ibb.co/7xyrsZRN/images-5.jpg" },
-  { name: "Patrícia Nunes", city: "Goiânia - GO", time: "Recém adquirido", avatar: "https://i.ibb.co/JRCp9dWb/download-12.jpg" },
-  { name: "Cristina M.", city: "Fortaleza - CE", time: "4 minutos atrás", avatar: "https://i.ibb.co/fdrz0Zjb/download-11.jpg" },
-  { name: "Rita C.", city: "Recife - PE", time: "Recém adquirido", avatar: "https://i.ibb.co/chMZPkJ1/images-4.jpg" },
-  { name: "Cláudia Regina", city: "Manaus - AM", time: "1 minuto atrás", avatar: "https://i.ibb.co/mCYQ5QKV/images-3.jpg" },
-  { name: "Rosana Silva", city: "Vitória - ES", time: "2 minutos atrás", avatar: "https://i.ibb.co/pB3cr8Rm/images-2.jpg" },
-  { name: "Sandra de Sousa", city: "Florianópolis - SC", time: "3 minutos atrás", avatar: "https://i.ibb.co/GfcCShNV/images-1.jpg" },
-  { name: "Fátima Medeiros", city: "Natal - RN", time: "Recém adquirido", avatar: "https://i.ibb.co/MxnCcV7T/images.jpg" },
-];
-
-const PurchaseToast: React.FC<{ vagas: number }> = ({ vagas }) => {
-  const [current, setCurrent] = useState(0);
-  const [show, setShow] = useState(false);
-
-  useEffect(() => {
-    // Delay first notification by 12 seconds so user can read hero peacefully
-    const initialTimer = setTimeout(() => {
-      setShow(true);
-      // Automatically close after 5 seconds
-      setTimeout(() => setShow(false), 5000);
-    }, 12000);
-
-    // Dynamic slower interval of 22 seconds for consecutive organic alerts
-    const interval = setInterval(() => {
-      setShow(false);
-      setTimeout(() => {
-        setCurrent(prev => (prev + 1) % CATECHIST_PURCHASES.length);
-        setShow(true);
-        // Display for 5 seconds of active duration
-        setTimeout(() => setShow(false), 5000);
-      }, 1000);
-    }, 22000);
-
-    return () => {
-      clearTimeout(initialTimer);
-      clearInterval(interval);
-    };
-  }, []);
-
-  if (!show) return null;
-  const item = CATECHIST_PURCHASES[current];
-
-  return (
-    <div className="fixed bottom-24 left-4 right-4 z-[90] max-w-[480px] mx-auto animate-slide-up pointer-events-none px-2 sm:px-4">
-      <div className="bg-white/95 backdrop-blur-md rounded-2xl border-2 border-pink-100 shadow-[0_12px_30px_rgba(219,39,119,0.15)] p-3 flex items-center gap-3 max-w-[310px]">
-        <div className="w-10 h-10 rounded-full bg-pink-50 flex items-center justify-center shrink-0 relative border border-pink-100">
-          <img 
-            src={item.avatar} 
-            alt={item.name} 
-            className="w-full h-full rounded-full object-cover"
-            referrerPolicy="no-referrer"
-          />
-          <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-green-500 rounded-full border-2 border-white animate-pulse" />
-        </div>
-        <div className="text-left leading-tight">
-          <p className="text-[9px] text-gray-400 font-extrabold uppercase tracking-widest">Inscrição Confirmada!</p>
-          <p className="text-[11px] font-black text-gray-800">{item.name}</p>
-          <p className="text-[9px] text-pink-500 font-bold">{item.city} • <span className="text-gray-400 font-medium">{item.time}</span></p>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-const StickyCTA: React.FC = () => {
+const StickyCTA: React.FC<{ onAnchorClick: () => void }> = ({ onAnchorClick }) => {
   const [isVisible, setIsVisible] = useState(false);
   useEffect(() => {
     const handleScroll = () => setIsVisible(window.scrollY > 800);
@@ -173,14 +102,14 @@ const StickyCTA: React.FC = () => {
   if (!isVisible) return null;
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 p-4 z-[100] glass-effect border-t-2 border-pink-100 max-w-[480px] mx-auto animate-fade-in rounded-t-[32px] shadow-[0_-10px_40px_rgba(0,0,0,0.12)]">
-      <a 
-        href={CHECKOUT_URL}
-        className="block w-full text-center bg-pink-500 hover:bg-pink-600 text-white font-black py-4 rounded-full shadow-[0_8px_20px_rgba(219,39,119,0.35)] animate-cta flex items-center justify-center flex-wrap gap-2 text-[12.5px] sm:text-[14px] uppercase tracking-wider px-2"
+    <div className="fixed bottom-0 left-0 right-0 p-4 z-[100] glass-effect border-t-2 border-pink-100 max-w-[480px] mx-auto animate-fade-in rounded-t-[32px] shadow-[0_-10px_40px_rgba(0,0,0,0.1)]">
+      <button 
+        onClick={() => onAnchorClick()}
+        className="w-full bg-pink-400 text-white font-black py-2 rounded-full shadow-lg animate-cta flex items-center justify-center gap-2 text-xs uppercase tracking-wide whitespace-nowrap"
       >
-        <Heart size={18} fill="currentColor" className="shrink-0" />
-        QUERO MEU MATERIAL AGORA
-      </a>
+        <Heart size={18} fill="currentColor" />
+        QUERO MEU PDF AGORA
+      </button>
     </div>
   );
 };
@@ -229,97 +158,13 @@ const FAQItem: React.FC<{ q: string; a: string }> = ({ q, a }) => {
 // --- Main App ---
 
 const App: React.FC = () => {
-  const [vagas, setVagas] = useState<number>(17);
-  const [isVagasFlash, setIsVagasFlash] = useState(false);
-  const [hasTriggeredDrop, setHasTriggeredDrop] = useState(false);
+  const [vagas, setVagas] = useState(14);
   const offerRef = useRef<HTMLDivElement>(null);
-  const bannerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (hasTriggeredDrop) return;
-
-    const runSequentialDrop = () => {
-      setHasTriggeredDrop(true);
-      
-      // First drop (17 -> 16) after 1.2s
-      setTimeout(() => {
-        setVagas(prev => {
-          if (prev > 3) {
-            setIsVagasFlash(true);
-            setTimeout(() => setIsVagasFlash(false), 850);
-            return prev - 1;
-          }
-          return prev;
-        });
-
-        // Second drop (16 -> 15) after 1.8s
-        setTimeout(() => {
-          setVagas(prev => {
-            if (prev > 3) {
-              setIsVagasFlash(true);
-              setTimeout(() => setIsVagasFlash(false), 850);
-              return prev - 1;
-            }
-            return prev;
-          });
-
-          // Third drop (15 -> 14) after 1.8s
-          setTimeout(() => {
-            setVagas(prev => {
-              if (prev > 3) {
-                setIsVagasFlash(true);
-                setTimeout(() => setIsVagasFlash(false), 850);
-                return prev - 1;
-              }
-              return prev;
-            });
-          }, 1800);
-        }, 1800);
-      }, 1200);
-    };
-
-    // Trigger on scroll (when the pricing banner enters viewport)
-    let observer: IntersectionObserver | null = null;
-    if (typeof window !== 'undefined' && 'IntersectionObserver' in window) {
-      const checkAndRun = () => {
-        const target = bannerRef.current || document.getElementById("urgency-banner");
-        if (target) {
-          observer = new IntersectionObserver((entries) => {
-            if (entries[0].isIntersecting) {
-              runSequentialDrop();
-              if (observer) observer.disconnect();
-            }
-          }, { threshold: 0.05 });
-          observer.observe(target);
-        }
-      };
-      
-      // Schedule check to ensure element is rendered
-      setTimeout(checkAndRun, 100);
-    }
-
-    return () => {
-      if (observer) observer.disconnect();
-    };
-  }, [hasTriggeredDrop]);
-
-  useEffect(() => {
-    // Normal slow ambient decrement every 50 seconds to continue standard urgency decay down to 3
-    const interval = setInterval(() => {
-      if (hasTriggeredDrop) {
-        setVagas(prev => {
-          if (prev > 3) {
-            setIsVagasFlash(true);
-            setTimeout(() => setIsVagasFlash(false), 850);
-            return prev - 1;
-          }
-          return prev;
-        });
-      }
-    }, 50000);
-
+    const interval = setInterval(() => setVagas(prev => (prev > 2 ? prev - 1 : prev)), 60000);
     return () => clearInterval(interval);
-  }, [hasTriggeredDrop]);
+  }, []);
 
   const scrollToOffer = (e?: React.MouseEvent) => {
     if (e) e.preventDefault();
@@ -333,9 +178,9 @@ const App: React.FC = () => {
       <div className="max-w-[480px] w-full bg-white shadow-2xl relative overflow-x-hidden pb-10">
         
         {/* Urgency Header */}
-        <div className="bg-gradient-to-r from-pink-500 to-pink-400 text-white py-2 px-2 text-[8.2px] min-[360px]:text-[9px] min-[390px]:text-[10px] sm:text-[11px] font-black text-center flex justify-center items-center gap-1 uppercase tracking-tight leading-none whitespace-nowrap">
-          <Sun size={11} fill="white" className="animate-pulse shrink-0" />
-          <span>VAGAS LIMITADAS PARA ADQUIRIR O MATERIAL: RESTAM APENAS <span className={`inline-block transition-all duration-300 transform ${isVagasFlash ? 'text-yellow-200 scale-125 font-black drop-shadow-[0_0_8px_rgba(253,224,71,0.8)]' : ''}`}>{vagas}</span>!</span>
+        <div className="bg-gradient-to-r from-pink-500 to-pink-400 text-white py-2 px-4 text-[10px] font-black text-center flex justify-center items-center gap-2 uppercase tracking-wider">
+          <Sun size={12} fill="white" className="animate-pulse" />
+          Apenas {vagas} vagas com o bônus "Bobbie Goods" exclusivo!
         </div>
 
         {/* Hero */}
@@ -361,12 +206,10 @@ const App: React.FC = () => {
             <CountdownTimer />
             <button 
               onClick={() => scrollToOffer()}
-              className="w-full bg-gradient-to-r from-pink-500 to-pink-600 text-white text-base font-black py-5 rounded-[30px] shadow-2xl animate-cta flex flex-col items-center border-b-4 border-pink-800/20 px-4"
+              className="w-full bg-gradient-to-r from-pink-500 to-pink-600 text-white text-base font-black py-5 rounded-[30px] shadow-2xl animate-cta flex flex-col items-center border-b-4 border-pink-800/20"
             >
-              <span className="flex items-center justify-center flex-wrap gap-2 uppercase text-center text-[14px] sm:text-base whitespace-normal break-words leading-tight">
-                QUERO MEU MATERIAL AGORA <ArrowRight size={22} className="shrink-0" />
-              </span>
-              <span className="text-[10px] opacity-90 mt-1.5 uppercase tracking-widest">Acesso Vitalício e Imediato</span>
+              <span className="flex items-center gap-2 uppercase whitespace-nowrap">QUERO MEU MATERIAL AGORA <ArrowRight size={22} /></span>
+              <span className="text-[10px] opacity-90 mt-1 uppercase tracking-widest">Acesso Vitalício e Imediato</span>
             </button>
             <div className="flex items-center gap-6 text-[10px] font-black text-gray-400 uppercase">
               <span className="flex items-center gap-1.5"><Printer size={14} className="text-pink-300" /> Imprima e Encante</span>
@@ -442,91 +285,64 @@ const App: React.FC = () => {
             <h2 className="text-3xl font-black text-gray-900 leading-tight">Leve o Pack Completo</h2>
           </div>
 
-          <div className="bg-gradient-to-b from-white to-pink-50 rounded-[40px] shadow-[0_20px_40px_rgba(244,114,182,0.15)] border-[8px] border-pink-100 relative">
+          <div className="bg-gradient-to-b from-white to-pink-50/80 rounded-[40px] shadow-[0_25px_50px_rgba(236,72,153,0.22)] border-[8px] border-pink-200 relative">
             
             {/* Header do Card */}
-            <div className="bg-pink-500 rounded-t-[32px] p-8 text-center text-white">
-                <h3 className="font-extrabold text-[22px] leading-tight uppercase tracking-tight">SUPER COMBO CATEQUESE KIDS</h3>
-                <p className="text-[12px] font-bold mt-2 opacity-90 uppercase tracking-wide">TUDO O QUE VOCÊ VIU E MUITO MAIS!</p>
+            <div className="bg-gradient-to-r from-pink-500 via-rose-500 to-pink-500 bg-[size:150%_auto] rounded-t-[32px] p-8 text-center text-white shadow-inner">
+                <h3 className="font-black text-[22px] leading-tight uppercase tracking-tight drop-shadow-sm">SUPER COMBO CATEQUESE KIDS</h3>
+                <p className="text-[12px] font-black mt-2 opacity-95 uppercase tracking-wider bg-white/10 py-1 px-3 rounded-full inline-block">TUDO O QUE VOCÊ VIU E MUITO MAIS! ✨</p>
             </div>
 
             <div className="p-8">
               {/* Preço */}
               <div className="text-center mb-8">
-                 <div className="flex items-center justify-center gap-3 mb-2">
-                    <span className="text-gray-400 line-through text-lg font-bold">R$ 57,00</span>
-                    <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-wider">82% DE DESCONTO</span>
+                 <div className="flex items-center justify-center gap-3 mb-3">
+                    <span className="text-gray-400 line-through text-lg font-bold">R$ 97,00</span>
+                    <span className="bg-green-150 text-green-700 px-3.5 py-1 rounded-full text-[11px] font-black uppercase tracking-wider border border-green-200/50">ECONOMIZE 80%</span>
                  </div>
-                 <p className="text-pink-500 text-[12px] font-black uppercase tracking-[2px] mb-1">POR APENAS</p>
-                 <div className="flex items-baseline justify-center text-pink-600">
+                 <p className="text-pink-600 text-[11px] font-black uppercase tracking-[3px] bg-pink-100/60 px-3 py-1 rounded-full w-fit mx-auto mb-2">POR APENAS</p>
+                 <div className="flex items-baseline justify-center text-pink-500 drop-shadow-sm">
                    <span className="text-3xl font-black mr-1">R$</span>
-                   <span className="text-[72px] font-black tracking-tighter leading-none animate-pulse">10,00</span>
+                   <span className="text-[72px] font-black tracking-tighter leading-none bg-gradient-to-br from-pink-500 to-rose-600 bg-clip-text text-transparent">19,90</span>
                  </div>
-                 <p className="text-gray-400 text-[11px] font-bold mt-3 uppercase tracking-wider">ACESSO VITALÍCIO • DEVOLUÇÃO EM 7 DIAS</p>
-                 
-                 {/* Blinking Urgency Banner inside Pricing box */}
-                 <div id="urgency-banner" ref={bannerRef} className="mt-4 bg-red-50 border border-red-100 text-red-600 rounded-xl p-3 text-[11px] font-black uppercase tracking-wide flex items-center justify-center gap-1.5 animate-pulse">
-                   <span>⚠️ VAGAS PROMOCIONAIS ESGOTANDO (APENAS <span className={`inline-block transition-all duration-300 transform ${isVagasFlash ? 'text-pink-600 scale-150 font-black drop-shadow-[0_0_12px_rgba(219,39,119,0.7)]' : ''}`}>{vagas}</span> RESTANTES)</span>
-                 </div>
+                 <p className="text-gray-400 text-[11px] font-bold mt-3 uppercase tracking-wider">ACESSO VITALÍCIO • PDF PRONTINHO</p>
               </div>
 
-              <hr className="border-gray-100 mb-8" />
+              <hr className="border-pink-100/65 mb-8" />
 
-              {/* Lista com Value Stack */}
-              <div className="space-y-4 mb-10">
+              {/* Lista */}
+              <div className="space-y-5 mb-10">
                 {[
-                  { text: "Pack Completo: Temas de Batismo à Crisma", val: "R$ 57" },
-                  { text: "Bônus: Coleção de Histórias Bíblicas Kids", val: "R$ 27" },
-                  { text: "Bônus: Lembrancinhas e Moldes Prontos", val: "R$ 19" },
-                  { text: "Super Bônus: Desenhos Bobbie Goods 100% Católicos", val: "R$ 37" },
-                  { text: "Especial Corpus Christi e Dinâmicas Lúdicas", val: "R$ 17" },
+                  "Pack Completo: Batismo à Crisma",
+                  "Bônus: Histórias Bíblicas Kids (Adão e Moisés)",
+                  "Bônus: Lembrancinhas e Quebra-cabeças",
+                  "Especial Corpus Christi e Dinâmicas",
+                  "Desenhos Bobbie Goods Exclusivos",
                 ].map((item, i) => (
-                  <div key={i} className="flex items-start gap-3">
-                    <div className="bg-pink-100 text-pink-500 p-1 rounded-full shrink-0 mt-0.5">
-                      <Check size={14} strokeWidth={3.5} />
+                  <div key={i} className="flex items-center gap-3">
+                    <div className="bg-pink-500 text-white p-1 rounded-full shadow-md shadow-pink-500/20">
+                      <Check size={14} strokeWidth={4.5} />
                     </div>
-                    <div className="text-left leading-tight">
-                      <span className="font-bold text-gray-700 text-[13.5px] block">{item.text}</span>
-                      {i === 0 ? (
-                        <span className="text-[10px] text-pink-500 font-extrabold uppercase bg-pink-50 px-2 py-0.5 rounded border border-pink-100/50 inline-block mt-1">
-                          Valor normal: R$ 57 • <span className="text-pink-600 font-black animate-pulse">HOJE POR APENAS R$ 10,00</span>
-                        </span>
-                      ) : (
-                        <span className="text-[10px] text-pink-500 font-extrabold uppercase bg-pink-50 px-2 py-0.5 rounded border border-pink-100/50 inline-block mt-1">
-                          Valor normal: {item.val} • <span className="text-green-600 font-black">HOJE GRÁTIS</span>
-                        </span>
-                      )}
-                    </div>
+                    <span className="font-extrabold text-gray-700 text-[14.5px] leading-tight">{item}</span>
                   </div>
                 ))}
               </div>
 
               {/* Botão de Checkout */}
-              <a 
-                href={CHECKOUT_URL}
-                className="block w-full bg-pink-600 hover:bg-pink-700 text-white font-black py-4 sm:py-4.5 rounded-[22px] text-[13px] sm:text-[17px] uppercase tracking-wider px-4 text-center mb-6 border-b-4 border-pink-800 whitespace-normal break-words leading-tight animate-pulse-strong"
+              <button 
+                data-checkout={CHECKOUT_URL}
+                className="block w-full bg-gradient-to-r from-pink-500 via-rose-500 to-pink-600 text-white font-black py-4.5 rounded-[22px] shadow-[0_10px_25px_rgba(244,63,94,0.45)] hover:shadow-[0_12px_30px_rgba(244,63,94,0.55)] transition-all duration-300 transform hover:scale-[1.01] active:scale-[0.99] animate-cta text-[14px] sm:text-[16px] uppercase tracking-wider px-2 sm:px-4 text-center mb-6 whitespace-nowrap border-b-4 border-rose-700/40"
               >
-                QUERO ENCANTAR MINHA TURMA AGORA
-              </a>
+                QUERO ENCANTAR MINHA TURMA
+              </button>
 
-              {/* Métodos de Pagamento e Segurança */}
-              <div className="flex flex-col items-center gap-4 border-t border-gray-100 pt-6">
-                <div className="flex items-center gap-4 text-gray-400 font-black text-[10px] uppercase tracking-wider">
-                  <span className="flex items-center gap-1.5"><ShieldCheck size={15} className="text-green-500" /> COMPRA 100% SEGURA</span>
-                  <span className="flex items-center gap-1.5"><Star size={15} className="text-yellow-400" fill="currentColor" /> 4.9/5 ESTRELAS</span>
+              {/* Segurança e Estrelas */}
+              <div className="flex justify-center items-center gap-6 text-gray-400 font-black text-[11px] uppercase tracking-wider">
+                <div className="flex items-center gap-1.5">
+                  <ShieldCheck size={16} /> SEGURO
                 </div>
-                
-                {/* Payment Methods Badges */}
-                <div className="flex items-center justify-center gap-3 bg-gray-50 px-5 py-2.5 rounded-2xl border border-gray-100/60 w-full">
-                  <span className="text-[10px] text-gray-400 font-extrabold uppercase tracking-wide">Pague com:</span>
-                  
-                  <div className="flex items-center gap-1.5 bg-white px-2 py-1 rounded-lg border border-gray-100 text-pink-600 text-[10px] font-black">
-                    <QrCode size={13} className="text-sky-500" /> PIX (Acesso Imediato)
-                  </div>
-                  
-                  <div className="flex items-center gap-1.5 bg-white px-2 py-1 rounded-lg border border-gray-100 text-pink-600 text-[10px] font-black">
-                    <CreditCard size={13} className="text-yellow-500" /> CARTÃO
-                  </div>
+                <div className="flex items-center gap-1.5">
+                  <Star size={16} className="text-yellow-400" fill="currentColor" /> 4.9/5 ESTRELAS
                 </div>
               </div>
             </div>
@@ -542,7 +358,7 @@ const App: React.FC = () => {
           </div>
           <div className="space-y-2">
             <FAQItem q="O material chega pelo correio?" a="Não, é 100% digital! Você recebe no e-mail logo após a compra, baixa e imprime quando quiser." />
-            <FAQItem q="É pago mensalmente?" a="Não! É um pagamento único de R$ 10,00 e você tem acesso para sempre." />
+            <FAQItem q="É pago mensalmente?" a="Não! É um pagamento único de R$ 37,90 e você tem acesso para sempre." />
             <FAQItem q="Como recebo o acesso?" a="Imediatamente após a confirmação do pagamento, você receberá um e-mail com o link para baixar todos os PDFs." />
           </div>
         </section>
@@ -553,32 +369,12 @@ const App: React.FC = () => {
           </p>
         </footer>
 
-        {/* Purchase Toast notification for ultimate social proof */}
-        <PurchaseToast vagas={vagas} />
-
         {/* Sticky CTA */}
-        <StickyCTA />
+        <StickyCTA onAnchorClick={scrollToOffer} />
       </div>
       <style>{`
         @keyframes fade-in { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes slide-up { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes pulse-strong {
-          0% {
-            transform: scale(1);
-            box-shadow: 0 0 0 0 rgba(219, 39, 119, 0.7), 0 8px 25px rgba(219, 39, 119, 0.35);
-          }
-          50% {
-            transform: scale(1.04);
-            box-shadow: 0 0 0 20px rgba(219, 39, 119, 0), 0 12px 35px rgba(219, 39, 119, 0.55);
-          }
-          100% {
-            transform: scale(1);
-            box-shadow: 0 0 0 0 rgba(219, 39, 119, 0), 0 8px 25px rgba(219, 39, 119, 0.35);
-          }
-        }
         .animate-fade-in { animation: fade-in 0.4s ease-out forwards; }
-        .animate-slide-up { animation: slide-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-        .animate-pulse-strong { animation: pulse-strong 1.5s infinite cubic-bezier(0.25, 1, 0.5, 1); }
         .glass-effect { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); }
       `}</style>
     </div>
