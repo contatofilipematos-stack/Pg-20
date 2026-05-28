@@ -286,9 +286,10 @@ const App: React.FC = () => {
           <div className="bg-gradient-to-b from-white to-pink-50 rounded-[40px] shadow-[0_20px_40px_rgba(244,114,182,0.15)] border-[8px] border-pink-100 relative">
             
             {/* Header do Card */}
-            <div className="bg-pink-500 rounded-t-[32px] p-8 text-center text-white">
-                <h3 className="font-extrabold text-[22px] leading-tight uppercase tracking-tight">SUPER COMBO CATEQUESE KIDS</h3>
-                <p className="text-[12px] font-bold mt-2 opacity-90 uppercase tracking-wide">TUDO O QUE VOCÊ VIU E MUITO MAIS!</p>
+            <div className="bg-gradient-to-r from-pink-500 to-pink-600 rounded-t-[32px] p-8 text-center text-white relative">
+                <h3 className="font-sans font-black text-3xl leading-tight tracking-tight uppercase drop-shadow-sm">
+                  Catequese Criativa Completa
+                </h3>
             </div>
 
             <div className="p-8">
