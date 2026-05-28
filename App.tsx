@@ -187,6 +187,7 @@ const App: React.FC = () => {
           <div className="flex justify-center items-center gap-2 text-pink-500 font-black text-[11px] uppercase bg-white/50 w-fit mx-auto px-4 py-1.5 rounded-full border border-pink-50">
             <Heart size={14} fill="currentColor" /> A Melhor Escolha para sua Catequese <Heart size={14} fill="currentColor" />
           </div>
+          
           <h1 className="text-3xl font-black text-gray-900 leading-[1.1]">
             Transforme sua Catequese: Tenha o Material mais <span className="text-pink-500 underline decoration-yellow-400 decoration-4">Lúdico e Apaixonante</span> do Brasil! ✨
           </h1>
@@ -198,7 +199,7 @@ const App: React.FC = () => {
             <div className="absolute -top-1 -left-1 z-10 bg-yellow-400 text-gray-900 text-[11px] font-black px-4 py-2 rounded-[18px] rotate-[-5deg] shadow-lg flex items-center gap-1 border-2 border-white">
               <Cloud size={14} fill="white" /> 100% DIGITAL EM PDF
             </div>
-            <img src="https://i.ibb.co/Xx9tT55J/1000141193.png" alt="Pack Kids" className="rounded-[40px] shadow-2xl border-[10px] border-white drop-shadow-2xl" />
+            <img src="https://i.ibb.co/tPBy7XYn/1000141193.png" alt="Pack Kids" className="rounded-[40px] shadow-2xl border-[10px] border-white drop-shadow-2xl" />
           </div>
 
           <div className="flex flex-col items-center gap-5 pt-4">
@@ -300,7 +301,7 @@ const App: React.FC = () => {
                  <p className="text-pink-500 text-[12px] font-black uppercase tracking-[2px] mb-1">POR APENAS</p>
                  <div className="flex items-baseline justify-center text-pink-600">
                    <span className="text-3xl font-black mr-1">R$</span>
-                   <span className="text-[72px] font-black tracking-tighter leading-none">10,00</span>
+                   <span className="text-[72px] font-black tracking-tighter leading-none">19,90</span>
                  </div>
                  <p className="text-gray-400 text-[11px] font-bold mt-3 uppercase tracking-wider">ACESSO VITALÍCIO • PDF PRONTINHO</p>
               </div>
@@ -355,7 +356,7 @@ const App: React.FC = () => {
           </div>
           <div className="space-y-2">
             <FAQItem q="O material chega pelo correio?" a="Não, é 100% digital! Você recebe no e-mail logo após a compra, baixa e imprime quando quiser." />
-            <FAQItem q="É pago mensalmente?" a="Não! É um pagamento único de R$ 10,00 e você tem acesso para sempre." />
+            <FAQItem q="É pago mensalmente?" a="Não! É um pagamento único de R$ 19,90 e você tem acesso para sempre." />
             <FAQItem q="Como recebo o acesso?" a="Imediatamente após a confirmação do pagamento, você receberá um e-mail com o link para baixar todos os PDFs." />
           </div>
         </section>
