@@ -103,6 +103,8 @@ const StickyCTA: React.FC<{ onAnchorClick: () => void }> = ({ onAnchorClick }) =
   return (
     <div className="fixed bottom-0 left-0 right-0 p-4 z-[100] glass-effect border-t-2 border-pink-100 max-w-[480px] mx-auto animate-fade-in rounded-t-[32px] shadow-[0_-10px_40px_rgba(0,0,0,0.1)]">
       <button 
+        id="btn-sticky-cta"
+        type="button"
         onClick={() => onAnchorClick()}
         className="w-full bg-gradient-to-r from-pink-500 to-pink-600 text-white font-black py-4.5 rounded-[24px] shadow-xl animate-cta flex items-center justify-center gap-2 text-lg uppercase"
       >
@@ -128,8 +130,8 @@ const Carousel: React.FC<{ images: string[] }> = ({ images }) => {
             </div>
           ))}
         </div>
-        <button onClick={() => prev()} className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-pink-500/90 text-white shadow-lg flex items-center justify-center"><ChevronLeft size={24}/></button>
-        <button onClick={() => next()} className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-pink-500/90 text-white shadow-lg flex items-center justify-center"><ChevronRight size={24}/></button>
+        <button id="carousel-btn-prev" type="button" onClick={() => prev()} className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-pink-500/90 text-white shadow-lg flex items-center justify-center"><ChevronLeft size={24}/></button>
+        <button id="carousel-btn-next" type="button" onClick={() => next()} className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-pink-500/90 text-white shadow-lg flex items-center justify-center"><ChevronRight size={24}/></button>
         <div className="absolute top-6 right-6 pdf-badge shadow-xl">PDF FOFINHO</div>
       </div>
       <div className="flex justify-center gap-2 mt-4">
@@ -145,7 +147,7 @@ const FAQItem: React.FC<{ q: string; a: string }> = ({ q, a }) => {
   const [open, setOpen] = useState(false);
   return (
     <div className="mb-3">
-      <button onClick={() => setOpen(!open)} className={`w-full p-5 rounded-2xl flex justify-between items-center text-left transition-all ${open ? 'bg-pink-50 ring-2 ring-pink-100' : 'bg-white'}`}>
+      <button id="faq-toggle-btn" type="button" onClick={() => setOpen(!open)} className={`w-full p-5 rounded-2xl flex justify-between items-center text-left transition-all ${open ? 'bg-pink-50 ring-2 ring-pink-100' : 'bg-white'}`}>
         <span className="font-extrabold text-gray-800 text-sm">{q}</span>
         <div className={`p-1 rounded-full bg-pink-100 text-pink-500 transition-transform ${open ? 'rotate-180' : ''}`}><ChevronDown size={18} /></div>
       </button>
@@ -188,8 +190,8 @@ const App: React.FC = () => {
             <Heart size={14} fill="currentColor" /> A Melhor Escolha para sua Catequese <Heart size={14} fill="currentColor" />
           </div>
           
-          <h1 className="text-3xl font-black text-gray-900 leading-[1.1]">
-            Transforme sua Catequese: Tenha o Material mais <span className="text-pink-500 underline decoration-yellow-400 decoration-4">Lúdico e Apaixonante</span> do Brasil! ✨
+          <h1 className="text-3xl font-black text-gray-900 leading-[1.1] uppercase">
+            Mais de <span className="text-pink-500 underline decoration-yellow-400 decoration-4">300 Atividades Católicas</span> Prontas para Imprimir!
           </h1>
           <p className="text-gray-600 text-[15px] leading-relaxed font-bold italic px-4">
             Diga adeus ao cansaço de preparar aulas do zero. Encante seus pequenos com atividades fofas em PDF e veja o brilho nos olhos de cada criança! 🎨📖
@@ -205,6 +207,8 @@ const App: React.FC = () => {
           <div className="flex flex-col items-center gap-5 pt-4">
             <CountdownTimer />
             <button 
+              id="hero-scroll-btn"
+              type="button"
               onClick={() => scrollToOffer()}
               className="w-full bg-gradient-to-r from-pink-500 to-pink-600 text-white text-xl font-black py-5 rounded-[30px] shadow-2xl animate-cta flex flex-col items-center border-b-4 border-pink-800/20"
             >
@@ -247,6 +251,8 @@ const App: React.FC = () => {
               { t: "Confissão", s: "PENITÊNCIA LÚDICA", i: "🤍", c: "bg-pink-50" },
               { t: "Eucaristia", s: "1ª COMUNHÃO", i: "🍞", c: "bg-yellow-50" },
               { t: "Crisma", s: "CONFIRMAÇÃO", i: "🔥", c: "bg-red-50" },
+              { t: "Datas Litúrgicas", s: "CELEBRAÇÕES E FESTAS", i: "📅", c: "bg-amber-50" },
+              { t: "Nossa Senhora", s: "DEVOCIONAL INFANTIL", i: "🌹", c: "bg-rose-50" },
               { t: "Perseverança", s: "CAMINHANDO COM JESUS", i: "👣", c: "bg-green-50" },
               { t: "Bíblia Ilustrada", s: "CONTOS EM PDF", i: "📖", c: "bg-indigo-50" },
               { t: "Dinâmicas Kids", s: "ALEGRIA NO ENCONTRO", i: "🎈", c: "bg-pink-100" },
@@ -258,6 +264,58 @@ const App: React.FC = () => {
                 <div className="text-4xl mb-2">{item.i}</div>
                 <h4 className="text-[13px] font-black text-gray-800 leading-tight">{item.t}</h4>
                 <p className="text-[9px] text-gray-500 font-bold uppercase mt-1 tracking-wider">{item.s}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Para quem é este material */}
+        <section className="p-8 space-y-6 bg-pink-50 relative">
+          <div className="text-center space-y-2">
+            <span className="text-pink-500 font-black text-[11px] uppercase bg-white/80 px-4 py-1.5 rounded-full border border-pink-100 shadow-sm inline-block">
+              Para Quem é Este Material? 🤔
+            </span>
+            <h2 className="text-2xl font-black text-gray-900 leading-tight">
+              Esse Pack é <span className="text-pink-500 underline decoration-yellow-300 decoration-4">Perfeito</span> Para:
+            </h2>
+          </div>
+
+          <div className="space-y-4">
+            {[
+              {
+                title: "Catequistas Dedicadas",
+                desc: "Que desejam economizar tempo de planejamento e encantar as crianças com encontros lúdicos, dinâmicos e fáceis de aplicar.",
+                icon: "✨",
+                badge: "PRATICIDADE"
+              },
+              {
+                title: "Mães, Pais e Famílias",
+                desc: "Que querem ensinar os ensinamentos da Igreja em casa de forma leve e divertida, aproximando toda a família de Deus.",
+                icon: "🏡",
+                badge: "CATEQUESE LAR"
+              },
+              {
+                title: "Coordenadoras de Catequese",
+                desc: "Que buscam padronizar, enriquecer e elevar o nível dos encontros das equipes de catequese da sua comunidade.",
+                icon: "⛪",
+                badge: "LIDERANÇA"
+              },
+              {
+                title: "Avós e Padrinhos",
+                desc: "Que pretendem dar um presente de valor eterno para semear o amor de Jesus no coração dos seus afilhados e netinhos.",
+                icon: "🎁",
+                badge: "PRESENTE COM PROPÓSITO"
+              }
+            ].map((buyer, idx) => (
+              <div key={idx} className="bg-white p-5 rounded-[28px] border-4 border-pink-100/40 shadow-sm flex gap-4 items-start hover:scale-[1.02] transition-transform">
+                <span className="text-3xl p-2 bg-pink-100/50 rounded-2xl flex-shrink-0">{buyer.icon}</span>
+                <div className="space-y-1">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <h4 className="font-extrabold text-[15px] text-gray-900 leading-tight">{buyer.title}</h4>
+                    <span className="text-[8px] font-black text-pink-600 bg-pink-50 px-2 py-0.5 rounded-full uppercase tracking-wider">{buyer.badge}</span>
+                  </div>
+                  <p className="text-gray-600 text-xs leading-relaxed font-semibold">{buyer.desc}</p>
+                </div>
               </div>
             ))}
           </div>
@@ -328,12 +386,13 @@ const App: React.FC = () => {
               </div>
 
               {/* Botão de Checkout */}
-              <button 
-                data-checkout={CHECKOUT_URL}
+              <a 
+                id="checkout-main-link"
+                href={CHECKOUT_URL}
                 className="block w-full bg-pink-600 text-white font-black py-4 rounded-[20px] shadow-[0_4px_15px_rgba(219,39,119,0.3)] animate-cta text-[13px] sm:text-[16px] uppercase tracking-wide px-2 sm:px-4 text-center mb-6 whitespace-nowrap"
               >
                 QUERO ENCANTAR MINHA TURMA
-              </button>
+              </a>
 
               {/* Segurança e Estrelas */}
               <div className="flex justify-center items-center gap-6 text-gray-400 font-black text-[11px] uppercase tracking-wider">
