@@ -109,7 +109,7 @@ const StickyCTA: React.FC<{ onAnchorClick: () => void }> = ({ onAnchorClick }) =
         className="w-full bg-gradient-to-r from-pink-500 to-pink-600 text-white font-black py-4.5 rounded-[24px] shadow-xl animate-cta flex items-center justify-center gap-2 text-lg uppercase"
       >
         <Heart size={20} fill="currentColor" />
-        QUERO MEU PDF AGORA
+        QUERO TODO MATERIAL
       </button>
     </div>
   );
@@ -193,7 +193,7 @@ const App: React.FC = () => {
 
           <div className="relative pt-4">
             <div className="absolute -top-1 -left-1 z-10 bg-yellow-400 text-gray-900 text-[11px] font-black px-4 py-2 rounded-[18px] rotate-[-5deg] shadow-lg flex items-center gap-1 border-2 border-white">
-              <Cloud size={14} fill="white" /> 100% DIGITAL EM PDF
+              <Cloud size={14} fill="white" /> 100% DIGITAL E PARA IMPRIMIR
             </div>
             <img src="https://i.ibb.co/tPBy7XYn/1000141193.png" alt="Pack Kids" className="rounded-[40px] shadow-2xl border-[10px] border-white drop-shadow-2xl" />
           </div>
@@ -239,6 +239,7 @@ const App: React.FC = () => {
           <h2 className="text-2xl font-black text-center text-gray-900 pt-10">O que vem no seu Pack:</h2>
           <div className="grid grid-cols-2 gap-4">
             {[
+              { t: "Todos os materiais dos vídeos do Tiktok", s: "PACOTE COMPLETO", i: "📱", c: "bg-pink-200", full: true },
               { t: "Mandamentos HQ", s: "HISTÓRIAS EM QUADRINHOS", i: "📜", c: "bg-orange-50" },
               { t: "7 Sacramentos", s: "AULAS CRIATIVAS", i: "⛪", c: "bg-blue-50" },
               { t: "Batismo", s: "INICIAÇÃO CRISTÃ", i: "💧", c: "bg-sky-50" },
@@ -254,10 +255,10 @@ const App: React.FC = () => {
               { t: "Jogos & Quiz", s: "FIXAÇÃO DIVERTIDA", i: "🧩", c: "bg-orange-100" },
               { t: "Santos & Anjos", s: "NOSSOS AMIGOS", i: "😇", c: "bg-blue-100" }
             ].map((item, i) => (
-              <div key={i} className={`${item.c} border-4 border-white p-5 rounded-[30px] shadow-sm text-center flex flex-col items-center justify-center hover:scale-105 transition-transform`}>
+              <div key={i} className={`${item.c} border-4 border-white p-5 rounded-[30px] shadow-sm text-center flex flex-col items-center justify-center hover:scale-[1.02] transition-transform ${item.full ? 'col-span-2' : ''}`}>
                 <div className="text-4xl mb-2">{item.i}</div>
-                <h4 className="text-[13px] font-black text-gray-800 leading-tight">{item.t}</h4>
-                <p className="text-[9px] text-gray-500 font-bold uppercase mt-1 tracking-wider">{item.s}</p>
+                <h4 className={`font-black text-gray-800 leading-tight ${item.full ? 'text-lg' : 'text-[13px]'}`}>{item.t}</h4>
+                <p className={`text-gray-500 font-bold uppercase mt-1 tracking-wider ${item.full ? 'text-[11px]' : 'text-[9px]'}`}>{item.s}</p>
               </div>
             ))}
           </div>
@@ -364,6 +365,7 @@ const App: React.FC = () => {
               {/* Lista */}
               <div className="space-y-5 mb-10">
                 {[
+                  "Todos os materiais dos vídeos do Tiktok",
                   "Pack Completo: Batismo à Crisma",
                   "Bônus: Histórias Bíblicas Kids (Adão e Moisés)",
                   "Bônus: Lembrancinhas e Quebra-cabeças",
