@@ -159,13 +159,7 @@ const FAQItem: React.FC<{ q: string; a: string }> = ({ q, a }) => {
 // --- Main App ---
 
 const App: React.FC = () => {
-  const [vagas, setVagas] = useState(14);
   const offerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const interval = setInterval(() => setVagas(prev => (prev > 2 ? prev - 1 : prev)), 60000);
-    return () => clearInterval(interval);
-  }, []);
 
   const scrollToOffer = (e?: React.MouseEvent) => {
     if (e) e.preventDefault();
@@ -181,7 +175,7 @@ const App: React.FC = () => {
         {/* Urgency Header */}
         <div className="bg-gradient-to-r from-pink-500 to-pink-400 text-white py-2 px-4 text-[10px] font-black text-center flex justify-center items-center gap-2 uppercase tracking-wider">
           <Sun size={12} fill="white" className="animate-pulse" />
-          Apenas {vagas} vagas com o bônus "Bobbie Goods" exclusivo!
+          Todos os materiais dos vídeos no pack completo!!
         </div>
 
         {/* Hero */}
