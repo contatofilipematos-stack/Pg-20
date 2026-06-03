@@ -175,7 +175,7 @@ const App: React.FC = () => {
         {/* Urgency Header */}
         <div className="bg-gradient-to-r from-pink-500 to-pink-400 text-white py-2 px-4 text-[10px] font-black text-center flex justify-center items-center gap-2 uppercase tracking-wider">
           <Sun size={12} fill="white" className="animate-pulse" />
-          Todos os materiais dos vídeos no pack completo!!
+          Bônus Especial Dinâmicas de Corpus Christi no pack completo!!
         </div>
 
         {/* Hero */}
@@ -239,7 +239,6 @@ const App: React.FC = () => {
           <h2 className="text-2xl font-black text-center text-gray-900 pt-10">O que vem no seu Pack:</h2>
           <div className="grid grid-cols-2 gap-4">
             {[
-              { t: "Todos os materiais dos vídeos do Tiktok", s: "PACOTE COMPLETO", i: "📱", c: "bg-pink-200", full: true },
               { t: "Mandamentos HQ", s: "HISTÓRIAS EM QUADRINHOS", i: "📜", c: "bg-orange-50" },
               { t: "7 Sacramentos", s: "AULAS CRIATIVAS", i: "⛪", c: "bg-blue-50" },
               { t: "Batismo", s: "INICIAÇÃO CRISTÃ", i: "💧", c: "bg-sky-50" },
@@ -255,10 +254,10 @@ const App: React.FC = () => {
               { t: "Jogos & Quiz", s: "FIXAÇÃO DIVERTIDA", i: "🧩", c: "bg-orange-100" },
               { t: "Santos & Anjos", s: "NOSSOS AMIGOS", i: "😇", c: "bg-blue-100" }
             ].map((item, i) => (
-              <div key={i} className={`${item.c} border-4 border-white p-5 rounded-[30px] shadow-sm text-center flex flex-col items-center justify-center hover:scale-[1.02] transition-transform ${item.full ? 'col-span-2' : ''}`}>
+              <div key={i} className={`${item.c} border-4 border-white p-5 rounded-[30px] shadow-sm text-center flex flex-col items-center justify-center hover:scale-[1.02] transition-transform`}>
                 <div className="text-4xl mb-2">{item.i}</div>
-                <h4 className={`font-black text-gray-800 leading-tight ${item.full ? 'text-lg' : 'text-[13px]'}`}>{item.t}</h4>
-                <p className={`text-gray-500 font-bold uppercase mt-1 tracking-wider ${item.full ? 'text-[11px]' : 'text-[9px]'}`}>{item.s}</p>
+                <h4 className="font-black text-gray-800 leading-tight text-[13px]">{item.t}</h4>
+                <p className="text-gray-500 font-bold uppercase mt-1 tracking-wider text-[9px]">{item.s}</p>
               </div>
             ))}
           </div>
@@ -365,12 +364,11 @@ const App: React.FC = () => {
               {/* Lista */}
               <div className="space-y-5 mb-10">
                 {[
-                  "Todos os materiais dos vídeos do Tiktok",
                   "Pack Completo: Batismo à Crisma",
                   "Bônus: Histórias Bíblicas Kids (Adão e Moisés)",
                   "Bônus: Lembrancinhas e Quebra-cabeças",
                   "Especial Corpus Christi e Dinâmicas",
-                  "Desenhos Bobbie Goods Exclusivos",
+                  "Super Pack Bobbie Goods Católico (Mais de 50 desenhos)",
                 ].map((item, i) => (
                   <div key={i} className="flex items-center gap-3">
                     <div className="bg-pink-100 text-pink-500 p-1 rounded-full">
